@@ -5,7 +5,8 @@ import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 
-import com.zerowater.environment.R;
+import me.fourground.raisal.R;
+
 
 /**
  * Created by YoungSoo Kim on 2016-06-17.

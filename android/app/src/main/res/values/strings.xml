@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Environment</string>
+    <string name="facebook_app_id">1853584631579919</string>
+    <string name="fb_login_protocol_scheme">fb1853584631579919</string>
+
+    <string name="app_name">Raisal</string>
+
+    <string name="text_loading">loading</string>
 </resources>

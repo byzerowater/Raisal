@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "401919712656",
+    "firebase_url": "https://raisal-b7da8.firebaseio.com",
+    "project_id": "raisal-b7da8",
+    "storage_bucket": "raisal-b7da8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401919712656:android:3e9335e4ed4b90ae",
+        "android_client_info": {
+          "package_name": "me.fourground.raisal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401919712656-26grepc8h71krqds0hdcgcekkrnppnus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.fourground.raisal",
+            "certificate_hash": "ccf24fe7f857bf0eb30133df5b5f0f0234b6458b"
+          }
+        },
+        {
+          "client_id": "401919712656-qcj5damstaf85nhp0ggq8c6hr2q34ri8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ErsJcnTGmtxhn7jCYOMUavDazeIidaU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401919712656-qcj5damstaf85nhp0ggq8c6hr2q34ri8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

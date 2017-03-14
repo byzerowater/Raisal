@@ -1,13 +1,15 @@
 package me.fourground.raisal.ui.splash;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.zerowater.environment.R;
+import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import me.fourground.raisal.ui.login.LoginActivity;
 
 /**
  * Created by YoungSoo Kim on 2016-07-29.
@@ -27,7 +29,9 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         ButterKnife.bind(this);
         mSplashPresenter.attachView(this);
 
-        mSplashPresenter.getAccessToken();
+        startActivity(new Intent(this, LoginActivity.class));
+
+//        mSplashPresenter.getAccessToken();
 
     }
 

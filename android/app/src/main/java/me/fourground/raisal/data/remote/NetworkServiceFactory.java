@@ -2,9 +2,9 @@ package me.fourground.raisal.data.remote;
 
 import android.content.Context;
 
+import me.fourground.raisal.BuildConfig;
 import me.fourground.raisal.injection.ApplicationContext;
 import com.google.gson.Gson;
-import com.zerowater.environment.BuildConfig;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
