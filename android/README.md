@@ -1,5 +1,5 @@
-# Environment
-프로젝트 환경설정
+# Raisal
+Raisal Project
 ## Libraries
 
 The libraries and tools used include:
