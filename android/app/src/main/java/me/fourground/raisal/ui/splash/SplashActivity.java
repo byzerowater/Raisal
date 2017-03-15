@@ -1,6 +1,5 @@
 package me.fourground.raisal.ui.splash;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import me.fourground.raisal.R;
@@ -9,7 +8,7 @@ import me.fourground.raisal.ui.base.BaseActivity;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import me.fourground.raisal.ui.login.LoginActivity;
+import me.fourground.raisal.ui.signin.SignInActivity;
 
 /**
  * Created by YoungSoo Kim on 2016-07-29.
@@ -29,10 +28,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         ButterKnife.bind(this);
         mSplashPresenter.attachView(this);
 
-        startActivity(new Intent(this, LoginActivity.class));
-
-//        mSplashPresenter.getAccessToken();
-
+        startActivity(SignInActivity.getStartIntent(this));
     }
 
     @Override
@@ -42,7 +38,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     @Override
-    public void showUpdateDialog(String version) {
+    public void showProgress(boolean isShow) {
 
     }
 }

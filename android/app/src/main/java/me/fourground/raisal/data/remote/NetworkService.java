@@ -1,6 +1,8 @@
 package me.fourground.raisal.data.remote;
 
-import me.fourground.raisal.data.model.AccessTokenResponse;
+import me.fourground.raisal.data.model.SignData;
+import me.fourground.raisal.data.model.SignInRequest;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -13,7 +15,7 @@ import rx.Observable;
 public interface NetworkService {
 
     @POST("/api/auth/get")
-    Observable<AccessTokenResponse> getAccessToken();
+    Observable<SignData> signIn(@Body SignInRequest loginRequest);
 
 
 //    /**

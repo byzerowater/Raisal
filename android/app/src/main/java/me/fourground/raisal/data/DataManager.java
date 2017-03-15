@@ -1,13 +1,13 @@
 package me.fourground.raisal.data;
 
-import me.fourground.raisal.data.local.PreferencesHelper;
-import me.fourground.raisal.data.model.AccessTokenResponse;
-import me.fourground.raisal.data.remote.NetworkService;
-import me.fourground.raisal.data.remote.EventPosterHelper;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import me.fourground.raisal.data.local.PreferencesHelper;
+import me.fourground.raisal.data.model.SignData;
+import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.remote.EventPosterHelper;
+import me.fourground.raisal.data.remote.NetworkService;
 import rx.Observable;
 
 /**
@@ -32,12 +32,30 @@ public class DataManager {
         mEventPoster = eventPoster;
     }
 
-    public void putClientId(String clientId) {
-        mPreferencesHelper.putClientId(clientId);
+    public Observable<SignData> signIn(SignInRequest signInRequest) {
+        return mNetworkService.signIn(signInRequest)
+                .map(signData -> {
+                    mPreferencesHelper.putAccessToken(signData.getAuthKey());
+                    return signData;
+                });
     }
 
-    public Observable<AccessTokenResponse> getAccessToken() {
-        return mNetworkService.getAccessToken();
+    public Observable<String> signOut() {
+        return Observable.create(subscriber -> {
+                    try {
+                        subscriber.onNext(removeAccessToken());
+                        subscriber.onCompleted();
+                    } catch (Throwable error) {
+                        subscriber.onError(error);
+                    }
+                }
+        );
+    }
+
+    private String removeAccessToken() {
+        String accessToken = mPreferencesHelper.getAccessToken();
+        mPreferencesHelper.putAccessToken(null);
+        return accessToken;
     }
 
 //    public Single<List<Shot>> getShots(int perPage, int page) {

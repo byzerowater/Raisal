@@ -22,7 +22,6 @@ public class BaseActivity extends AppCompatActivity {
     public ProgressDialog mProgressDialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +39,19 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void requestPermissionsSafely(String[] permissions, int requestCode) {
+    protected void requestPermissionsSafely(String[] permissions, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, requestCode);
         }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public boolean hasPermission(String permission) {
+    protected boolean hasPermission(String permission) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
                 checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void showProgressDialog() {
+    protected void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(getString(R.string.text_loading));
@@ -62,7 +61,7 @@ public class BaseActivity extends AppCompatActivity {
         mProgressDialog.show();
     }
 
-    public void hideProgressDialog() {
+    protected void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }

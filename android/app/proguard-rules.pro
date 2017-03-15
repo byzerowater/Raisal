@@ -64,9 +64,6 @@
 -keep class sun.misc.Unsafe { *; }
 #-keep class com.google.gson.stream.** { *; }
 
-# Application classes that will be serialized/deserialized over Gson
--keep class com.yapglobal.environment.data.model.** { *; }
-
 # Otto EventBus rules
 -keepattributes *Annotation*
 -keepclassmembers class ** {
@@ -76,3 +73,6 @@
 
 # Retrolambda rules
 -dontwarn java.lang.invoke.*
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class me.fourground.raisal.data.model.**

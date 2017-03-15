@@ -40,13 +40,13 @@ public class NetworkServiceFactory {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
-                : HttpLoggingInterceptor.Level.NONE);
+                : HttpLoggingInterceptor.Level.BODY);
 
 
         return new OkHttpClient.Builder()
                 .addInterceptor(logging)
+                .addInterceptor(new UnauthorisedInterceptor(context))
                 .addInterceptor(new HeaderInterceptor(context))
-                .addInterceptor(new ErrorInterceptor(context))
                 .build();
     }
 }

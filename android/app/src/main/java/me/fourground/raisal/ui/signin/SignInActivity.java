@@ -1,15 +1,18 @@
-package me.fourground.raisal.ui.login;
+package me.fourground.raisal.ui.signin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -21,6 +24,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -36,28 +41,41 @@ import timber.log.Timber;
  * company Ltd
  * youngsoo.kim@yap.net
  */
-public class LoginActivity extends BaseActivity implements LoginMvpView {
+public class SignInActivity extends BaseActivity implements SignInMvpView {
 
-    @Inject
-    LoginPresenter mLoginPresenter;
+    private static final int RC_SIGN_IN = 9001;
+
+    private static final String LOGIN_TYPE_GOOGLE = "G";
+    private static final String LOGIN_TYPE_FACEBOOK = "F";
+
     @BindView(R.id.sib_google)
     SignInButton mSibGoogle;
 
-    private static final int RC_SIGN_IN = 9001;
     @BindView(R.id.sib_facebook)
-    LoginButton mSibFacebook;
+    Button mSibFacebook;
 
-    // [START declare_auth]
+    @Inject
+    SignInPresenter mSignInPresenter;
+
     private FirebaseAuth mAuth;
-    // [END declare_auth]
 
-    // [START declare_auth_listener]
     private FirebaseAuth.AuthStateListener mAuthListener;
-    // [END declare_auth_listener]
 
     private GoogleApiClient mGoogleApiClient;
-
     private CallbackManager mCallbackManager;
+
+    private String mLoginType = null;
+
+    /**
+     * LoginActivity 가져오기
+     *
+     * @param context Context
+     * @return LoginActivity Intent
+     */
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, SignInActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +83,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         activityComponent().inject(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mLoginPresenter.attachView(this);
+        mSignInPresenter.attachView(this);
         initGoogleLogin();
         initFacebookLogin();
         initFirebaseAuth();
@@ -73,21 +91,18 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     private void initFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
-
-        // [START auth_state_listener]
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
+                Timber.i("user " + user.getProviderId());
                 // User is signed in
-                Timber.i("onAuthStateChanged:signed_in:" + user.getUid());
+                mSignInPresenter.login(user, mLoginType);
             } else {
                 // User is signed out
                 Timber.i("onAuthStateChanged:signed_out");
+                showProgress(false);
             }
-            // [START_EXCLUDE]
-            updateUI(user);
-            // [END_EXCLUDE]
+
         };
     }
 
@@ -112,9 +127,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
         mCallbackManager = CallbackManager.Factory.create();
 
-        mSibFacebook.setReadPermissions("email", "public_profile");
-
-        mSibFacebook.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Timber.d("facebook:onSuccess:" + loginResult);
@@ -124,30 +137,21 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
             @Override
             public void onCancel() {
                 Timber.d("facebook:onCancel");
-                // [START_EXCLUDE]
-                updateUI(null);
-                // [END_EXCLUDE]
             }
 
             @Override
             public void onError(FacebookException error) {
                 Timber.d("facebook:onError", error);
-                // [START_EXCLUDE]
-                updateUI(null);
-                // [END_EXCLUDE]
             }
         });
     }
 
-    // [START on_start_add_listener]
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-    // [END on_start_add_listener]
 
-    // [START on_stop_remove_listener]
     @Override
     public void onStop() {
         super.onStop();
@@ -159,7 +163,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mLoginPresenter.detachView();
+        mSignInPresenter.detachView();
     }
 
     @Override
@@ -175,58 +179,52 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed, update UI appropriately
-                // [START_EXCLUDE]
-                updateUI(null);
-                // [END_EXCLUDE]
+                Timber.d("facebook:onCancel");
             }
         }
     }
 
-    // [START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Timber.i("firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
-        showProgressDialog();
-        // [END_EXCLUDE]
+        showProgress(true);
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
+                            mLoginType = LOGIN_TYPE_GOOGLE;
                             Timber.d("signInWithCredential:onComplete:" + task.isSuccessful());
-
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 Timber.w("signInWithCredential", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+
+                                Toast.makeText(SignInActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                showProgress(false);
                             }
-                            // [START_EXCLUDE]
-                            hideProgressDialog();
-                            // [END_EXCLUDE]
                         }
                 );
     }
-    // [END auth_with_google]
 
-    // [START signin]
     private void signInGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-    // [END signin]
 
-    // [START auth_with_facebook]
+    private void signInFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this,
+                Arrays.asList("email", "public_profile"));
+    }
+
     private void handleFacebookAccessToken(AccessToken token) {
         Timber.d("handleFacebookAccessToken:" + token);
-        // [START_EXCLUDE silent]
-        showProgressDialog();
-        // [END_EXCLUDE]
+        showProgress(true);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
+                            mLoginType = LOGIN_TYPE_FACEBOOK;
                             Timber.d("signInWithCredential:onComplete:" + task.isSuccessful());
 
                             // If sign in fails, display a message to the user. If sign in succeeds
@@ -234,25 +232,32 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                             // signed in user can be handled in the listener.
                             if (!task.isSuccessful()) {
                                 Timber.w("signInWithCredential", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                Toast.makeText(SignInActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                showProgress(false);
                             }
-                            // [START_EXCLUDE]
-                            hideProgressDialog();
-                            // [END_EXCLUDE]
                         }
                 );
     }
 
-    private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
-        if (user != null) {
+    @Override
+    public void showProgress(boolean isShow) {
+        if (isShow) {
+            showProgressDialog();
         } else {
+            hideProgressDialog();
         }
     }
 
-    @OnClick(R.id.sib_google)
-    public void onClick() {
-        signInGoogle();
+    @OnClick({R.id.sib_google, R.id.sib_facebook})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.sib_google:
+                signInGoogle();
+                break;
+            case R.id.sib_facebook:
+                signInFacebook();
+                break;
+        }
     }
 }

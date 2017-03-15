@@ -12,9 +12,7 @@ import javax.inject.Singleton;
 @Singleton
 public class PreferencesHelper {
 
-    private static final String PREF_FILE_NAME = "tablet_app_pref_file";
-    private static final String PREF_KEY_APP_ID = "pref_key_app_id";
-    private static final String PREF_CLIENT_ID = "pref_client_id";
+    private static final String PREF_FILE_NAME = "raisal_pref_file";
     private static final String PREF_KEY_ACCESS_TOKEN = "pref_key_access_token";
 
     private final SharedPreferencesCache mPref;
@@ -36,23 +34,4 @@ public class PreferencesHelper {
     public String getAccessToken() {
         return mPref.getString(PREF_KEY_ACCESS_TOKEN);
     }
-
-    public void putClientId(String clientId) {
-        mPref.put(PREF_CLIENT_ID, clientId);
-    }
-
-    @Nullable
-    public String getClientId() {
-        return mPref.getString(PREF_CLIENT_ID);
-    }
-
-    public void putAppId(String appId) {
-        mPref.put(PREF_KEY_APP_ID, appId);
-    }
-
-    @Nullable
-    public String getAppId() {
-        return mPref.getString(PREF_KEY_APP_ID);
-    }
-
 }

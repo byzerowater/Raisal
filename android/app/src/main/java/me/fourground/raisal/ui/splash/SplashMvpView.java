@@ -5,6 +5,4 @@ import me.fourground.raisal.ui.base.MvpView;
 
 public interface SplashMvpView extends MvpView {
 
-    void showUpdateDialog(String version);
-
 }

@@ -8,4 +8,6 @@ package me.fourground.raisal.ui.base;
  */
 public interface MvpView {
 
+    void showProgress(boolean isShow);
+
 }

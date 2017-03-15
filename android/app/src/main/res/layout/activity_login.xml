@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="me.fourground.raisal.ui.login.LoginActivity">
+    tools:context="me.fourground.raisal.ui.signin.SignInActivity">
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sib_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.facebook.login.widget.LoginButton
+    <Button
         android:id="@+id/sib_facebook"
+        android:text="facebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"/>
