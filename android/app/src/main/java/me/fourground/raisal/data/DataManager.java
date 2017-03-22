@@ -12,8 +12,8 @@ import rx.Observable;
 
 /**
  * Created by YoungSoo Kim on 2016-06-23.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * 데이터 매니져 데이터 접근 및 관리
  */
 @Singleton

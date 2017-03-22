@@ -17,7 +17,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -37,19 +36,19 @@ import me.fourground.raisal.ui.base.BaseActivity;
 import timber.log.Timber;
 
 /**
- * Created by YoungSoo Kim on 2016-07-29.
- * company Ltd
- * youngsoo.kim@yap.net
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class SignInActivity extends BaseActivity implements SignInMvpView {
 
-    private static final int RC_SIGN_IN = 9001;
+    private static final int REQUEST_SIGN_IN = 0x15;
 
     private static final String LOGIN_TYPE_GOOGLE = "G";
     private static final String LOGIN_TYPE_FACEBOOK = "F";
 
     @BindView(R.id.sib_google)
-    SignInButton mSibGoogle;
+    Button mSibGoogle;
 
     @BindView(R.id.sib_facebook)
     Button mSibFacebook;
@@ -107,8 +106,6 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     }
 
     private void initGoogleLogin() {
-        mSibGoogle.setSize(SignInButton.SIZE_WIDE);
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -171,7 +168,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == REQUEST_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
@@ -209,7 +206,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     private void signInGoogle() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, REQUEST_SIGN_IN);
     }
 
     private void signInFacebook() {

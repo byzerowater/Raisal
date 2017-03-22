@@ -2,8 +2,8 @@ package me.fourground.raisal.data.model;
 
 /**
  * Created by YoungSoo Kim on 2017-03-15.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class SignInRequest {
 

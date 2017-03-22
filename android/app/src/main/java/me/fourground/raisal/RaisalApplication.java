@@ -19,6 +19,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
+/**
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
+ */
 public class RaisalApplication extends Application  {
 
     @Inject

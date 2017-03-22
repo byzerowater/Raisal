@@ -10,8 +10,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by YoungSoo Kim on 2016-08-01.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class AESUtil {
 

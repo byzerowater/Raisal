@@ -14,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by YoungSoo Kim on 2016-06-23.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * Retrofit 통신 환경 설정
  */
 public class NetworkServiceFactory {

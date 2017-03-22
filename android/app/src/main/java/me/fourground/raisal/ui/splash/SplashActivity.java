@@ -1,6 +1,7 @@
 package me.fourground.raisal.ui.splash;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
@@ -11,9 +12,9 @@ import butterknife.ButterKnife;
 import me.fourground.raisal.ui.signin.SignInActivity;
 
 /**
- * Created by YoungSoo Kim on 2016-07-29.
- * company Ltd
- * youngsoo.kim@yap.net
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class SplashActivity extends BaseActivity implements SplashMvpView {
 
@@ -27,8 +28,13 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         mSplashPresenter.attachView(this);
+    }
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         startActivity(SignInActivity.getStartIntent(this));
+        finish();
     }
 
     @Override

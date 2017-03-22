@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 /**
  * Created by YoungSoo Kim on 2016-06-17.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * 문자열 유틸
  */
 public class StringUtil {

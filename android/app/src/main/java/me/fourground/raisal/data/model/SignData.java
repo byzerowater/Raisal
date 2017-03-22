@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by YoungSoo Kim on 2016-07-29.
- * company Ltd
- * youngsoo.kim@yap.net
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class SignData implements Parcelable {
 

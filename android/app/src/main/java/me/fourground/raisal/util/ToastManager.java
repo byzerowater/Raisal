@@ -7,8 +7,8 @@ import me.fourground.raisal.injection.ApplicationContext;
 
 /**
  * Created by YoungSoo Kim on 2016-08-01.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class ToastManager {
     private Context mContext = null;

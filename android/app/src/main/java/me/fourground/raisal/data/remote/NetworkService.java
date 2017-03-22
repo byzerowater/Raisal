@@ -8,8 +8,8 @@ import rx.Observable;
 
 /**
  * Created by YoungSoo Kim on 2016-06-23.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * Retrofit 인터페이스 정의 서버 쿼리
  */
 public interface NetworkService {

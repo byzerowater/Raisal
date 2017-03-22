@@ -3,7 +3,11 @@ package me.fourground.raisal.util;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-
+/**
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
+ */
 public final class DisplayMetricsUtil {
 
     /**

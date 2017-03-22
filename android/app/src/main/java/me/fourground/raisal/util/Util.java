@@ -1,9 +1,9 @@
 package me.fourground.raisal.util;
 
 /**
- * Created by YoungSoo Kim on 2016-07-29.
- * company Ltd
- * youngsoo.kim@yap.net
+ * Created by YoungSoo Kim on 2017-03-22.
+ * 4ground Ltd
+ * byzerowater@gmail.com
  */
 public class Util {
     // Build API authorization string from a given access token.

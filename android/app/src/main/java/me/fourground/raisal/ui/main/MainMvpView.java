@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.signin;
+package me.fourground.raisal.ui.main;
 
 
 import me.fourground.raisal.ui.base.MvpView;
@@ -8,5 +8,5 @@ import me.fourground.raisal.ui.base.MvpView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public interface SignInMvpView extends MvpView {
+public interface MainMvpView extends MvpView {
 }

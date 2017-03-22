@@ -12,8 +12,8 @@ import javax.inject.Singleton;
 
 /**
  * Created by YoungSoo Kim on 2016-06-17.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * 이미지 로드 유틸
  */
 @Singleton
