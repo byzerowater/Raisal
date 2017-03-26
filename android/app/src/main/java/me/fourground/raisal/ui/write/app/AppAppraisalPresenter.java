@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.signin;
+package me.fourground.raisal.ui.write.app;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -19,19 +19,19 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class SignInPresenter implements Presenter<SignInMvpView> {
+public class AppAppraisalPresenter implements Presenter<AppAppraisalMvpView> {
 
     private final DataManager mDataManager;
-    private SignInMvpView mMvpView;
+    private AppAppraisalMvpView mMvpView;
     private Subscription mSubscription;
 
     @Inject
-    public SignInPresenter(DataManager dataManager) {
+    public AppAppraisalPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
     @Override
-    public void attachView(SignInMvpView mvpView) {
+    public void attachView(AppAppraisalMvpView mvpView) {
         mMvpView = mvpView;
     }
 
@@ -53,7 +53,6 @@ public class SignInPresenter implements Presenter<SignInMvpView> {
                     @Override
                     public void onCompleted() {
                         mMvpView.showProgress(false);
-                        mMvpView.onSignIn();
                     }
 
                     @Override

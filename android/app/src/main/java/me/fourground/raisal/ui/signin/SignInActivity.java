@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.main.MainActivity;
 import timber.log.Timber;
 
 /**
@@ -256,5 +257,11 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
                 signInFacebook();
                 break;
         }
+    }
+
+    @Override
+    public void onSignIn() {
+        startActivity(MainActivity.getStartIntent(SignInActivity.this));
+        finish();
     }
 }
