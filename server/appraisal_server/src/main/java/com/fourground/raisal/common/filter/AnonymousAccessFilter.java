@@ -26,13 +26,13 @@ public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 		if(!isAnnonyAccessible /*&& userContainer.isAnonymous()*/) {
 			// authorizing api
 			String authKey = request.getHeader("authKey");
-			if(authKey == null) {
-				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
-				System.out.println(request.getRequestURI());
-				throw new AccessDeniedException(msg);
-			} else {
-				// next
-			}
+//			if(authKey == null) {
+//				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
+//				System.out.println(request.getRequestURI());
+//				throw new AccessDeniedException(msg);
+//			} else {
+//				// next
+//			}
 		} else {
 			// non-authorizing api
 			// next

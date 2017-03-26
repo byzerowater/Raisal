@@ -1,7 +1,10 @@
 package com.fourground.raisal.user.ctl;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fourground.raisal.common.ctl.BaseRestController;
 import com.fourground.raisal.common.dto.RequestBodyVo;
 import com.fourground.raisal.user.dto.AuthInfoVo;
+import com.fourground.raisal.user.svc.AuthManagerService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +25,9 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping(value="/api/auth", produces= MediaType.APPLICATION_JSON_VALUE)
 public class LoginRestController extends BaseRestController {
+	
+	@Autowired
+	private AuthManagerService authManageService;
 
 	@ApiOperation(value="로그인 API"
 			,notes="1>인증키 발급"
@@ -30,14 +37,16 @@ public class LoginRestController extends BaseRestController {
 			HttpServletRequest request
 			,@ApiParam(name="body",value="\"userUid\":\"채널사고유UID\","+BR+"\"channelCode\":\"채널사코드(G,F)\","+BR+"\"email\":\"등록이메일\""+BR) @RequestBody RequestBodyVo requestBody)
 	{
-		AuthInfoVo authInfoVo = new AuthInfoVo();
+		Map<String, Object> parameter = requestBody.getBody();
 		
-		authInfoVo.setAuthKey("L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6");
-		authInfoVo.setChannelCode((String)requestBody.getBody().get("chnCode"));
-		authInfoVo.setEmail("project4ground@gmail.com");
-		authInfoVo.setNickName("멋진남자");
-		authInfoVo.setRegAppCount("3");
-		authInfoVo.setUserId("project4ground-random");
+		AuthInfoVo authInfoVo = authManageService.generateAuthKeyForUser(parameter);
+		
+//		authInfoVo.setAuthKey("L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6");
+//		authInfoVo.setChannelCode((String)requestBody.getBody().get("chnCode"));
+//		authInfoVo.setEmail("project4ground@gmail.com");
+//		authInfoVo.setNickName("멋진남자");
+//		authInfoVo.setRegAppCount("3");
+//		authInfoVo.setUserId("project4ground-random");
 		
 		return success(authInfoVo);
 	}
