@@ -22,9 +22,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Inject
     MainPresenter mMainPresenter;
-
     @BindView(R.id.rv_review)
-    RecyclerView mRvReview;
+    RecyclerView rvReview;
+
 
     /**
      * MainActivity 가져오기
