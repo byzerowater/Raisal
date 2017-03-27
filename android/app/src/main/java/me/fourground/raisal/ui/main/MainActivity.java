@@ -24,6 +24,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     MainPresenter mMainPresenter;
     @BindView(R.id.rv_review)
     RecyclerView rvReview;
+    @Inject
+    ReviewAdapter mReviewAdapter;
 
 
     /**
