@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.ui.base.BasePresenter;
 import me.fourground.raisal.ui.base.Presenter;
 import rx.Subscriber;
 import rx.Subscription;
@@ -19,10 +20,9 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ReviewPresenter implements Presenter<ReviewMvpView> {
+public class ReviewPresenter extends BasePresenter<ReviewMvpView> {
 
     private final DataManager mDataManager;
-    private ReviewMvpView mMvpView;
     private Subscription mSubscription;
 
     @Inject
@@ -31,18 +31,13 @@ public class ReviewPresenter implements Presenter<ReviewMvpView> {
     }
 
     @Override
-    public void attachView(ReviewMvpView mvpView) {
-        mMvpView = mvpView;
-    }
-
-    @Override
     public void detachView() {
-        mMvpView = null;
+      super.detachView();
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
     public void login(FirebaseUser user, String chnCode) {
-        mMvpView.showProgress(true);
+        getMvpView().showProgress(true);
         mSubscription = mDataManager.signIn(new SignInRequest(
                 user.getUid(),
                 user.getEmail(),
@@ -52,13 +47,13 @@ public class ReviewPresenter implements Presenter<ReviewMvpView> {
                 .subscribe(new Subscriber<SignData>() {
                     @Override
                     public void onCompleted() {
-                        mMvpView.showProgress(false);
+                        getMvpView().showProgress(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Timber.e(e);
-                        mMvpView.showProgress(false);
+                        getMvpView().showProgress(false);
                     }
 
                     @Override
