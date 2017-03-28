@@ -8,6 +8,7 @@ import me.fourground.raisal.ui.mypage.MyPageActivity;
 import me.fourground.raisal.ui.signin.SignInActivity;
 import me.fourground.raisal.ui.splash.SplashActivity;
 import me.fourground.raisal.ui.write.app.AppAppraisalActivity;
+import me.fourground.raisal.ui.write.app.AppAppraisalCompleteActivity;
 import me.fourground.raisal.ui.write.review.ReviewActivity;
 
 @PerActivity
@@ -24,5 +25,7 @@ public interface ActivityComponent {
     void inject(ReviewActivity reviewActivity);
 
     void inject(MyPageActivity myPageActivity);
+
+    void inject(AppAppraisalCompleteActivity appAppraisalCompleteActivity);
 }
 

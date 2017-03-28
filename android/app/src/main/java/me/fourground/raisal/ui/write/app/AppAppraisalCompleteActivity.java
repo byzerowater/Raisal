@@ -3,10 +3,8 @@ package me.fourground.raisal.ui.write.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import javax.inject.Inject;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,20 +17,24 @@ import me.fourground.raisal.ui.base.BaseActivity;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class AppAppraisalActivity extends BaseActivity implements AppAppraisalMvpView {
+public class AppAppraisalCompleteActivity extends BaseActivity {
+
+    private static final String EXTRA_APPRAISAL_DATE = "extra_appraisal_date";
 
 
-    @Inject
-    AppAppraisalPresenter mAppAppraisalPresenter;
+    @BindView(R.id.tv_date)
+    TextView mTvDate;
 
     /**
-     * MainActivity 가져오기
+     * AppAppraisalCompleteActivity 가져오기
      *
      * @param context Context
+     * @param date 평가기간
      * @return MainActivity Intent
      */
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, AppAppraisalActivity.class);
+    public static Intent getStartIntent(Context context, String date) {
+        Intent intent = new Intent(context, AppAppraisalCompleteActivity.class);
+        intent.putExtra(EXTRA_APPRAISAL_DATE, date);
         return intent;
     }
 
@@ -40,28 +42,19 @@ public class AppAppraisalActivity extends BaseActivity implements AppAppraisalMv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_app_appraisal);
+        setContentView(R.layout.activity_app_appraisal_complete);
         ButterKnife.bind(this);
-        mAppAppraisalPresenter.attachView(this);
+
+        String date = getIntent().getStringExtra(EXTRA_APPRAISAL_DATE);
+        mTvDate.setText(date);
     }
 
-    @Override
-    public void showProgress(boolean isShow) {
-        if (isShow) {
-            showProgressDialog();
-        } else {
-            hideProgressDialog();
-        }
-    }
-
-    @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})
+    @OnClick({R.id.btn_write, R.id.btn_main})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_pre:
+            case R.id.btn_write:
                 break;
-            case R.id.btn_cancel:
-                break;
-            case R.id.btn_confirm:
+            case R.id.btn_main:
                 break;
         }
     }

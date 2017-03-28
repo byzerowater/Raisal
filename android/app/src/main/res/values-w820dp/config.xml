@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="recycler_linear_horizontal">0</integer>
+    <integer name="recycler_linear_vertical">1</integer>
+</resources>
