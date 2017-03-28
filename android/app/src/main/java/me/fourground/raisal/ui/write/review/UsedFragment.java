@@ -1,16 +1,16 @@
-package me.fourground.raisal.ui.write.app;
+package me.fourground.raisal.ui.write.review;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
 
@@ -19,30 +19,37 @@ import me.fourground.raisal.R;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class NameFragment extends Fragment {
+public class UsedFragment extends Fragment {
 
 
-    @BindView(R.id.et_name)
-    TextInputEditText etName;
-    @BindView(R.id.til_name)
-    TextInputLayout tilName;
-    @BindView(R.id.et_play_store_url)
-    TextInputEditText etPlayStoreUrl;
-    @BindView(R.id.til_play_store_url)
-    TextInputLayout tilPlayStoreUrl;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_store)
+    TextView mTvStore;
     Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wirte_app_name, container, false);
+        View view = inflater.inflate(R.layout.fragment_wirte_review_used, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R.id.rl_btn_used, R.id.rl_btn_first})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_btn_used:
+                break;
+            case R.id.rl_btn_first:
+                break;
+        }
     }
 }

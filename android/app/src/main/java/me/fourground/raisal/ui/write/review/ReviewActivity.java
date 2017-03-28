@@ -3,12 +3,12 @@ package me.fourground.raisal.ui.write.review;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 
@@ -23,8 +23,6 @@ public class ReviewActivity extends BaseActivity implements ReviewMvpView {
     @Inject
     ReviewPresenter mReviewPresenter;
 
-    @BindView(R.id.rv_review)
-    RecyclerView mRvReview;
 
     /**
      * MainActivity 가져오기
@@ -41,7 +39,7 @@ public class ReviewActivity extends BaseActivity implements ReviewMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_review);
         ButterKnife.bind(this);
         mReviewPresenter.attachView(this);
     }
@@ -52,6 +50,18 @@ public class ReviewActivity extends BaseActivity implements ReviewMvpView {
             showProgressDialog();
         } else {
             hideProgressDialog();
+        }
+    }
+
+    @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_pre:
+                break;
+            case R.id.btn_cancel:
+                break;
+            case R.id.btn_confirm:
+                break;
         }
     }
 }
