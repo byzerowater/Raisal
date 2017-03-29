@@ -17,7 +17,7 @@ import me.fourground.raisal.ui.base.BaseActivity;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class AppAppraisalCompleteActivity extends BaseActivity {
+public class WriteAppAppraisalCompleteActivity extends BaseActivity {
 
     private static final String EXTRA_APPRAISAL_DATE = "extra_appraisal_date";
 
@@ -33,7 +33,7 @@ public class AppAppraisalCompleteActivity extends BaseActivity {
      * @return MainActivity Intent
      */
     public static Intent getStartIntent(Context context, String date) {
-        Intent intent = new Intent(context, AppAppraisalCompleteActivity.class);
+        Intent intent = new Intent(context, WriteAppAppraisalCompleteActivity.class);
         intent.putExtra(EXTRA_APPRAISAL_DATE, date);
         return intent;
     }
@@ -42,7 +42,7 @@ public class AppAppraisalCompleteActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_app_appraisal_complete);
+        setContentView(R.layout.activity_write_app_appraisal_complete);
         ButterKnife.bind(this);
 
         String date = getIntent().getStringExtra(EXTRA_APPRAISAL_DATE);

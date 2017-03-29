@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.write.review;
+package me.fourground.raisal.ui.mypage.app;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -8,7 +8,6 @@ import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
 import me.fourground.raisal.ui.base.BasePresenter;
-import me.fourground.raisal.ui.base.Presenter;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,19 +19,20 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ReviewPresenter extends BasePresenter<ReviewMvpView> {
+public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
     @Inject
-    public ReviewPresenter(DataManager dataManager) {
+    public MyAppPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
+
     @Override
     public void detachView() {
-      super.detachView();
+        super.detachView();
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 

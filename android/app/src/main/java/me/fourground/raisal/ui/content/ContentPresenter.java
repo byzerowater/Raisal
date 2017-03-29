@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.write.app;
+package me.fourground.raisal.ui.content;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -8,7 +8,6 @@ import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
 import me.fourground.raisal.ui.base.BasePresenter;
-import me.fourground.raisal.ui.base.Presenter;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -20,13 +19,13 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class AppAppraisalPresenter extends BasePresenter<AppAppraisalMvpView> {
+public class ContentPresenter extends BasePresenter<ContentMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
     @Inject
-    public AppAppraisalPresenter(DataManager dataManager) {
+    public ContentPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 

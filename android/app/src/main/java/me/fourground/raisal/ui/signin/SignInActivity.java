@@ -67,10 +67,10 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     private String mLoginType = null;
 
     /**
-     * LoginActivity 가져오기
+     * SignInActivity 가져오기
      *
      * @param context Context
-     * @return LoginActivity Intent
+     * @return SignInActivity Intent
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);

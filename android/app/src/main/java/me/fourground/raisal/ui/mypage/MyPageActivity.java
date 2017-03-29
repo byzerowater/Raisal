@@ -14,6 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.mypage.app.MyAppActivity;
+import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -26,7 +28,7 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
     @Inject
     MyPagePresenter mMyPagePresenter;
 
-    @BindView(R.id.rv_review)
+    @BindView(R.id.rv_app)
     RecyclerView mRvReview;
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
@@ -66,8 +68,10 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
             case R.id.btn_change_nickname:
                 break;
             case R.id.rl_btn_my_app:
+                startActivity(MyAppActivity.getStartIntent(MyPageActivity.this));
                 break;
             case R.id.rl_btn_my_review:
+                startActivity(MyReviewActivity.getStartIntent(MyPageActivity.this));
                 break;
         }
     }

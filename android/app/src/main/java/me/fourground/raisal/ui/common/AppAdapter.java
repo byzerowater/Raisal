@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.main;
+package me.fourground.raisal.ui.common;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -25,32 +25,32 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
  * Created by YoungSoo Kim on 2017-03-22.
  * 4ground Ltd
  * byzerowater@gmail.com
- * 리뷰 Adapter
+ * 앱 평가 Adapter
  */
-public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_EVALUATING = 1;
     private static final int VIEW_TYPE_END = 2;
 
-    interface OnReviewItemClickListener {
-        void onReviewItemClick(String reviewItem);
+    interface OnAppItemClickListener {
+        void onAppItemClick(String appItem);
     }
 
     /**
-     * 리뷰 데이터들
+     * 앱 평가 데이터들
      */
-    private List<String> mReviewDatas;
+    private List<String> mAppDatas;
     /**
-     * 리뷰 아이템 클릭 리스너
+     * 앱 평가 아이템 클릭 리스너
      */
-    private OnReviewItemClickListener mOnOrderItemClickListener;
+    private OnAppItemClickListener mOnOrderItemClickListener;
 
     /**
-     * 리뷰 Adapter
+     * 앱 평가 Adapter
      */
     @Inject
-    public ReviewAdapter() {
-        this.mReviewDatas = new ArrayList<>();
+    public AppAdapter() {
+        this.mAppDatas = new ArrayList<>();
     }
 
 
@@ -59,10 +59,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         LayoutInflater inflate = LayoutInflater.from(parent.getContext());
         ViewHolder viewHolder = null;
         if (viewType == VIEW_TYPE_EVALUATING) {
-            viewHolder = new ReviewEvaluatingHolder(
+            viewHolder = new AppEvaluatingHolder(
                     inflate.inflate(R.layout.item_review_evaluating, parent, false));
         } else if (viewType == VIEW_TYPE_END) {
-            viewHolder = new ReviewEndHolder(
+            viewHolder = new AppEndHolder(
                     inflate.inflate(R.layout.item_review_end, parent, false));
         }
 
@@ -80,18 +80,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        String s = mReviewDatas.get(position);
+        String s = mAppDatas.get(position);
         holder.itemView.setOnClickListener(
                 view -> {
                     if (mOnOrderItemClickListener != null) {
-                        mOnOrderItemClickListener.onReviewItemClick(s);
+                        mOnOrderItemClickListener.onAppItemClick(s);
                     }
                 });
     }
 
     @Override
     public int getItemCount() {
-        return ListUtil.getListCount(mReviewDatas);
+        return ListUtil.getListCount(mAppDatas);
     }
 
     public String getItem(int position) {
@@ -99,17 +99,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         String item = null;
 
         if (itemCount > position && position < 0) {
-            item = mReviewDatas.get(position);
+            item = mAppDatas.get(position);
         }
 
         return item;
     }
 
-    public void setReviewDatas(List<String> reviewDatas) {
-        mReviewDatas = reviewDatas;
+    public void setAppDatas(List<String> appDatas) {
+        mAppDatas = appDatas;
     }
 
-    public void setOnOrderItemClickListener(OnReviewItemClickListener onOrderItemClickListener) {
+    public void setOnOrderItemClickListener(OnAppItemClickListener onOrderItemClickListener) {
         mOnOrderItemClickListener = onOrderItemClickListener;
     }
 
@@ -117,7 +117,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     /**
      * 리뷰중 Holder
      */
-    class ReviewEvaluatingHolder extends ViewHolder {
+    static class AppEvaluatingHolder extends ViewHolder {
         @BindView(R.id.tv_name)
         TextView mTvName;
         @BindView(R.id.tv_store)
@@ -129,7 +129,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.btn_join_review)
         Button mBtnJoinReview;
 
-        public ReviewEvaluatingHolder(View itemView) {
+        public AppEvaluatingHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -138,7 +138,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     /**
      * 리뷰 종료 Holder
      */
-    class ReviewEndHolder extends ViewHolder {
+    static class AppEndHolder extends ViewHolder {
         @BindView(R.id.tv_name)
         TextView mTvName;
         @BindView(R.id.tv_store)
@@ -154,7 +154,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.tv_date)
         TextView mTvDate;
 
-        public ReviewEndHolder(View itemView) {
+        public AppEndHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

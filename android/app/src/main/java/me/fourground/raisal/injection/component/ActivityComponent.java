@@ -3,13 +3,16 @@ package me.fourground.raisal.injection.component;
 import dagger.Component;
 import me.fourground.raisal.injection.PerActivity;
 import me.fourground.raisal.injection.module.ActivityModule;
+import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.main.MainActivity;
 import me.fourground.raisal.ui.mypage.MyPageActivity;
+import me.fourground.raisal.ui.mypage.app.MyAppActivity;
+import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 import me.fourground.raisal.ui.signin.SignInActivity;
 import me.fourground.raisal.ui.splash.SplashActivity;
-import me.fourground.raisal.ui.write.app.AppAppraisalActivity;
-import me.fourground.raisal.ui.write.app.AppAppraisalCompleteActivity;
-import me.fourground.raisal.ui.write.review.ReviewActivity;
+import me.fourground.raisal.ui.write.app.WriteWriteAppAppraisalActivity;
+import me.fourground.raisal.ui.write.app.WriteAppAppraisalCompleteActivity;
+import me.fourground.raisal.ui.write.review.WriteWriteReviewActivity;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
@@ -20,12 +23,18 @@ public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
 
-    void inject(AppAppraisalActivity appAppraisalActivity);
+    void inject(WriteWriteAppAppraisalActivity writeAppAppraisalActivity);
 
-    void inject(ReviewActivity reviewActivity);
+    void inject(WriteWriteReviewActivity writeReviewActivity);
 
     void inject(MyPageActivity myPageActivity);
 
-    void inject(AppAppraisalCompleteActivity appAppraisalCompleteActivity);
+    void inject(WriteAppAppraisalCompleteActivity writeAppAppraisalCompleteActivity);
+
+    void inject(MyReviewActivity myReviewActivity);
+
+    void inject(MyAppActivity myAppActivity);
+
+    void inject(ContentActivity contentActivity);
 }
 

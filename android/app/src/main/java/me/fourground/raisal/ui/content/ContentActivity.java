@@ -1,8 +1,9 @@
-package me.fourground.raisal.ui.main;
+package me.fourground.raisal.ui.content;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -10,7 +11,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
-import me.fourground.raisal.ui.common.AppAdapter;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
@@ -18,24 +18,32 @@ import me.fourground.raisal.ui.views.LinearRecyclerView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class MainActivity extends BaseActivity implements MainMvpView {
+public class ContentActivity extends BaseActivity implements ContentMvpView {
 
 
     @Inject
-    MainPresenter mMainPresenter;
+    ContentPresenter mContentPresenter;
     @Inject
-    AppAdapter mAppAdapter;
-    @BindView(R.id.rv_app)
-    LinearRecyclerView mRvApp;
+    ReviewAdapter mReviewAdapter;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_store)
+    TextView mTvStore;
+    @BindView(R.id.tv_state)
+    TextView mTvState;
+    @BindView(R.id.tv_date)
+    TextView mTvDate;
+    @BindView(R.id.rv_review)
+    LinearRecyclerView mRvReview;
 
     /**
-     * MainActivity 가져오기
+     * ContentActivity 가져오기
      *
      * @param context Context
-     * @return MainActivity Intent
+     * @return ContentActivity Intent
      */
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, ContentActivity.class);
         return intent;
     }
 
@@ -43,9 +51,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_content);
         ButterKnife.bind(this);
-        mMainPresenter.attachView(this);
+        mContentPresenter.attachView(this);
     }
 
     @Override

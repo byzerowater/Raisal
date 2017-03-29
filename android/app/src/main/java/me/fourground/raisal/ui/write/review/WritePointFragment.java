@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.write.app;
+package me.fourground.raisal.ui.write.review;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,36 +9,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
+import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
  * Created by YoungSoo Kim on 2017-03-26.
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class NameFragment extends Fragment {
+public class WritePointFragment extends Fragment {
 
 
-    @BindView(R.id.et_name)
-    TextInputEditText etName;
-    @BindView(R.id.til_name)
-    TextInputLayout tilName;
+    @BindView(R.id.rv_points)
+    LinearRecyclerView mRvPoints;
     @BindView(R.id.et_play_store_url)
-    TextInputEditText etPlayStoreUrl;
+    TextInputEditText mEtPlayStoreUrl;
     @BindView(R.id.til_play_store_url)
-    TextInputLayout tilPlayStoreUrl;
+    TextInputLayout mTilPlayStoreUrl;
+
+    @Inject
+    WritePointAdapter mWritePointAdapter;
+
     Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wirte_app_name, container, false);
+        View view = inflater.inflate(R.layout.fragment_wirte_review_point, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
+
 
     @Override
     public void onDestroyView() {

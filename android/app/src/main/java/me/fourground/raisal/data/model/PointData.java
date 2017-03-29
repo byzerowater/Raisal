@@ -9,13 +9,13 @@ public class PointData {
     /**
      * contents : 4.8
      * design : 4.8
-     * durability : 4.8
+     * satisfaction : 4.8
      * useful : 4.8
      */
 
     private double contents;
     private double design;
-    private double durability;
+    private double satisfaction;
     private double useful;
 
     public double getContents() {
@@ -34,12 +34,12 @@ public class PointData {
         this.design = design;
     }
 
-    public double getDurability() {
-        return durability;
+    public double getSatisfaction() {
+        return satisfaction;
     }
 
-    public void setDurability(double durability) {
-        this.durability = durability;
+    public void setSatisfaction(double satisfaction) {
+        this.satisfaction = satisfaction;
     }
 
     public double getUseful() {

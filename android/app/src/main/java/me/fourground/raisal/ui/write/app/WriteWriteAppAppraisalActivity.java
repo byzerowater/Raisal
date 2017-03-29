@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.write.review;
+package me.fourground.raisal.ui.write.app;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,21 +17,20 @@ import me.fourground.raisal.ui.base.BaseActivity;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ReviewActivity extends BaseActivity implements ReviewMvpView {
+public class WriteWriteAppAppraisalActivity extends BaseActivity implements WriteAppAppraisalMvpView {
 
 
     @Inject
-    ReviewPresenter mReviewPresenter;
-
+    WriteAppAppraisalPresenter mWriteAppAppraisalPresenter;
 
     /**
-     * MainActivity 가져오기
+     * WriteWriteAppAppraisalActivity 가져오기
      *
      * @param context Context
-     * @return MainActivity Intent
+     * @return WriteWriteAppAppraisalActivity Intent
      */
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, ReviewActivity.class);
+        Intent intent = new Intent(context, WriteWriteAppAppraisalActivity.class);
         return intent;
     }
 
@@ -39,9 +38,9 @@ public class ReviewActivity extends BaseActivity implements ReviewMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.activity_write_app_appraisal);
         ButterKnife.bind(this);
-        mReviewPresenter.attachView(this);
+        mWriteAppAppraisalPresenter.attachView(this);
     }
 
     @Override

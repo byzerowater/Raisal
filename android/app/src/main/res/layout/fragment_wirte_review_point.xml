@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              tools:context=".ui.write.review.PointFragment">
+              tools:context=".ui.write.review.WritePointFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -26,7 +26,7 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
  * byzerowater@gmail.com
  * 점수 Adapter
  */
-public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointHolder> {
+public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.PointHolder> {
 
     /**
      * 리뷰 데이터들
@@ -37,7 +37,7 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointHolder>
      * 리뷰 Adapter
      */
     @Inject
-    public PointAdapter() {
+    public WritePointAdapter() {
         this.mPointDatas = new ArrayList<>();
     }
 
@@ -78,7 +78,7 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.PointHolder>
     /**
      * 점수 Holder
      */
-    class PointHolder extends ViewHolder {
+    static class PointHolder extends ViewHolder {
 
         @BindView(R.id.tv_title)
         TextView mTvTitle;

@@ -8,5 +8,5 @@ import me.fourground.raisal.ui.base.MvpView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public interface ReviewMvpView extends MvpView {
+public interface WriteReviewMvpView extends MvpView {
 }
