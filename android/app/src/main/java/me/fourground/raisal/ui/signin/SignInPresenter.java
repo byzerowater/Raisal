@@ -37,12 +37,12 @@ public class SignInPresenter extends BasePresenter<SignInMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void login(FirebaseUser user, String chnCode) {
+    public void login(FirebaseUser user, String channelCode) {
         getMvpView().showProgress(true);
         mSubscription = mDataManager.signIn(new SignInRequest(
                 user.getUid(),
                 user.getEmail(),
-                chnCode))
+                channelCode))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SignData>() {

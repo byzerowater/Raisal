@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 
@@ -25,12 +28,14 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
 
     @BindView(R.id.rv_review)
     RecyclerView mRvReview;
+    @BindView(R.id.tv_nickname)
+    TextView mTvNickname;
 
     /**
-     * MainActivity 가져오기
+     * MyPageActivity 가져오기
      *
      * @param context Context
-     * @return MainActivity Intent
+     * @return MyPageActivity Intent
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MyPageActivity.class);
@@ -41,7 +46,7 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_page);
         ButterKnife.bind(this);
         mMyPagePresenter.attachView(this);
     }
@@ -52,6 +57,18 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
             showProgressDialog();
         } else {
             hideProgressDialog();
+        }
+    }
+
+    @OnClick({R.id.btn_change_nickname, R.id.rl_btn_my_app, R.id.rl_btn_my_review})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_change_nickname:
+                break;
+            case R.id.rl_btn_my_app:
+                break;
+            case R.id.rl_btn_my_review:
+                break;
         }
     }
 }

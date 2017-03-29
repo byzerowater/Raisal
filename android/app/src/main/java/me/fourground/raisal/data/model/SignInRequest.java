@@ -18,12 +18,12 @@ public class SignInRequest {
     /**
      * 채널사코드(G,F)
      */
-    private String chnCode;
+    private String channelCode;
 
-    public SignInRequest(String userUid, String email, String chnCode) {
+    public SignInRequest(String userUid, String email, String channelCode) {
         this.userUid = userUid;
         this.email = email;
-        this.chnCode = chnCode;
+        this.channelCode = channelCode;
     }
 
     public String getEmail() {
@@ -42,11 +42,11 @@ public class SignInRequest {
         this.userUid = userUid;
     }
 
-    public String getChnCode() {
-        return chnCode;
+    public String getChannelCode() {
+        return channelCode;
     }
 
-    public void setChnCode(String chnCode) {
-        this.chnCode = chnCode;
+    public void setChannelCode(String channelCode) {
+        this.channelCode = channelCode;
     }
 }
