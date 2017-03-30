@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -22,6 +23,8 @@ public class WriteWriteAppAppraisalActivity extends BaseActivity implements Writ
 
     @Inject
     WriteAppAppraisalPresenter mWriteAppAppraisalPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
 
     /**
      * WriteWriteAppAppraisalActivity 가져오기
@@ -44,12 +47,23 @@ public class WriteWriteAppAppraisalActivity extends BaseActivity implements Writ
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWriteAppAppraisalPresenter.detachView();
+    }
+
+    @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            showProgressDialog();
+            mLoadingDialog.show();
         } else {
-            hideProgressDialog();
+            mLoadingDialog.hide();
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 
     @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})

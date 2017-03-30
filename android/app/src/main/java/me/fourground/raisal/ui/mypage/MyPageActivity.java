@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.mypage.app.MyAppActivity;
 import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 
@@ -27,6 +28,8 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
 
     @Inject
     MyPagePresenter mMyPagePresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
 
     @BindView(R.id.rv_app)
     RecyclerView mRvReview;
@@ -54,12 +57,23 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMyPagePresenter.detachView();
+    }
+
+    @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            showProgressDialog();
+            mLoadingDialog.show();
         } else {
-            hideProgressDialog();
+            mLoadingDialog.hide();
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 
     @OnClick({R.id.btn_change_nickname, R.id.rl_btn_my_app, R.id.rl_btn_my_review})

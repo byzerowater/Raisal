@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.common.AppAdapter;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
@@ -25,6 +26,8 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
 
     @Inject
     MyAppPresenter mMyAppPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
     @Inject
     AppAdapter mAppAdapter;
     @BindView(R.id.tv_title)
@@ -53,12 +56,23 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMyAppPresenter.detachView();
+    }
+
+    @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            showProgressDialog();
+            mLoadingDialog.show();
         } else {
-            hideProgressDialog();
+            mLoadingDialog.hide();
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 
     @OnClick(R.id.btn_back)

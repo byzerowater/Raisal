@@ -10,4 +10,11 @@
     <string name="text_error_input_name">서비스 이름은 필수 입니다.</string>
     <string name="text_hint_input_url">Google Play URL을 입력하세요.</string>
     <string name="text_error_input_url">유효하지 않는 URL 입니다.\n서비스의 Google Play URL을 확인 후 다시 입력하세요.</string>
+
+    <string name="text_network_error">네트워크에 접속할 수 없습니다.</string>
+    <string name="text_network_error_guide">네트워크 연결 상태를 확인해 주세요.</string>
+
+    <string name="action_confirm">확인</string>
+    <string name="action_close">닫기</string>
+    <string name="action_retry_connect">재시도</string>
 </resources>

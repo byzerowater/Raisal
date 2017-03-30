@@ -60,10 +60,10 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ViewHolder viewHolder = null;
         if (viewType == VIEW_TYPE_EVALUATING) {
             viewHolder = new AppEvaluatingHolder(
-                    inflate.inflate(R.layout.item_review_evaluating, parent, false));
+                    inflate.inflate(R.layout.item_app_evaluating, parent, false));
         } else if (viewType == VIEW_TYPE_END) {
             viewHolder = new AppEndHolder(
-                    inflate.inflate(R.layout.item_review_end, parent, false));
+                    inflate.inflate(R.layout.item_app_end, parent, false));
         }
 
         return viewHolder;

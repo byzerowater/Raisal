@@ -49,6 +49,7 @@ public class WriteAppAppraisalCompleteActivity extends BaseActivity {
         mTvDate.setText(date);
     }
 
+
     @OnClick({R.id.btn_write, R.id.btn_main})
     public void onViewClicked(View view) {
         switch (view.getId()) {

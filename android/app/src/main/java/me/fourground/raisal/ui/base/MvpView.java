@@ -10,4 +10,6 @@ public interface MvpView {
 
     void showProgress(boolean isShow);
 
+    void onError();
+
 }

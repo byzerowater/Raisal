@@ -14,7 +14,6 @@ public class ReviewData {
      * nPartyUserCount : 0
      * raisalStat : string
      * targetOsCode : string
-     * title : string
      */
 
     private String appId;

@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.common.AppAdapter;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
@@ -25,6 +26,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     MainPresenter mMainPresenter;
     @Inject
     AppAdapter mAppAdapter;
+    @Inject
+    LoadingDialog mLoadingDialog;
+
     @BindView(R.id.rv_app)
     LinearRecyclerView mRvApp;
 
@@ -49,11 +53,22 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMainPresenter.detachView();
+    }
+
+    @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            showProgressDialog();
+            mLoadingDialog.show();
         } else {
-            hideProgressDialog();
+            mLoadingDialog.hide();
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 }

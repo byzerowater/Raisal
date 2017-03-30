@@ -12,8 +12,8 @@ import me.fourground.raisal.R;
 
 /**
  * Created by YoungSoo Kim on 2016-08-26.
- * company Ltd
- * youngsoo.kim@yap.net
+ * 4ground Ltd
+ * byzerowater@gmail.com
  * LinearRecyclerView
  */
 public class LinearRecyclerView extends RecyclerView {
