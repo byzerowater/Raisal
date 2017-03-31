@@ -54,11 +54,11 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     @Override
     public void showProgress(boolean isShow) {
-        if (isShow) {
-            mLoadingDialog.show();
-        } else {
-            mLoadingDialog.hide();
-        }
+//        if (isShow) {
+//            mLoadingDialog.show();
+//        } else {
+//            mLoadingDialog.hide();
+//        }
     }
 
     @Override

@@ -1,21 +1,25 @@
 package me.fourground.raisal.ui.splash;
 
+import android.content.Context;
+
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import me.fourground.raisal.R;
 import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
 import me.fourground.raisal.ui.base.BasePresenter;
-import me.fourground.raisal.util.RetryNetworkSubscriber;
+import me.fourground.raisal.util.DialogFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -32,7 +36,6 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
         mDataManager = dataManager;
     }
 
-
     @Override
     public void detachView() {
         super.detachView();
@@ -41,23 +44,40 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
     public void signIn(FirebaseUser user, String channelCode) {
         getMvpView().showProgress(true);
-        Observable<SignData> signDataObservable = mDataManager.signIn(new SignInRequest(
+        mSubscription = mDataManager.signIn(new SignInRequest(
                 user.getUid(),
                 user.getEmail(),
-                channelCode));
-        mSubscription = signDataObservable
+                channelCode))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RetryNetworkSubscriber<SignData>(getMvpView(), signDataObservable) {
+                .retryWhen(err ->
+                        err.flatMap(e -> {
+                            PublishSubject<Integer> choice = PublishSubject.create();
+                            Context context = (Context) getMvpView();
+                            DialogFactory.createDialog(context,
+                                    context.getString(R.string.text_network_error),
+                                    context.getString(R.string.action_close),
+                                    context.getString(R.string.action_retry_connect),
+                                    (dialog, which) -> {
+                                        choice.onError(e);
+                                    },
+                                    (dialog, which) -> {
+                                        choice.onNext(1);
+                                    }).show();
+
+                            return choice;
+                        })
+                )
+                .subscribe(new Subscriber<SignData>() {
                     @Override
                     public void onCompleted() {
-                        super.onCompleted();
+                        getMvpView().showProgress(false);
                         getMvpView().onSignIn();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
+                        getMvpView().showProgress(false);
                     }
 
                     @Override
