@@ -78,6 +78,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
                     @Override
                     public void onError(Throwable e) {
                         getMvpView().showProgress(false);
+                        getMvpView().onError();
                     }
 
                     @Override
