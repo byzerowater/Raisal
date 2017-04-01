@@ -4,7 +4,7 @@ public class RaisalElement {
 	
 	private String contents;
 	private String design;
-	private String durability;
+	private String satisfaction;
 	private String useful;
 	
 	public String getContents() {
@@ -19,11 +19,11 @@ public class RaisalElement {
 	public void setDesign(String design) {
 		this.design = design;
 	}
-	public String getDurability() {
-		return durability;
+	public String getSatisfaction() {
+		return satisfaction;
 	}
-	public void setDurability(String durability) {
-		this.durability = durability;
+	public void setSatisfaction(String satisfaction) {
+		this.satisfaction = satisfaction;
 	}
 	public String getUseful() {
 		return useful;

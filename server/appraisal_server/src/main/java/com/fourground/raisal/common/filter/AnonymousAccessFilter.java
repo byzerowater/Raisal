@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fourground.raisal.common.exception.AccessDeniedException;
-
 public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 	
     private String[] anonymousAccessibleResources = new String[0];

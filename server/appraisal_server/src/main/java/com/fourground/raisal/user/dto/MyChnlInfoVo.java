@@ -2,11 +2,11 @@ package com.fourground.raisal.user.dto;
 
 public class MyChnlInfoVo {
 
-	private String channelCode;
+	private String userId;		//채널사에서 내려받은 접속자 고유값
+	private String channelCode;	//채널사코드 (F, G)
 	private String email;
 	private String nickName;
 	private String regAppCount;
-	private String userId;
 	
 	public String getChannelCode() {
 		return channelCode;

@@ -3,6 +3,8 @@ package com.fourground.raisal.common.ctl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.fourground.raisal.common.dto.RestResult;
+
 public class BaseRestController {
 	
 	protected final String BR = "<BR>";
@@ -11,6 +13,15 @@ public class BaseRestController {
 //		RestResult restResult = new RestResult();
 		return new ResponseEntity<Object>(data, HttpStatus.OK);
 	}
+	
+	protected ResponseEntity<Object> successWithPage(Object data) {
+		
+		RestResult restResult = new RestResult();
+		restResult.init(data);
+		
+		return new ResponseEntity<Object>(restResult, HttpStatus.OK);
+	}	
+	
 	
 	protected ResponseEntity<Object> fail(Object data, String errMsg) {
 		return new ResponseEntity<Object>(data, HttpStatus.BAD_REQUEST);

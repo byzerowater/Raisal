@@ -35,9 +35,6 @@ public class AuthManagerService {
 				// 기존회원이면 UPDATE
 				nRowCnt = chnlAccntDao.updateManager(parameter);
 			} else {
-				// 신규회원이면 INSERT
-				parameter.put("userId", generateRandomUserId(parameter));
-				
 				nRowCnt = chnlAccntDao.insertManager(parameter);
 				myAccntInfo =  this.getAuthInfo(parameter);
 			}
@@ -62,10 +59,6 @@ public class AuthManagerService {
 		// 로그인 방식에 따라 둘 중 선택
 		// return chnlAccntDao.getAuthkey((String)parameter.get("userUid"));
 		return chnlAccntDao.getAuthKeyByParam(parameter);
-	}
-	
-	private String generateRandomUserId(Map<String, Object> parameter) {
-		return "project4ground-random";
 	}
 	
 	private String generateLoginAuthKey(String userId) {

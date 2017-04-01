@@ -1,8 +1,5 @@
 package com.fourground.raisal.app.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AppInfoDetailVo {
 
 	private String appDesc;
@@ -11,8 +8,6 @@ public class AppInfoDetailVo {
 	private String raisalEndDtm;
 	
 	private AppInfoVo appInfoVo;
-	
-	private List<AppraisalVo> usersRaisalList;
 
 	public String getAppDesc() {
 		return appDesc;
@@ -52,20 +47,5 @@ public class AppInfoDetailVo {
 
 	public void setAppInfoVo(AppInfoVo appInfoVo) {
 		this.appInfoVo = appInfoVo;
-	}
-
-	public List<AppraisalVo> getUsersRaisalList() {
-		return usersRaisalList;
-	}
-
-	public void setUsersRaisalList(List<AppraisalVo> usersRaisalList) {
-		this.usersRaisalList = usersRaisalList;
-	}
-	
-	public void adduserRaisal(AppraisalVo appraisalVo) {
-		if(this.usersRaisalList != null) {
-			this.usersRaisalList = new ArrayList<AppraisalVo>();
-		}
-		this.usersRaisalList.add(appraisalVo);
 	}
 }

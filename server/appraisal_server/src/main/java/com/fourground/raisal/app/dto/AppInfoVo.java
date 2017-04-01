@@ -4,12 +4,13 @@ public class AppInfoVo {
 
 	private String appId;
 	private String appName;
-	private String title;
+//	private String title;
 	private String targetOsCode;
 	private String raisalStat;
 	private int nPartyUserCount;
 	
-	private AppraisalVo appraisalAvg;
+//	private AppraisalVo appraisalAvg;
+	private String appraisalAvg;
 	
 	public String getAppId() {
 		return appId;
@@ -23,12 +24,12 @@ public class AppInfoVo {
 	public void setAppName(String appName) {
 		this.appName = appName;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+//	public String getTitle() {
+//		return title;
+//	}
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
 	public String getTargetOsCode() {
 		return targetOsCode;
 	}
@@ -47,10 +48,16 @@ public class AppInfoVo {
 	public void setnPartyUserCount(int nPartyUserCount) {
 		this.nPartyUserCount = nPartyUserCount;
 	}
-	public AppraisalVo getAppraisalAvg() {
+//	public AppraisalVo getAppraisalAvg() {
+//		return appraisalAvg;
+//	}
+//	public void setAppraisalAvg(AppraisalVo appraisalAvg) {
+//		this.appraisalAvg = appraisalAvg;
+//	}
+	public String getAppraisalAvg() {
 		return appraisalAvg;
 	}
-	public void setAppraisalAvg(AppraisalVo appraisalAvg) {
+	public void setAppraisalAvg(String appraisalAvg) {
 		this.appraisalAvg = appraisalAvg;
 	}
 }

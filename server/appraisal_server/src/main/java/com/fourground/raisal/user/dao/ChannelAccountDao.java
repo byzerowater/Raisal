@@ -20,18 +20,18 @@ public class ChannelAccountDao {
 		return sqlSession.selectOne(PREFIX+"getAuthkey", userId);
 	}
 	public AuthInfoVo getAuthKeyByParam(Map<String, Object> parameter) {
-		return sqlSession.selectOne(PREFIX+"getAuthkey", parameter);
+		return sqlSession.selectOne(PREFIX+"getAuthkeyMap", parameter);
 	}
 	public MyChnlInfoVo getMyInfo(String userId) {
 		return sqlSession.selectOne(PREFIX+"getMyInfo", userId);
 	}
 	public int insertManager(Map<String, Object> parameter){
-		return sqlSession.insert(PREFIX+"insertManager", parameter);
+		return sqlSession.insert(PREFIX+"insertChnlAccnt", parameter);
 	}
 	public int updateManager(Map<String, Object> parameter){ 
-		return sqlSession.update(PREFIX+"updateManager", parameter);
+		return sqlSession.update(PREFIX+"updateChnlAccntByUserid", parameter);
 	}
-	public int deleteManager(String userId){
-		return sqlSession.delete(PREFIX+"deleteManager", userId);
+	public int deleteManager(Map<String, Object> parameter){
+		return sqlSession.delete(PREFIX+"deleteChnlAccnt", parameter);
 	}
 }

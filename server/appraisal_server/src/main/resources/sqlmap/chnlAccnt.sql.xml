@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fourground.raisal.user.dao.ChannelAccountDao">
+
+	<!-- user_id, email, chnl_cd, user_nm, auth_key, reg_app_cnt -->
+
+	<resultMap type='com.fourground.raisal.user.dto.MyChnlInfoVo' id='chnlInfoMap'>
+		<id column='user_id' property='userId' ></id>
+		<result column='chnl_cd' property='channelCode' ></result>
+		<result column='email' property='email' ></result>
+		<result column='user_nm' property='nickName' ></result>
+		<result column='reg_app_cnt' property='regAppCount' ></result>
+	</resultMap>
+	
+	<resultMap type='com.fourground.raisal.user.dto.AuthInfoVo' id='authInfoMap'>
+		<id column='user_id' property='userId' ></id>
+		<result column='chnl_cd' property='channelCode' ></result>
+		<result column='email' property='email' ></result>
+		<result column='user_nm' property='nickName' ></result>
+		<result column='auth_key' property='authKey' ></result>
+		<result column='reg_app_cnt' property='regAppCount' ></result>
+	</resultMap>
+	
+	<sql id='getAuthorizeKey'>
+		SELECT
+			user_id
+			,chnl_cd
+			,email
+			,user_nm
+			,reg_app_cnt
+			,auth_key
+		FROM CO_CH_ACNT
+	</sql>
+	
+	<sql id='getMyChnlInformation'>
+		SELECT
+			user_id
+			,chnl_cd
+			,email
+			,user_nm
+			,reg_app_cnt
+		FROM CO_CH_ACNT
+	</sql>
+	
+	<sql id='Conditions_byUser'>
+		AND user_id = #{userUid}
+	</sql>
+	<sql id='Condition_JustOne'>
+		LIMIT 1
+	</sql>
+
+	<select id="getAuthKey" parameterType="String" resultMap="authInfoMap">
+		<include refid='getAuthorizeKey'></include>
+		WHERE 1=1
+		<include refid='Conditions_byUser'></include>
+		<include refid='Condition_JustOne'></include>
+	</select>
+	
+	<select id="getAuthKeyMap" parameterType="hmap" resultMap="authInfoMap">
+		<include refid='getAuthorizeKey'></include>
+		WHERE 1=1
+		<include refid='Conditions_byUser'></include>
+		<include refid='Condition_JustOne'></include>
+	</select>
+	
+	<select id="getMyInfo" parameterType="String" resultMap="chnlInfoMap">
+		<include refid='getMyChnlInformation'></include>
+		WHERE 1=1
+		<include refid='Conditions_byUser'></include>
+		<include refid='Condition_JustOne'></include>
+	</select>
+	
+	<insert id="insertChnlAccnt" parameterType="hmap">
+		INSERT INTO CO_CH_ACNT (
+			user_id
+			,email
+			<if test='userNm != null'>
+			,userNm
+			</if>
+			,authKey
+			,chnl_cd
+			,regAppCnt
+			,mod_id
+			,mod_dtm
+			,reg_id
+			,reg_dtm
+		) VALUES(
+			#{user_id}
+			,#{email}
+			<if test='userNm != null'>
+			,#{userNm}
+			</if>
+			,#{authKey}
+			,#{chnlCd}
+			,0
+			,now()
+			,'APISYSTEM'
+			,now()
+			,'APISYSTEM'
+		)
+	</insert>
+	
+	<update id="updateChnlAccntByUserid" parameterType="hmap">
+		UPDATE CO_CH_ACNT
+		<trim prefix='SET' suffixOverrides=','>
+			<if test='email != null'>email = #{email},</if>
+			<if test='userNm != null'>user_nm = #{userNm},</if>
+			<if test='authKey != null'>auth_key = #{authKey},</if>
+			<if test='regAppCnt != null'>reg_app_cnt = #{regAppCnt},</if>
+			<if test='userId != null'>
+			mod_id = #{userId},
+			mod_dtm = now()
+			</if>
+		</trim>
+		WHERE 1=1
+		<include refid='Conditions_byUser'></include>
+	</update>
+	
+	<delete id="deleteChnlAccnt" parameterType="String">
+		DELETE FROM CO_CH_ACNT
+		WHERE 1=1
+		<include refid='Conditions_byUser'></include>
+	</delete>
+
+</mapper>
