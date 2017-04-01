@@ -38,8 +38,6 @@ public class ApplicationModule {
         return mApplication;
     }
 
-
-
     @Provides
     @Singleton
     Bus provideEventBus() {

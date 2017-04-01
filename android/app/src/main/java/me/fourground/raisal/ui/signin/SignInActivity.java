@@ -23,6 +23,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 import java.util.Arrays;
 
@@ -33,6 +34,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.common.Const;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.main.MainActivity;
 import timber.log.Timber;
 
@@ -45,9 +48,6 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     private static final int REQUEST_SIGN_IN = 0x15;
 
-    private static final String LOGIN_TYPE_GOOGLE = "G";
-    private static final String LOGIN_TYPE_FACEBOOK = "F";
-
     @BindView(R.id.sib_google)
     Button mSibGoogle;
 
@@ -56,21 +56,20 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     @Inject
     SignInPresenter mSignInPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
 
     private FirebaseAuth mAuth;
-
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private GoogleApiClient mGoogleApiClient;
     private CallbackManager mCallbackManager;
 
-    private String mLoginType = null;
-
     /**
-     * LoginActivity 가져오기
+     * SignInActivity 가져오기
      *
      * @param context Context
-     * @return LoginActivity Intent
+     * @return SignInActivity Intent
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);
@@ -94,9 +93,16 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         mAuthListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
-                Timber.i("user " + user.getProviderId());
+                String loginType = Const.LOGIN_TYPE_GOOGLE;
+                for (UserInfo userInfo : user.getProviderData()) {
+                    Timber.i("user " + userInfo.getProviderId());
+                    if ("facebook.com".equals(userInfo.getProviderId())) {
+                        loginType = Const.LOGIN_TYPE_FACEBOOK;
+                        break;
+                    }
+                }
                 // User is signed in
-                mSignInPresenter.login(user, mLoginType);
+                mSignInPresenter.signIn(user, loginType);
             } else {
                 // User is signed out
                 Timber.i("onAuthStateChanged:signed_out");
@@ -189,7 +195,6 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
-                            mLoginType = LOGIN_TYPE_GOOGLE;
                             Timber.d("signInWithCredential:onComplete:" + task.isSuccessful());
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
@@ -222,7 +227,6 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
-                            mLoginType = LOGIN_TYPE_FACEBOOK;
                             Timber.d("signInWithCredential:onComplete:" + task.isSuccessful());
 
                             // If sign in fails, display a message to the user. If sign in succeeds
@@ -241,10 +245,15 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
-            showProgressDialog();
+            mLoadingDialog.show();
         } else {
-            hideProgressDialog();
+            mLoadingDialog.hide();
         }
+    }
+
+    @Override
+    public void onError() {
+
     }
 
     @OnClick({R.id.sib_google, R.id.sib_facebook})

@@ -1,50 +1,73 @@
 package me.fourground.raisal.util;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
-
-import me.fourground.raisal.R;
-
+import android.content.DialogInterface;
 
 /**
  * Created by YoungSoo Kim on 2016-06-17.
  * 4ground Ltd
  * byzerowater@gmail.com
- * 이미지 로드 유틸
+ * DialogFactory
+ * Dialog 관리
  */
 public class DialogFactory {
 
-    public static Dialog createSimpleOkErrorDialog(Context context, String title, String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
-                .setTitle(title)
+    /**
+     * AlertDialog 생성
+     *
+     * @param context Context
+     * @param message 메세지
+     * @return AlertDialog
+     */
+    public static Dialog createDialog(Context context,
+                                      CharSequence message) {
+        return new AlertDialog.Builder(context)
                 .setMessage(message)
-                .setNeutralButton(R.string.app_name, null);
-        return alertDialog.create();
+                .create();
     }
 
-    public static Dialog createSimpleOkErrorDialog(Context context,
-                                                   @StringRes int titleResource,
-                                                   @StringRes int messageResource) {
-
-        return createSimpleOkErrorDialog(context,
-                context.getString(titleResource),
-                context.getString(messageResource));
-    }
-
-    public static Dialog createSimpleOkErrorDialog(Context context, String message) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.app_name))
+    /**
+     * AlertDialog 생성
+     *
+     * @param context          context
+     * @param message          메세지
+     * @param positiveText     확인 버튼 문구
+     * @param positiveListener 확인 버튼 클릭 리스너
+     * @return AlertDialog
+     */
+    public static Dialog createDialog(Context context,
+                                      CharSequence message,
+                                      CharSequence positiveText,
+                                      DialogInterface.OnClickListener positiveListener) {
+        return new AlertDialog.Builder(context)
                 .setMessage(message)
-                .setNeutralButton(R.string.app_name, null);
-        return alertDialog.create();
+                .setPositiveButton(positiveText, positiveListener)
+                .create();
     }
 
-    public static Dialog createSimpleOkErrorDialog(Context context,
-                                                   @StringRes int messageResource) {
-
-        return createSimpleOkErrorDialog(context, context.getString(messageResource));
+    /**
+     * AlertDialog 생성
+     *
+     * @param context          Context
+     * @param message          메세지
+     * @param negativeText     취소 버튼 문구
+     * @param positiveText     확인 버튼 문구
+     * @param negativeListener 취소 버튼 클릭 리스너
+     * @param positiveListener 확인 버튼 클릭 리스너
+     * @return AlertDialog
+     */
+    public static Dialog createDialog(Context context,
+                                      CharSequence message,
+                                      CharSequence negativeText,
+                                      CharSequence positiveText,
+                                      DialogInterface.OnClickListener negativeListener,
+                                      DialogInterface.OnClickListener positiveListener) {
+        return new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setNegativeButton(negativeText, negativeListener)
+                .setPositiveButton(positiveText, positiveListener)
+                .create();
     }
-
 }

@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.write.app;
+package me.fourground.raisal.ui.mypage.app;
 
 
 import me.fourground.raisal.ui.base.MvpView;
@@ -8,5 +8,5 @@ import me.fourground.raisal.ui.base.MvpView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public interface AppAppraisalMvpView extends MvpView {
+public interface MyAppMvpView extends MvpView {
 }

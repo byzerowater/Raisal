@@ -9,6 +9,7 @@ import me.fourground.raisal.injection.ActivityContext;
 
 import dagger.Module;
 import dagger.Provides;
+import me.fourground.raisal.ui.dialog.LoadingDialog;
 
 @Module
 public class ActivityModule {
@@ -32,6 +33,11 @@ public class ActivityModule {
     @Provides
     FragmentManager providesFragmentManager() {
         return ((FragmentActivity) mActivity).getSupportFragmentManager();
+    }
+
+    @Provides
+    LoadingDialog provideLoadingDialog() {
+        return new LoadingDialog(mActivity);
     }
 
 }
