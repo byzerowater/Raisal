@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
+import me.fourground.raisal.util.ViewHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -25,7 +26,6 @@ public class WriteWriteReviewActivity extends BaseActivity implements WriteRevie
     WriteReviewPresenter mWriteReviewPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
-
 
     /**
      * WriteWriteReviewActivity 가져오기
@@ -45,6 +45,8 @@ public class WriteWriteReviewActivity extends BaseActivity implements WriteRevie
         setContentView(R.layout.activity_write_review);
         ButterKnife.bind(this);
         mWriteReviewPresenter.attachView(this);
+
+        ViewHelper.addFragment(R.id.fl_content, WriteWriteReviewActivity.this, WriteUsedFragment.newInstance());
     }
 
     @Override

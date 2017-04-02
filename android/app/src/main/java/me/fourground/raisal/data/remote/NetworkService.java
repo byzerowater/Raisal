@@ -1,17 +1,18 @@
 package me.fourground.raisal.data.remote;
 
-import java.util.List;
-
+import me.fourground.raisal.data.model.AppListData;
+import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.data.model.RegisterData;
 import me.fourground.raisal.data.model.RegisterReviewRequest;
-import me.fourground.raisal.data.model.ReviewData;
+import me.fourground.raisal.data.model.ReviewListData;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -51,12 +52,28 @@ public interface NetworkService {
 
 
     /**
+     * 평가앱 상세 조회
+     *
+     * @return
+     */
+    @GET("/api/raisal/get/{appId}")
+    Observable<ContentData> getContent(@Path("appId") String appId);
+
+    /**
+     * 평가앱 상세 리뷰 리스트 조회
+     *
+     * @return
+     */
+    @GET
+    Observable<ReviewListData> getContentReviewList(@Url String url);
+
+    /**
      * 평가앱 목록 조회
      *
      * @return
      */
-    @GET("/api/raisal/select")
-    Observable<List<ReviewData>> getAppList();
+    @GET
+    Observable<AppListData> getAppList(@Url String url);
 
 //    /**
 //     * Retrieve a list of shots

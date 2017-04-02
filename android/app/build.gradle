@@ -40,9 +40,13 @@ android {
 
         debug {
             buildConfigField "String", "BASE_URL", "\"http://ec2-54-190-194-73.us-west-2.compute.amazonaws.com:8080\""
+            buildConfigField "String", "APP_LIST_URL", "\"/api/raisal/select\""
+            buildConfigField "String", "APP_REVIEW_LIST_URL", "\"/api/raisal/collect/{appId}\""
         }
         release {
             buildConfigField "String", "BASE_URL", "\"http://ec2-54-190-194-73.us-west-2.compute.amazonaws.com:8080\""
+            buildConfigField "String", "APP_LIST_URL", "\"/api/raisal/select\""
+            buildConfigField "String", "APP_REVIEW_LIST_URL", "\"/api/raisal/collect/{appId}\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config

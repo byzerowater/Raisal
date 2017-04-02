@@ -13,6 +13,11 @@ public class StoreInfoData {
     private String platformCode;
     private String downUrl;
 
+    public StoreInfoData(String platformCode, String downUrl) {
+        this.platformCode = platformCode;
+        this.downUrl = downUrl;
+    }
+
     public String getPlatformCode() {
         return platformCode;
     }

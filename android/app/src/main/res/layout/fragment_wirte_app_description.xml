@@ -8,23 +8,29 @@
               tools:context=".ui.write.app.WriteDescriptionFragment">
 
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/rg_days"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <Button
+        <RadioButton
             android:id="@+id/btn_7day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:button="@android:color/transparent"
+            android:checked="true"/>
 
-        <Button
+        <RadioButton
             android:id="@+id/btn_14day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:button="@android:color/transparent"/>
 
-    </LinearLayout>
+    </RadioGroup>
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_description"

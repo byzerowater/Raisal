@@ -54,9 +54,11 @@ public class WriteAppAppraisalCompleteActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_write:
+                startActivity(WriteWriteAppAppraisalActivity.getStartIntent(WriteAppAppraisalCompleteActivity.this));
                 break;
             case R.id.btn_main:
                 break;
         }
+        finish();
     }
 }

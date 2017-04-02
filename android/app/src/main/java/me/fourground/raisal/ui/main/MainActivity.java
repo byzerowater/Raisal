@@ -4,13 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.BusEvent;
+import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.common.AppAdapter;
+import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
@@ -21,7 +29,8 @@ import me.fourground.raisal.ui.views.LinearRecyclerView;
  */
 public class MainActivity extends BaseActivity implements MainMvpView {
 
-
+    @Inject
+    Bus mEventBus;
     @Inject
     MainPresenter mMainPresenter;
     @Inject
@@ -49,13 +58,24 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         activityComponent().inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mEventBus.register(this);
+
         mMainPresenter.attachView(this);
+
+        mRvApp.setAdapter(mAppAdapter);
+
+        mAppAdapter.setOnOrderItemClickListener(appItem -> {
+            ContentActivity.getStartIntent(MainActivity.this, appItem.getAppId());
+        });
+
+        mMainPresenter.getAppList();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mMainPresenter.detachView();
+        mEventBus.unregister(this);
     }
 
     @Override
@@ -70,5 +90,18 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void onError() {
 
+    }
+
+    @Subscribe
+    public void onRegisterCompleted(BusEvent.RegisterCompleted event) {
+        AppInfoData appInfoData = event.getAppInfoData();
+        mAppAdapter.addAppData(appInfoData);
+        mAppAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAppList(List<AppInfoData> datas) {
+        mAppAdapter.addAppDatas(datas);
+        mAppAdapter.notifyDataSetChanged();
     }
 }

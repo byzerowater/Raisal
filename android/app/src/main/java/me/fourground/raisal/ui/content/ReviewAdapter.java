@@ -1,6 +1,5 @@
 package me.fourground.raisal.ui.content;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.model.PointData;
+import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.util.ListUtil;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
@@ -30,7 +31,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     /**
      * 리뷰 데이터들
      */
-    private List<String> mReviewDatas;
+    private List<ReviewData> mReviewDatas;
 
     /**
      * 리뷰 Adapter
@@ -50,8 +51,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     @Override
     public void onBindViewHolder(ReviewHolder holder, int position) {
-        Context context = holder.itemView.getContext();
-        String s = mReviewDatas.get(position);
+        ReviewData reviewData = mReviewDatas.get(position);
+
+        holder.mTvNickname.setText(reviewData.getUserName());
+        holder.mTvReview.setText(reviewData.getComment());
+
+        PointData point = reviewData.getPoint();
+        holder.mTvDesign.setText(String.valueOf(point.getDesign()));
+        holder.mTvContents.setText(String.valueOf(point.getContents()));
+        holder.mTvSatisfaction.setText(String.valueOf(point.getSatisfaction()));
+        holder.mTvUseful.setText(String.valueOf(point.getUseful()));
     }
 
     @Override
@@ -59,9 +68,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         return ListUtil.getListCount(mReviewDatas);
     }
 
-    public String getItem(int position) {
+    public ReviewData getItem(int position) {
         int itemCount = getItemCount();
-        String item = null;
+        ReviewData item = null;
 
         if (itemCount > position && position < 0) {
             item = mReviewDatas.get(position);
@@ -70,8 +79,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         return item;
     }
 
-    public void setReviewDatas(List<String> reviewDatas) {
-        mReviewDatas = reviewDatas;
+    public void addReviewDatas(List<ReviewData> reviewDatas) {
+        mReviewDatas.addAll(reviewDatas);
     }
 
     /**

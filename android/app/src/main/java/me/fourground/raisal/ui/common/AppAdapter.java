@@ -17,6 +17,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.common.Const;
+import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.util.ListUtil;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
@@ -32,14 +34,14 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int VIEW_TYPE_EVALUATING = 1;
     private static final int VIEW_TYPE_END = 2;
 
-    interface OnAppItemClickListener {
-        void onAppItemClick(String appItem);
+    public interface OnAppItemClickListener {
+        void onAppItemClick(AppInfoData appItem);
     }
 
     /**
      * 앱 평가 데이터들
      */
-    private List<String> mAppDatas;
+    private List<AppInfoData> mAppDatas;
     /**
      * 앱 평가 아이템 클릭 리스너
      */
@@ -72,19 +74,40 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        String item = getItem(position);
+        AppInfoData item = getItem(position);
         int type = VIEW_TYPE_EVALUATING;
+        if (Const.APPRAISAL_TYPE_FINISH.equals(item.getStat())) {
+            type = VIEW_TYPE_END;
+        }
         return type;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        String s = mAppDatas.get(position);
+        AppInfoData data = mAppDatas.get(position);
+
+        if (Const.APPRAISAL_TYPE_FINISH.equals(data.getStat())) {
+            AppEvaluatingHolder evaluatingHolder = (AppEvaluatingHolder) holder;
+            evaluatingHolder.mTvName.setText(data.getAppName());
+            evaluatingHolder.mTvReviewCount.setText(String.valueOf(data.getNPartyUserCount()));
+            evaluatingHolder.mTvStore.setText(data.getTargetOsCode());
+            evaluatingHolder.mTvState.setText(data.getStat());
+        } else {
+            AppEndHolder endHolder = (AppEndHolder) holder;
+            endHolder.mRbAverage.setRating(Float.parseFloat(data.getAppraisalAvg()));
+            endHolder.mTvAverage.setText(data.getAppraisalAvg());
+            endHolder.mTvDate.setText("add");
+            endHolder.mTvReviewCount.setText(String.valueOf(data.getNPartyUserCount()));
+            endHolder.mTvName.setText(data.getAppName());
+            endHolder.mTvStore.setText(data.getTargetOsCode());
+            endHolder.mTvState.setText(data.getStat());
+        }
+
         holder.itemView.setOnClickListener(
                 view -> {
                     if (mOnOrderItemClickListener != null) {
-                        mOnOrderItemClickListener.onAppItemClick(s);
+                        mOnOrderItemClickListener.onAppItemClick(data);
                     }
                 });
     }
@@ -94,9 +117,9 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return ListUtil.getListCount(mAppDatas);
     }
 
-    public String getItem(int position) {
+    public AppInfoData getItem(int position) {
         int itemCount = getItemCount();
-        String item = null;
+        AppInfoData item = null;
 
         if (itemCount > position && position < 0) {
             item = mAppDatas.get(position);
@@ -105,8 +128,12 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return item;
     }
 
-    public void setAppDatas(List<String> appDatas) {
-        mAppDatas = appDatas;
+    public void addAppDatas(List<AppInfoData> appDatas) {
+        mAppDatas.addAll(appDatas);
+    }
+
+    public void addAppData(AppInfoData appData) {
+        mAppDatas.add(appData);
     }
 
     public void setOnOrderItemClickListener(OnAppItemClickListener onOrderItemClickListener) {
@@ -149,8 +176,8 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         RatingBar mRbAverage;
         @BindView(R.id.tv_average)
         TextView mTvAverage;
-        @BindView(R.id.tv_entry)
-        TextView mTvEntry;
+        @BindView(R.id.tv_review_count)
+        TextView mTvReviewCount;
         @BindView(R.id.tv_date)
         TextView mTvDate;
 

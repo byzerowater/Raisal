@@ -28,6 +28,13 @@ public class WriteUsedFragment extends Fragment {
     TextView mTvStore;
     Unbinder unbinder;
 
+    public static Fragment newInstance() {
+        Fragment fragment = new WriteUsedFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

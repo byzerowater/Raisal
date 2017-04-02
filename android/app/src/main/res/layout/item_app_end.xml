@@ -27,7 +27,7 @@
             android:text="aaa" />
 
         <TextView
-            android:id="@+id/tv_entry"
+            android:id="@+id/tv_review_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="aaa" />

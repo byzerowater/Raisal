@@ -1,17 +1,20 @@
 package me.fourground.raisal.ui.write.app;
 
-import com.google.firebase.auth.FirebaseUser;
+import android.content.Context;
 
 import javax.inject.Inject;
 
+import me.fourground.raisal.R;
 import me.fourground.raisal.data.DataManager;
-import me.fourground.raisal.data.model.SignData;
-import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.model.RegisterAppRequest;
+import me.fourground.raisal.data.model.RegisterData;
 import me.fourground.raisal.ui.base.BasePresenter;
+import me.fourground.raisal.util.DialogFactory;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
 import timber.log.Timber;
 
 /**
@@ -36,15 +39,30 @@ public class WriteAppAppraisalPresenter extends BasePresenter<WriteAppAppraisalM
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void login(FirebaseUser user, String chnCode) {
+    public void registerApp(RegisterAppRequest registerAppRequest) {
         getMvpView().showProgress(true);
-        mSubscription = mDataManager.signIn(new SignInRequest(
-                user.getUid(),
-                user.getEmail(),
-                chnCode))
+        mSubscription = mDataManager.registerApp(registerAppRequest)
+                .retryWhen(err ->
+                        err.flatMap(e -> {
+                            PublishSubject<Integer> choice = PublishSubject.create();
+                            Context context = (Context) getMvpView();
+                            DialogFactory.createDialog(context,
+                                    context.getString(R.string.text_network_error),
+                                    context.getString(R.string.action_close),
+                                    context.getString(R.string.action_retry_connect),
+                                    (dialog, which) -> {
+                                        choice.onError(e);
+                                    },
+                                    (dialog, which) -> {
+                                        choice.onNext(1);
+                                    }).show();
+
+                            return choice;
+                        })
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SignData>() {
+                .subscribe(new Subscriber<RegisterData>() {
                     @Override
                     public void onCompleted() {
                         getMvpView().showProgress(false);
@@ -57,8 +75,9 @@ public class WriteAppAppraisalPresenter extends BasePresenter<WriteAppAppraisalM
                     }
 
                     @Override
-                    public void onNext(SignData signData) {
-
+                    public void onNext(RegisterData registerData) {
+                        Timber.d(registerData.toString());
+                        getMvpView().onRegister();
                     }
                 });
     }

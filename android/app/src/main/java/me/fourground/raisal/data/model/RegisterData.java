@@ -40,4 +40,13 @@ public class RegisterData {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+    @Override
+    public String toString() {
+        return "RegisterData{" +
+                "appId='" + appId + '\'' +
+                ", message='" + message + '\'' +
+                ", success=" + success +
+                '}';
+    }
 }

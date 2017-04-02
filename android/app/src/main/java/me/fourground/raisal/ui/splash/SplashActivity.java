@@ -10,8 +10,8 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.common.Const;
 import me.fourground.raisal.ui.base.BaseActivity;
-import me.fourground.raisal.ui.common.Const;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.signin.SignInActivity;
 import timber.log.Timber;

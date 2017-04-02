@@ -1,18 +1,24 @@
 package me.fourground.raisal.ui.content;
 
-import com.google.firebase.auth.FirebaseUser;
+import android.content.Context;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
+import me.fourground.raisal.BuildConfig;
+import me.fourground.raisal.R;
 import me.fourground.raisal.data.DataManager;
-import me.fourground.raisal.data.model.SignData;
-import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.model.ContentData;
+import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BasePresenter;
+import me.fourground.raisal.util.DialogFactory;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -23,6 +29,7 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
+    private String mNextUrl = BuildConfig.APP_REVIEW_LIST_URL;
 
     @Inject
     public ContentPresenter(DataManager dataManager) {
@@ -36,15 +43,38 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void login(FirebaseUser user, String chnCode) {
+    public void getContent(String appId) {
         getMvpView().showProgress(true);
-        mSubscription = mDataManager.signIn(new SignInRequest(
-                user.getUid(),
-                user.getEmail(),
-                chnCode))
+
+        Observable<ContentData> content = mDataManager.getContent(appId);
+        Observable<List<ReviewData>> contentReviewList = mDataManager.getContentReviewList(appId)
+                .map(reviewListData -> {
+                    mNextUrl = reviewListData.getLinks().getNext();
+                    return reviewListData.getData();
+                });
+
+        mSubscription = Observable.merge(content, contentReviewList)
+                .retryWhen(err ->
+                        err.flatMap(e -> {
+                            PublishSubject<Integer> choice = PublishSubject.create();
+                            Context context = (Context) getMvpView();
+                            DialogFactory.createDialog(context,
+                                    context.getString(R.string.text_network_error),
+                                    context.getString(R.string.action_close),
+                                    context.getString(R.string.action_retry_connect),
+                                    (dialog, which) -> {
+                                        choice.onError(e);
+                                    },
+                                    (dialog, which) -> {
+                                        choice.onNext(1);
+                                    }).show();
+
+                            return choice;
+                        })
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SignData>() {
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
                         getMvpView().showProgress(false);
@@ -52,13 +82,59 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.e(e);
                         getMvpView().showProgress(false);
                     }
 
                     @Override
-                    public void onNext(SignData signData) {
+                    public void onNext(Object o) {
+                        if (o instanceof ContentData) {
+                            getMvpView().onContent((ContentData) o);
+                        } else {
+                            getMvpView().onReviewList((List<ReviewData>) o);
+                        }
+                    }
+                });
+    }
 
+    public void getReviewList() {
+        mSubscription =mDataManager.getContentReviewList(mNextUrl)
+                .map(reviewListData -> {
+                    mNextUrl = reviewListData.getLinks().getNext();
+                    return reviewListData.getData();
+                }).retryWhen(err ->
+                        err.flatMap(e -> {
+                            PublishSubject<Integer> choice = PublishSubject.create();
+                            Context context = (Context) getMvpView();
+                            DialogFactory.createDialog(context,
+                                    context.getString(R.string.text_network_error),
+                                    context.getString(R.string.action_close),
+                                    context.getString(R.string.action_retry_connect),
+                                    (dialog, which) -> {
+                                        choice.onError(e);
+                                    },
+                                    (dialog, which) -> {
+                                        choice.onNext(1);
+                                    }).show();
+
+                            return choice;
+                        })
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<ReviewData>>() {
+                    @Override
+                    public void onCompleted() {
+                        getMvpView().showProgress(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showProgress(false);
+                    }
+
+                    @Override
+                    public void onNext(List<ReviewData> reviewDatas) {
+                        getMvpView().onReviewList(reviewDatas);
                     }
                 });
     }

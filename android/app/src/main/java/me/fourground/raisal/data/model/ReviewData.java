@@ -7,67 +7,39 @@ package me.fourground.raisal.data.model;
  */
 public class ReviewData {
 
+
     /**
-     * appId : string
-     * appName : string
-     * appraisalAvg : 4.1
-     * nPartyUserCount : 0
-     * raisalStat : string
-     * targetOsCode : string
+     * comment : string
+     * point : {"contents":"string","design":"string","satisfaction":"string","useful":"string"}
+     * userName : string
      */
 
-    private String appId;
-    private String appName;
-    private int nPartyUserCount;
-    private String raisalStat;
-    private String targetOsCode;
-    private float appraisalAvg;
+    private String comment;
+    private PointData point;
+    private String userName;
 
-    public String getAppId() {
-        return appId;
+    public String getComment() {
+        return comment;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getAppName() {
-        return appName;
+    public PointData getPoint() {
+        return point;
     }
 
-    public void setAppName(String appName) {
-        this.appName = appName;
+    public void setPoint(PointData point) {
+        this.point = point;
     }
 
-    public int getNPartyUserCount() {
-        return nPartyUserCount;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setNPartyUserCount(int nPartyUserCount) {
-        this.nPartyUserCount = nPartyUserCount;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getRaisalStat() {
-        return raisalStat;
-    }
-
-    public void setRaisalStat(String raisalStat) {
-        this.raisalStat = raisalStat;
-    }
-
-    public String getTargetOsCode() {
-        return targetOsCode;
-    }
-
-    public void setTargetOsCode(String targetOsCode) {
-        this.targetOsCode = targetOsCode;
-    }
-
-    public float getAppraisalAvg() {
-        return appraisalAvg;
-    }
-
-    public void setAppraisalAvg(float appraisalAvg) {
-        this.appraisalAvg = appraisalAvg;
-    }
 }

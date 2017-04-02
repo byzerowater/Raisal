@@ -6,6 +6,7 @@
 
     <string name="text_loading">loading</string>
 
+    <string name="text_register">등록하기</string>
     <string name="text_hint_input_name">서비스 이름을 입력하세요.</string>
     <string name="text_error_input_name">서비스 이름은 필수 입니다.</string>
     <string name="text_hint_input_url">Google Play URL을 입력하세요.</string>
@@ -16,5 +17,6 @@
 
     <string name="action_confirm">확인</string>
     <string name="action_close">닫기</string>
+    <string name="action_next">다음</string>
     <string name="action_retry_connect">재시도</string>
 </resources>
