@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace='common'>
+ 	
+ 	<!-- 
+	<select id='getSeq' resultType='Long' parameterType='String'>
+    	SELECT seq(#{seqName})
+    </select>
+ 	 -->
+        
+   	<sql id='count-top'>
+		SELECT count(*) AS totalCount
+		  FROM (
+	</sql>
+	
+	<sql id='count-bottom'>
+	       ) sub
+	</sql>
+	
+	<!--
+	<sql id='paging-bottom'>
+			LIMIT #{pagingLimit,jdbcType=NUMERIC} OFFSET #{pagingPage,jdbcType=NUMERIC}-1 * #{pagingLimit,jdbcType=NUMERIC}
+	</sql>
+    -->
+    <sql id='paging-top'>
+		<if test='pagingYn=="Y"'>
+			  SELECT PAGING.* from (
+		</if>
+	</sql>
+	
+    <sql id='paging-bottom'>
+		<if test='pagingYn=="Y"'>
+			) PAGING
+			<if test='pagingOrder!=""'>
+				ORDER BY ${pagingOrder}
+			</if>
+			LIMIT #{pagingOffset,jdbcType=NUMERIC},#{length,jdbcType=NUMERIC}
+		</if>
+	</sql>
+</mapper>

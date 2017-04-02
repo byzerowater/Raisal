@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
+import com.fourground.raisal.app.svc.AppManagerService;
+import com.fourground.raisal.common.Constants;
 import com.fourground.raisal.common.ctl.BaseRestController;
 import com.fourground.raisal.common.dto.RequestBodyVo;
 import com.fourground.raisal.common.dto.ResultVo;
@@ -29,23 +34,39 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping(value="/api/raisal", produces= MediaType.APPLICATION_JSON_VALUE)
 public class AppraisalRestController extends BaseRestController {
+	
+	@Autowired
+	private AppManagerService appManagerService;
 
 	@ApiOperation(value="평가앱 목록 조회"
 			,notes="1>조회"
 			,response=AppInfoVo.class)
 	@RequestMapping(value="/select", method={RequestMethod.GET})
 	public ResponseEntity<Object> selectAppraisalList(
-			@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer currPage
+			@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer reqPage
 			,@ApiParam(required=false, value="페이지당조회수", name="size") @RequestParam(value="size",required=false) Integer size)
 	{
+		Map<String,Object> parameter = new HashMap<String, Object>();
 		Map<String, Object> resultData = new HashMap<String, Object>();
 		
+		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
+		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
+		
+		int totPages = this.getCalcuTotPage(appManagerService.selectAppListCount(parameter)
+				,nListLength);
+
+		parameter.put("pagingYn", "Y");
+		parameter.put("pagingOrder", "reg_dtm");
+		parameter.put("pagingOffset", nReqPage * nListLength);
+		parameter.put("length", nListLength);
+		
 		List<AppInfoVo> appInfoVoList = new ArrayList<AppInfoVo>();
+		appInfoVoList = appManagerService.selectAppList(parameter);
 		
 		resultData.put("data", appInfoVoList);
 		resultData.put("baseUrl", "/api/raisal/select");
-		resultData.put("totPages", 10);
-		resultData.put("currPage", currPage);
+		resultData.put("totPages", totPages);
+		resultData.put("currPage", reqPage);
 		resultData.put("size", size);
 		
 		return successWithPage(resultData);
@@ -56,9 +77,20 @@ public class AppraisalRestController extends BaseRestController {
 			,response=AppInfoDetailVo.class)
 	@RequestMapping(value="/get/{appId}", method={RequestMethod.GET})
 	public ResponseEntity<Object> getAppraisalDetail(
-			@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId)
+			HttpServletRequest request
+			,@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId)
 	{
+		Map<String,Object> parameter = new HashMap<String, Object>();
+		parameter.put("appId", appId);
+		
+		if(request.getHeader("osType") != null && request.getHeader("osType").equals("ios")) {
+			parameter.put("plfmCd", "IOS");
+		} else {
+			parameter.put("plfmCd", "ADR");
+		}
+		
 		AppInfoDetailVo appInfoDetailVo = new AppInfoDetailVo();
+		appInfoDetailVo = appManagerService.getAppDetail(parameter);
 		
 		return success(appInfoDetailVo);
 	}
@@ -68,17 +100,40 @@ public class AppraisalRestController extends BaseRestController {
 			,response=AppraisalVo.class)
 	@RequestMapping(value="/collect/{appId}", method={RequestMethod.GET})
 	public ResponseEntity<Object> collectAppraisalList(
-			@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId
-			,@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer currPage
+			HttpServletRequest request
+			,@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId
+			,@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer reqPage
 			,@ApiParam(required=false, value="페이지당조회수", name="size") @RequestParam(value="size",required=false) Integer size)
 	{
+		Map<String,Object> parameter = new HashMap<String, Object>();
 		Map<String, Object> resultData = new HashMap<String, Object>();
+
+		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
+		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
+		
+		parameter.put("appId", appId);
+		
+		int totPages = this.getCalcuTotPage(appManagerService.selectAppraisalListCount(parameter)
+				,nListLength);
+
+		parameter.put("pagingYn", "Y");
+		parameter.put("pagingOrder", "aprs_id");
+		parameter.put("pagingOffset", nReqPage * nListLength);
+		parameter.put("length", nListLength);
+		
+//		if(request.getHeader("osType") != null && request.getHeader("osType").equals("ios")) {
+//			parameter.put("plfmCd", "IOS");
+//		} else {
+//			parameter.put("plfmCd", "ADR");
+//		}
+		
 		List<AppraisalVo> collectAppraisalList = new ArrayList<AppraisalVo>();
+		collectAppraisalList = appManagerService.selectAppraisalList(parameter);
 		
 		resultData.put("data", collectAppraisalList);
 		resultData.put("baseUrl", "/api/raisal/collect/"+appId);
-		resultData.put("totPages", 10);
-		resultData.put("currPage", currPage);
+		resultData.put("totPages", totPages);
+		resultData.put("currPage", reqPage);
 		resultData.put("size", size);
 		
 		return successWithPage(resultData);
@@ -121,5 +176,15 @@ public class AppraisalRestController extends BaseRestController {
 		result.setAppId(appId);
 		
 		return success(result);
+	}
+
+	private int getCalcuTotPage(long rowCount, int nSplitSize) {
+		int nValue = (int)(rowCount % nSplitSize);
+		int nPageValue = (int) Math.floor(rowCount / nSplitSize);
+		
+		if(nValue > 0) {
+			nPageValue += 1;
+		}
+		return nPageValue;
 	}
 }

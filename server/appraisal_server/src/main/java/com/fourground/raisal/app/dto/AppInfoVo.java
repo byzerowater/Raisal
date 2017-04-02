@@ -7,6 +7,8 @@ public class AppInfoVo {
 	private String targetOsCode;
 	private String appStatus;
 	private int nPartyUserCount;
+	private String startDtm;
+	private String endDtm;
 	
 	private String appraisalAvg;
 	
@@ -39,6 +41,18 @@ public class AppInfoVo {
 	}
 	public void setnPartyUserCount(int nPartyUserCount) {
 		this.nPartyUserCount = nPartyUserCount;
+	}
+	public String getStartDtm() {
+		return startDtm;
+	}
+	public void setStartDtm(String startDtm) {
+		this.startDtm = startDtm;
+	}
+	public String getEndDtm() {
+		return endDtm;
+	}
+	public void setEndDtm(String endDtm) {
+		this.endDtm = endDtm;
 	}
 	public String getAppraisalAvg() {
 		return appraisalAvg;

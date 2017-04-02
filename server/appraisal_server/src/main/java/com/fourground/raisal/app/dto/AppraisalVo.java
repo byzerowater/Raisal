@@ -5,6 +5,7 @@ public class AppraisalVo {
 	private String raisalComment;
 	private RaisalElement raisalPoint;
 	private String userName;
+	private String targetOsCode;
 	
 	public String getRaisalComment() {
 		return raisalComment;
@@ -23,5 +24,11 @@ public class AppraisalVo {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getTargetOsCode() {
+		return targetOsCode;
+	}
+	public void setTargetOsCode(String targetOsCode) {
+		this.targetOsCode = targetOsCode;
 	}
 }

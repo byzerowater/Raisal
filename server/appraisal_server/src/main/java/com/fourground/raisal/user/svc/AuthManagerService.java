@@ -16,7 +16,6 @@ import com.fourground.raisal.user.dto.MyChnlInfoVo;
 public class AuthManagerService {
 
 	@Autowired
-//	private ChannelAccountDao chnlAccntDao;
 	private IChannelAccountDao chnlAccntDao;
 	
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
@@ -53,16 +52,16 @@ public class AuthManagerService {
 	}
 	
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
-	public MyChnlInfoVo getMyInfo(String userId) {
-		return chnlAccntDao.getMyInfo(userId);
+	public MyChnlInfoVo getMyInfo(Map<String, Object> parameter) {
+		return chnlAccntDao.getMyInfo(parameter);
 	}
-	
+
 	private AuthInfoVo getAuthInfo(Map<String, Object> parameter) {
 		// 로그인 방식에 따라 둘 중 선택
 		// return chnlAccntDao.getAuthkey((String)parameter.get("userUid"));
 		return chnlAccntDao.getAuthKeyMap(parameter);
 	}
-	
+
 	private String generateLoginAuthKey(String userId) {
 		return "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";
 	}

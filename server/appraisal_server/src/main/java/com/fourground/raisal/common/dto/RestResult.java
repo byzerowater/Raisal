@@ -20,7 +20,7 @@ public class RestResult extends BaseModel {
 			
 			// set meta
 			meta = new HashMap<String, Object>();
-			meta.put("total-pages", (Integer)map.get("totPages"));
+			meta.put("total-pages", (int)map.get("totPages"));
 			
 			// set data
 			this.data = map.get("data");
