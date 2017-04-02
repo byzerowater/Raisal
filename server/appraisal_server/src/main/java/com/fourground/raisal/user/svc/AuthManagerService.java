@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fourground.raisal.user.dao.ChannelAccountDao;
+import com.fourground.raisal.user.dao.IChannelAccountDao;
 import com.fourground.raisal.user.dto.AuthInfoVo;
 import com.fourground.raisal.user.dto.MyChnlInfoVo;
 
@@ -16,10 +16,11 @@ import com.fourground.raisal.user.dto.MyChnlInfoVo;
 public class AuthManagerService {
 
 	@Autowired
-	private ChannelAccountDao chnlAccntDao;
+//	private ChannelAccountDao chnlAccntDao;
+	private IChannelAccountDao chnlAccntDao;
 	
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
-	public AuthInfoVo generateAuthKeyForUser(Map<String, Object> parameter) {
+	public AuthInfoVo generateAuthKeyForUser(Map<String, Object> parameter) throws Exception {
 		String userUid = (String)parameter.get("userUid");
 		
 		// 인증키 생성
@@ -33,9 +34,9 @@ public class AuthManagerService {
 			int nRowCnt = 0;
 			if(myAccntInfo != null && myAccntInfo.getUserId().length() > 0) {
 				// 기존회원이면 UPDATE
-				nRowCnt = chnlAccntDao.updateManager(parameter);
+				nRowCnt = chnlAccntDao.updateChnlAccntByUserid(parameter);
 			} else {
-				nRowCnt = chnlAccntDao.insertManager(parameter);
+				nRowCnt = chnlAccntDao.insertChnlAccnt(parameter);
 				myAccntInfo =  this.getAuthInfo(parameter);
 			}
 			if(nRowCnt == 1) {
@@ -45,6 +46,7 @@ public class AuthManagerService {
 			}
 		} catch(Exception ex) {
 			// 인증키 업데이트 실패
+			throw new Exception(ex);
 		}
 		
 		return myAccntInfo;
@@ -58,7 +60,7 @@ public class AuthManagerService {
 	private AuthInfoVo getAuthInfo(Map<String, Object> parameter) {
 		// 로그인 방식에 따라 둘 중 선택
 		// return chnlAccntDao.getAuthkey((String)parameter.get("userUid"));
-		return chnlAccntDao.getAuthKeyByParam(parameter);
+		return chnlAccntDao.getAuthKeyMap(parameter);
 	}
 	
 	private String generateLoginAuthKey(String userId) {

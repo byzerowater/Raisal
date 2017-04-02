@@ -39,14 +39,13 @@ public class LoginRestController extends BaseRestController {
 	{
 		Map<String, Object> parameter = requestBody.getBody();
 		
-		AuthInfoVo authInfoVo = authManageService.generateAuthKeyForUser(parameter);
+		AuthInfoVo authInfoVo = null;
 		
-//		authInfoVo.setAuthKey("L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6");
-//		authInfoVo.setChannelCode((String)requestBody.getBody().get("chnCode"));
-//		authInfoVo.setEmail("project4ground@gmail.com");
-//		authInfoVo.setNickName("멋진남자");
-//		authInfoVo.setRegAppCount("3");
-//		authInfoVo.setUserId("project4ground-random");
+		try {
+			authInfoVo = authManageService.generateAuthKeyForUser(parameter);
+		} catch(Exception ex) {
+			return dbFail(ex.getMessage());
+		}
 		
 		return success(authInfoVo);
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.fourground.raisal.user.dao.ChannelAccountDao">
+<mapper namespace="com.fourground.raisal.user.dao.IChannelAccountDao">
 
 	<!-- user_id, email, chnl_cd, user_nm, auth_key, reg_app_cnt -->
 
@@ -57,7 +57,7 @@
 		<include refid='Condition_JustOne'></include>
 	</select>
 	
-	<select id="getAuthKeyMap" parameterType="hmap" resultMap="authInfoMap">
+	<select id="getAuthKeyMap" parameterType="HashMap" resultMap="authInfoMap">
 		<include refid='getAuthorizeKey'></include>
 		WHERE 1=1
 		<include refid='Conditions_byUser'></include>
@@ -71,37 +71,37 @@
 		<include refid='Condition_JustOne'></include>
 	</select>
 	
-	<insert id="insertChnlAccnt" parameterType="hmap">
+	<insert id="insertChnlAccnt" parameterType="HashMap">
 		INSERT INTO CO_CH_ACNT (
 			user_id
 			,email
 			<if test='userNm != null'>
-			,userNm
+			,user_nm
 			</if>
-			,authKey
+			,auth_Key
 			,chnl_cd
-			,regAppCnt
+			,reg_app_cnt
 			,mod_id
 			,mod_dtm
 			,reg_id
 			,reg_dtm
 		) VALUES(
-			#{user_id}
+			#{userUid}
 			,#{email}
 			<if test='userNm != null'>
 			,#{userNm}
 			</if>
 			,#{authKey}
-			,#{chnlCd}
+			,#{channelCode}
 			,0
-			,now()
 			,'APISYSTEM'
 			,now()
 			,'APISYSTEM'
+			,now()
 		)
 	</insert>
 	
-	<update id="updateChnlAccntByUserid" parameterType="hmap">
+	<update id="updateChnlAccntByUserid" parameterType="HashMap">
 		UPDATE CO_CH_ACNT
 		<trim prefix='SET' suffixOverrides=','>
 			<if test='email != null'>email = #{email},</if>
@@ -109,7 +109,7 @@
 			<if test='authKey != null'>auth_key = #{authKey},</if>
 			<if test='regAppCnt != null'>reg_app_cnt = #{regAppCnt},</if>
 			<if test='userId != null'>
-			mod_id = #{userId},
+			mod_id = 'APISYSTEM',
 			mod_dtm = now()
 			</if>
 		</trim>

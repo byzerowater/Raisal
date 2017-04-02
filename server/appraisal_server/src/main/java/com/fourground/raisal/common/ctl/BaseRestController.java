@@ -22,6 +22,9 @@ public class BaseRestController {
 		return new ResponseEntity<Object>(restResult, HttpStatus.OK);
 	}	
 	
+	protected ResponseEntity<Object> dbFail(String errMsg) {
+		return new ResponseEntity<Object>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	protected ResponseEntity<Object> fail(Object data, String errMsg) {
 		return new ResponseEntity<Object>(data, HttpStatus.BAD_REQUEST);
