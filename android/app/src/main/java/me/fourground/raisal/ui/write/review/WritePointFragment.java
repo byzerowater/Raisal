@@ -95,7 +95,7 @@ public class WritePointFragment extends Fragment {
     @OnClick(R.id.btn_confirm)
     public void onViewClicked() {
         WriteReviewActivity activity = (WriteReviewActivity) getActivity();
-        activity.getRegisterReviewRequest().setRaisalPoint(mWritePointAdapter.getPoint());
+        activity.getRegisterReviewRequest().setPoint(mWritePointAdapter.getPoint());
         activity.getRegisterReviewRequest().setComment(mEtPlayStoreUrl.getText().toString());
         activity.registerApp();
     }

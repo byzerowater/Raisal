@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Subscribe
-    public void onRegisterCompleted(BusEvent.RegisterCompleted event) {
+    public void onRegisterCompleted(BusEvent.RegisterAppCompleted event) {
         AppInfoData appInfoData = event.getAppInfoData();
         mAppAdapter.addAppData(appInfoData);
         mAppAdapter.notifyDataSetChanged();

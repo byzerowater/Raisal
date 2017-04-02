@@ -11,6 +11,7 @@ import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.data.model.RegisterData;
 import me.fourground.raisal.data.model.RegisterReviewRequest;
+import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.data.model.ReviewListData;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
@@ -45,6 +46,7 @@ public class DataManager {
         return mNetworkService.signIn(signInRequest)
                 .map(signData -> {
                     mPreferencesHelper.putAccessToken(signData.getAuthKey());
+                    mPreferencesHelper.putSignData(signData);
                     return signData;
                 });
     }
@@ -83,12 +85,19 @@ public class DataManager {
                             0,
                             Const.APPRAISAL_TYPE_ACTIVIE,
                             Const.STORE_TYPE_ADR);
-                    postEventSafelyAction(new BusEvent.RegisterCompleted(data));
+                    postEventSafelyAction(new BusEvent.RegisterAppCompleted(data));
                 });
     }
 
     public Observable<RegisterData> registerApp(String appId, RegisterReviewRequest registerReviewRequest) {
-        return mNetworkService.registerApp(appId, registerReviewRequest);
+        return mNetworkService.registerApp(appId, registerReviewRequest)
+                .doOnNext(registerData ->  {
+                    ReviewData data = new ReviewData();
+                    data.setComment(registerReviewRequest.getComment());
+                    data.setPoint(registerReviewRequest.getPoint());
+                    data.setUserName(mPreferencesHelper.getSignData().getNickName());
+                    postEventSafelyAction(new BusEvent.RegisterReviewCompleted(data));
+                });
     }
 
     private String removeAccessToken() {
