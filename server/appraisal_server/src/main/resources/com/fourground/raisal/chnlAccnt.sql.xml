@@ -52,7 +52,10 @@
 	</sql>
 	
 	<sql id='Conditions_byUser'>
-		AND user_id = #{userUid}
+		<if test='userUid != null'>AND user_id = #{userUid}</if>
+	</sql>
+	<sql id='Conditions_byAuthKey'>
+		<if test='authKey != null'>AND auth_key = #{authKey}</if>
 	</sql>
 	<sql id='Condition_JustOne'>
 		LIMIT 1
@@ -69,6 +72,7 @@
 		<include refid='getAuthorizeKey'></include>
 		WHERE 1=1
 		<include refid='Conditions_byUser'></include>
+		<include refid='Conditions_byAuthKey'></include>
 		<include refid='Condition_JustOne'></include>
 	</select>
 	

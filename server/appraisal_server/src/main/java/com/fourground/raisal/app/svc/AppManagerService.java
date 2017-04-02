@@ -1,6 +1,10 @@
 package com.fourground.raisal.app.svc;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +17,8 @@ import com.fourground.raisal.app.dao.IAppraisalDao;
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
+import com.fourground.raisal.user.dao.IChannelAccountDao;
+import com.fourground.raisal.user.dto.AuthInfoVo;
 
 @Transactional(propagation=Propagation.REQUIRED,rollbackFor={Exception.class})
 @Service
@@ -20,6 +26,9 @@ public class AppManagerService {
 
 	@Autowired
 	private IAppraisalDao appraisalDao;
+	
+	@Autowired
+	private IChannelAccountDao channelAccountDao;
 
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
 	public AppInfoDetailVo getAppDetail(Map<String, Object> parameter) {
@@ -52,5 +61,111 @@ public class AppManagerService {
 	public long selectAppraisalListCount(Map<String, Object> parameter) {
 		Long listCnt = appraisalDao.selectAppraisalCount(parameter);
 		return listCnt != null ? listCnt.longValue() : 0L;
+	}
+	
+
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public String insertAppraisalDetail(Map<String, Object> parameter, String appId, String authKey) throws Exception {
+//		Map<String, Object> raisalPoint = (Map<String, Object>)parameter.get("raisalPoint");
+//		String useTerm = (String)parameter.get("useTerm");
+//		String platformCode = (String)parameter.get("platformCode");
+		
+		Map<String, Object> authParam = new HashMap<String, Object>();
+		authParam.put("authKey", authKey);
+		AuthInfoVo authInfoVo = channelAccountDao.getAuthKeyMap(authParam);
+		// get userid
+		String userId = authInfoVo.getUserId();
+		
+		if(userId == null || userId.length() <= 0) {
+			throw new Exception("Not found user.");
+		}
+		parameter.put("userId", userId);
+		parameter.put("appId", appId);
+
+		//
+		String aprsId = appraisalDao.getSeq("CO_APPR");
+		parameter.put("aprsId", aprsId);
+		
+		appraisalDao.insertAppraisalDetail(parameter);
+		
+		
+		String apprId = appraisalDao.getSeq("CO_APPR_RPLY");
+		parameter.put("apprId", apprId);
+		
+		appraisalDao.insertAppraisalReply(parameter);
+		
+		return aprsId;
+	}
+	
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public String registAppInfo(Map<String, Object> parameter, String authKey) throws Exception {
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> downloadInfoList = (List<Map<String,Object>>)parameter.get("downInfo");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date today = new Date();
+		
+		// term calcu
+		String strDtm = sdf.format(today);
+		String endDtm = getEndDtm(today, (String)parameter.get("reqTerm"));
+		
+		Map<String, Object> authParam = new HashMap<String, Object>();
+		authParam.put("authKey", authKey);
+		AuthInfoVo authInfoVo = channelAccountDao.getAuthKeyMap(authParam);
+		// get userid
+		String userId = authInfoVo.getUserId();
+		
+		if(userId == null || userId.length() <= 0) {
+			throw new Exception("Not found user.");
+		}
+		// get appId
+		String appId = appraisalDao.getSeq("CO_APPR_APP");
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("appId", appId);
+		param.put("appNm", parameter.get("appName"));
+		param.put("appTitle", parameter.get("title"));
+		param.put("appDesc", parameter.get("appDesc"));
+		param.put("apprStus", "A");	// Active
+		param.put("aprsStartDtm", strDtm);
+		param.put("aprsEndDtm", endDtm);
+		param.put("userId", userId);
+
+		int nInsertCnt = 0;
+		nInsertCnt = appraisalDao.insertAppMasterInfo(param);
+		
+		if(downloadInfoList != null && downloadInfoList.size() > 0) {
+			parameter.put("appId", appId);
+			parameter.put("userId", userId);
+			for(Map<String, Object> mapTemp : downloadInfoList) {
+				parameter.put("plfmCd", (String)mapTemp.get("platformCode"));
+				parameter.put("refUrl", (String)mapTemp.get("downUrl"));
+				parameter.put("refCd", "DU");	// Download Url
+
+				appraisalDao.insertRefUrl(parameter);
+			}
+		}
+		
+		return appId;
+	}
+	
+	private String getEndDtm(Date today, String aprsTerm) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		int nTermDays = 1;
+		if(aprsTerm != null) {
+			try {
+				nTermDays = Integer.parseInt(aprsTerm);
+			} catch (Exception ex) {
+			}
+		}
+
+		// today
+		Calendar calTemp = Calendar.getInstance( );
+		calTemp.setTime(today);
+		
+		// calculate
+		calTemp.add(Calendar.DATE, nTermDays);
+
+		return sdf.format(new Date(calTemp.getTimeInMillis()));
 	}
 }

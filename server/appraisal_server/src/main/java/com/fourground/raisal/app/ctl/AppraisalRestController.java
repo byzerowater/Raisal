@@ -144,16 +144,31 @@ public class AppraisalRestController extends BaseRestController {
 			,response=ResultVo.class)
 	@RequestMapping(value="/regist", method={RequestMethod.POST})
 	public ResponseEntity<Object> insertAppraisalInfo(
-			@ApiParam(name="body"
+			HttpServletRequest request
+			,@ApiParam(name="body"
 					,value="\"appName\":\"앱이름\","+BR+"\"title\":\"앱평가 제목\","+BR+"\"reqTerm\":\"테스트기간\","+BR+"\"appDesc\":\"앱설명\","
 							+BR+"\"downInfo\" : ["+BR+"{\"platformCode\":\"OS종류(IOS,ADR)\",\"downUrl\":\"다운로드주소\"},"
 							+BR+"{\"platformCode\":\"OS종류\",\"downUrl\":\"다운로드주소\"}]"+BR) @RequestBody RequestBodyVo requestBody)
 	{
+		Map<String,Object> parameter = requestBody.getBody();
 		ResultVo result = new ResultVo();
+		
+		// real
+//		int nInsrtCount = appManagerService.registAppInfo(parameter, request.getHeader("Authorization"));
+		// test
+		String appId = "";
+		
+		try {
+			String authKey = request.getHeader("Authorization");
+			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";					
+			appId = appManagerService.registAppInfo(parameter, authKey);
+		} catch (Exception ex) {
+			return authFail(ex.getMessage());
+		}
 		
 		result.setSuccess(true);
 		result.setMessage("등록성공");
-		result.setAppId("AP1234");
+		result.setAppId(appId);
 		
 		return success(result);
 	}
@@ -163,13 +178,23 @@ public class AppraisalRestController extends BaseRestController {
 			,response=ResultVo.class)
 	@RequestMapping(value="/vote/{appId}", method={RequestMethod.POST})
 	public ResponseEntity<Object> insertAppAppraisal(
-			@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId
+			HttpServletRequest request
+			,@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId
 			,@ApiParam(name="body"
 					,value="\"useTerm\":\"앱이용기간\","+BR+"\"platformCode\":\"OS종류(IOS,ADR)\","+BR
-					+"\"raisalPoint\" : "+BR+"{\"contents\":\"콘텐츠점수(5)\",\"design\":\"디자인점수(5)\",\"satisfaction\":\"지속성(5)\",\"useful\":\"사용성(5)\"}"+BR
+					+"\"raisalPoint\" : "+BR+"{\"contents\":\"콘텐츠점수(5)\",\"design\":\"디자인점수(5)\",\"satisfaction\":\"지속성(5)\",\"useful\":\"사용성(5)\"},"+BR
 					+"\"comment\" : \"사용소감\""+BR) @RequestBody RequestBodyVo requestBody)
 	{
+		Map<String,Object> parameter = requestBody.getBody();
 		ResultVo result = new ResultVo();
+		
+		try {
+			String authKey = request.getHeader("Authorization");
+			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";					
+			String aprsId = appManagerService.insertAppraisalDetail(parameter, appId, authKey);
+		} catch (Exception ex) {
+			return authFail(ex.getMessage());
+		}
 		
 		result.setSuccess(true);
 		result.setMessage("평가완료");
