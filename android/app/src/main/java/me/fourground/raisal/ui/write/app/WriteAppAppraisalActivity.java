@@ -25,7 +25,7 @@ import me.fourground.raisal.util.ViewHelper;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class WriteWriteAppAppraisalActivity extends BaseActivity implements WriteAppAppraisalMvpView {
+public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppAppraisalMvpView {
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -49,7 +49,7 @@ public class WriteWriteAppAppraisalActivity extends BaseActivity implements Writ
      * @return WriteWriteAppAppraisalActivity Intent
      */
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, WriteWriteAppAppraisalActivity.class);
+        Intent intent = new Intent(context, WriteAppAppraisalActivity.class);
         return intent;
     }
 
@@ -101,18 +101,15 @@ public class WriteWriteAppAppraisalActivity extends BaseActivity implements Writ
                 finish();
                 break;
             case R.id.btn_confirm:
-                Fragment fragment = ViewHelper.getFragment(R.id.fl_content, WriteWriteAppAppraisalActivity.this);
+                Fragment fragment = ViewHelper.getFragment(R.id.fl_content, WriteAppAppraisalActivity.this);
 
                 if (fragment != null) {
-                    if (fragment instanceof Checker) {
-                        if (((Checker) fragment).checkInputText()) {
-                            if (fragment instanceof WriteNameFragment) {
-                                ViewHelper.addToBackStackFragment(R.id.fl_content, WriteWriteAppAppraisalActivity.this, WriteDescriptionFragment.newInstance());
-                            } else {
-                                mWriteAppAppraisalPresenter.registerApp(mRegisterAppRequest);
-                            }
+                    if (fragment instanceof Checker && ((Checker) fragment).checkInputText()) {
+                        if (fragment instanceof WriteNameFragment) {
+                            ViewHelper.addToBackStackFragment(R.id.fl_content, WriteAppAppraisalActivity.this, WriteDescriptionFragment.newInstance());
+                        } else {
+                            mWriteAppAppraisalPresenter.registerApp(mRegisterAppRequest);
                         }
-
                     }
 
                     break;

@@ -69,6 +69,8 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
         mRvReview.setAdapter(mReviewAdapter);
 
+        mContentPresenter.getContent(getIntent().getStringExtra(EXTRA_APP_ID));
+
     }
 
     @Override

@@ -1,5 +1,9 @@
 package me.fourground.raisal.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +11,7 @@ import java.util.List;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class RegisterAppRequest {
+public class RegisterAppRequest implements Parcelable {
 
 
     /**
@@ -63,4 +67,42 @@ public class RegisterAppRequest {
     public void setDownInfo(List<StoreInfoData> downInfo) {
         this.downInfo = downInfo;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.appName);
+        dest.writeString(this.title);
+        dest.writeString(this.reqTerm);
+        dest.writeString(this.appDesc);
+        dest.writeList(this.downInfo);
+    }
+
+    public RegisterAppRequest() {
+    }
+
+    protected RegisterAppRequest(Parcel in) {
+        this.appName = in.readString();
+        this.title = in.readString();
+        this.reqTerm = in.readString();
+        this.appDesc = in.readString();
+        this.downInfo = new ArrayList<StoreInfoData>();
+        in.readList(this.downInfo, StoreInfoData.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<RegisterAppRequest> CREATOR = new Parcelable.Creator<RegisterAppRequest>() {
+        @Override
+        public RegisterAppRequest createFromParcel(Parcel source) {
+            return new RegisterAppRequest(source);
+        }
+
+        @Override
+        public RegisterAppRequest[] newArray(int size) {
+            return new RegisterAppRequest[size];
+        }
+    };
 }

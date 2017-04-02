@@ -9,12 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.model.PointViewData;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
@@ -37,6 +42,13 @@ public class WritePointFragment extends Fragment {
 
     Unbinder unbinder;
 
+    public static Fragment newInstance() {
+        Fragment fragment = new WritePointFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,10 +57,46 @@ public class WritePointFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        List<PointViewData> pointViewDatas = new ArrayList<>();
+
+        pointViewDatas.add(
+                new PointViewData(
+                        getString(R.string.text_design),
+                        getString(R.string.text_design_guide)));
+        pointViewDatas.add(
+                new PointViewData(
+                        getString(R.string.text_useful),
+                        getString(R.string.text_useful_guide)));
+        pointViewDatas.add(
+                new PointViewData(
+                        getString(R.string.text_contents),
+                        getString(R.string.text_contents_guide)));
+        pointViewDatas.add(
+                new PointViewData(
+                        getString(R.string.text_satisfaction),
+                        getString(R.string.text_satisfaction_guide)));
+
+
+        mWritePointAdapter.addPointDatas(pointViewDatas);
+
+        mRvPoints.setAdapter(mWritePointAdapter);
+
+    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.btn_confirm)
+    public void onViewClicked() {
+        WriteReviewActivity activity = (WriteReviewActivity) getActivity();
+        activity.getRegisterReviewRequest().setRaisalPoint(mWritePointAdapter.getPoint());
+        activity.getRegisterReviewRequest().setComment(mEtPlayStoreUrl.getText().toString());
+        activity.registerApp();
     }
 }

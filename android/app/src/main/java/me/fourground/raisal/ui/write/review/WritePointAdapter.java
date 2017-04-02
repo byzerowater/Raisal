@@ -16,6 +16,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.model.PointData;
+import me.fourground.raisal.data.model.PointViewData;
 import me.fourground.raisal.util.ListUtil;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
@@ -29,12 +31,12 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
 public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.PointHolder> {
 
     /**
-     * 리뷰 데이터들
+     * 점수 데이터들
      */
-    private List<String> mPointDatas;
+    private List<PointViewData> mPointDatas;
 
     /**
-     * 리뷰 Adapter
+     * 점수 Adapter
      */
     @Inject
     public WritePointAdapter() {
@@ -51,7 +53,16 @@ public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.Po
     @Override
     public void onBindViewHolder(PointHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        String s = mPointDatas.get(position);
+        PointViewData pointData = mPointDatas.get(position);
+
+        holder.mTvTitle.setText(pointData.getTitle());
+        holder.mTvExplanation.setText(pointData.getExplanation());
+        holder.mRbPointDesign.setRating(pointData.getPoint());
+
+        holder.mRbPointDesign.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            pointData.setPoint(rating);
+        });
+
     }
 
     @Override
@@ -59,19 +70,29 @@ public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.Po
         return ListUtil.getListCount(mPointDatas);
     }
 
-    public String getItem(int position) {
+    public PointViewData getItem(int position) {
         int itemCount = getItemCount();
-        String item = null;
+        PointViewData item = null;
 
-        if (itemCount > position && position < 0) {
+        if (itemCount > position && !(position < 0)) {
             item = mPointDatas.get(position);
         }
 
         return item;
     }
 
-    public void setPointDatas(List<String> pointDatas) {
-        mPointDatas = pointDatas;
+    public void addPointDatas(List<PointViewData> pointDatas) {
+        mPointDatas.addAll(pointDatas);
+    }
+
+    public PointData getPoint() {
+        PointData pointData = new PointData();
+        pointData.setDesign(getItem(0).getPoint());
+        pointData.setUseful(getItem(1).getPoint());
+        pointData.setContents(getItem(2).getPoint());
+        pointData.setSatisfaction(getItem(3).getPoint());
+
+        return pointData;
     }
 
 
@@ -84,7 +105,7 @@ public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.Po
         TextView mTvTitle;
         @BindView(R.id.tv_explanation)
         TextView mTvExplanation;
-        @BindView(R.id.rb_point_design)
+        @BindView(R.id.rb_point)
         RatingBar mRbPointDesign;
 
         public PointHolder(View itemView) {

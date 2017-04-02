@@ -45,7 +45,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.write.app.WriteWriteAppAppraisalActivity"
+            android:name=".ui.write.app.WriteAppAppraisalActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -53,7 +53,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.write.review.WriteWriteReviewActivity"
+            android:name=".ui.write.review.WriteReviewActivity"
             android:screenOrientation="portrait"/>
 
         <activity

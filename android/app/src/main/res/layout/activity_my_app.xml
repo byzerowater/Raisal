@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.write.review.WriteWriteReviewActivity">
+              tools:context="me.fourground.raisal.ui.write.review.WriteReviewActivity">
 
     <include layout="@layout/include_my_page_header" />
 

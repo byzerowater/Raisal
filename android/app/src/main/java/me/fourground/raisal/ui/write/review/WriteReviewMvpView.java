@@ -9,4 +9,6 @@ import me.fourground.raisal.ui.base.MvpView;
  * byzerowater@gmail.com
  */
 public interface WriteReviewMvpView extends MvpView {
+
+    void onRegister();
 }

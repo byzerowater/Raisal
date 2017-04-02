@@ -67,7 +67,7 @@ public class WriteNameFragment extends Fragment implements Checker {
         String name = mEtName.getText().toString();
         String storeUrl = mEtPlayStoreUrl.getText().toString();
 
-        RegisterAppRequest registerAppRequest = ((WriteWriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
+        RegisterAppRequest registerAppRequest = ((WriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
 
         registerAppRequest.setAppName(name);
 

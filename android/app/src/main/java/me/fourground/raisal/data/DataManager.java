@@ -10,6 +10,7 @@ import me.fourground.raisal.data.model.AppListData;
 import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.data.model.RegisterData;
+import me.fourground.raisal.data.model.RegisterReviewRequest;
 import me.fourground.raisal.data.model.ReviewListData;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
@@ -84,6 +85,10 @@ public class DataManager {
                             Const.STORE_TYPE_ADR);
                     postEventSafelyAction(new BusEvent.RegisterCompleted(data));
                 });
+    }
+
+    public Observable<RegisterData> registerApp(String appId, RegisterReviewRequest registerReviewRequest) {
+        return mNetworkService.registerApp(appId, registerReviewRequest);
     }
 
     private String removeAccessToken() {

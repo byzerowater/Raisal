@@ -7,13 +7,26 @@
     <string name="text_loading">loading</string>
 
     <string name="text_register">등록하기</string>
+    <string name="text_write_review">리뷰쓰기</string>
     <string name="text_hint_input_name">서비스 이름을 입력하세요.</string>
     <string name="text_error_input_name">서비스 이름은 필수 입니다.</string>
     <string name="text_hint_input_url">Google Play URL을 입력하세요.</string>
     <string name="text_error_input_url">유효하지 않는 URL 입니다.\n서비스의 Google Play URL을 확인 후 다시 입력하세요.</string>
 
+    <string name="text_used">예전 또는 현재 사용한 적 있다.</string>
+    <string name="text_first_time">처음 사용해봤다.</string>
+
     <string name="text_network_error">네트워크에 접속할 수 없습니다.</string>
     <string name="text_network_error_guide">네트워크 연결 상태를 확인해 주세요.</string>
+
+    <string name="text_design">디자인</string>
+    <string name="text_design_guide">레이아웃, 색상, 아이콘 등</string>
+    <string name="text_useful">사용성</string>
+    <string name="text_useful_guide">메뉴 이동, 인터랙션 등</string>
+    <string name="text_contents">콘텐츠</string>
+    <string name="text_contents_guide">정보의 유효성, 재미요소 등</string>
+    <string name="text_satisfaction">만족도</string>
+    <string name="text_satisfaction_guide">서비스의 필요성, 지속적인 사용 유무 등</string>
 
     <string name="action_confirm">확인</string>
     <string name="action_close">닫기</string>

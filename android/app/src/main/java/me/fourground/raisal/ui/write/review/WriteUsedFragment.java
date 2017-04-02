@@ -13,6 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.util.ViewHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-26.
@@ -43,6 +45,14 @@ public class WriteUsedFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        AppInfoData appInfoData = ((WriteReviewActivity) getActivity()).getAppInfoData();
+
+        mTvName.setText(appInfoData.getAppName());
+        mTvStore.setText(appInfoData.getTargetOsCode());
+    }
 
     @Override
     public void onDestroyView() {
@@ -54,9 +64,14 @@ public class WriteUsedFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_btn_used:
+                ((WriteReviewActivity) getActivity()).getRegisterReviewRequest().setUseTerm("2");
                 break;
             case R.id.rl_btn_first:
+                ((WriteReviewActivity) getActivity()).getRegisterReviewRequest().setUseTerm("1");
                 break;
         }
+        ViewHelper.addToBackStackFragment(R.id.fl_content, getActivity(), WritePointFragment.newInstance());
+
     }
+
 }

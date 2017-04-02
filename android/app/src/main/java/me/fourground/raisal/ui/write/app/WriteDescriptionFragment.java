@@ -60,7 +60,7 @@ public class WriteDescriptionFragment extends Fragment implements Checker {
 
         String term = checkedRadioButtonId == R.id.btn_7day ? "7" : "14";
 
-        RegisterAppRequest registerAppRequest = ((WriteWriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
+        RegisterAppRequest registerAppRequest = ((WriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
         registerAppRequest.setAppDesc(mEtDescription.getText().toString());
         registerAppRequest.setReqTerm(term);
 
