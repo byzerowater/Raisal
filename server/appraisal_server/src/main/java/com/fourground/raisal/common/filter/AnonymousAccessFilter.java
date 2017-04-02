@@ -23,7 +23,7 @@ public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 		boolean isAnnonyAccessible = FilterCommonUtil.isAnonyAccessible(request, anonymousAccessibleResources);
 		if(!isAnnonyAccessible /*&& userContainer.isAnonymous()*/) {
 			// authorizing api
-			String authKey = request.getHeader("authKey");
+			String authKey = request.getHeader("Authorization");
 //			if(authKey == null) {
 //				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
 //				System.out.println(request.getRequestURI());

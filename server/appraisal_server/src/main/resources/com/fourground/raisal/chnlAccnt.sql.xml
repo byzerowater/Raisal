@@ -11,6 +11,10 @@
 		<result column='email' property='email' ></result>
 		<result column='user_nm' property='nickName' ></result>
 		<result column='reg_app_cnt' property='regAppCount' ></result>
+		<result column='mod_dtm' property='modDtm' ></result>
+		<result column='mod_id' property='modId' ></result>
+		<result column='reg_dtm' property='regDtm' ></result>
+		<result column='reg_id' property='regId' ></result>
 	</resultMap>
 	
 	<resultMap type='com.fourground.raisal.user.dto.AuthInfoVo' id='authInfoMap'>
@@ -20,6 +24,10 @@
 		<result column='user_nm' property='nickName' ></result>
 		<result column='auth_key' property='authKey' ></result>
 		<result column='reg_app_cnt' property='regAppCount' ></result>
+		<result column='mod_dtm' property='modDtm' ></result>
+		<result column='mod_id' property='modId' ></result>
+		<result column='reg_dtm' property='regDtm' ></result>
+		<result column='reg_id' property='regId' ></result>
 	</resultMap>
 	
 	<sql id='getAuthorizeKey'>
@@ -64,7 +72,7 @@
 		<include refid='Condition_JustOne'></include>
 	</select>
 	
-	<select id="getMyInfo" parameterType="String" resultMap="chnlInfoMap">
+	<select id="getMyInfo" parameterType="HashMap" resultMap="chnlInfoMap">
 		<include refid='getMyChnlInformation'></include>
 		WHERE 1=1
 		<include refid='Conditions_byUser'></include>

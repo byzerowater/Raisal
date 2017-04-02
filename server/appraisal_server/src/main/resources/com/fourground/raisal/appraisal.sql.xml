@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fourground.raisal.app.dao.IAppraisalDao">
+
+	<!-- app_id, app_titl, app_nm, app_desc, appr_stus, aprs_str_dtm, aprs_end_dtm -->
+	
+	<!-- app_id, ref_url, ref_cd, plfm_cd, use_fg -->
+	
+	<resultMap type='com.fourground.raisal.app.dto.AppInfoVo' id='appInfoMap'>
+		<id column='app_id' property='appId' ></id>
+		<result column='app_nm' property='appName' ></result>
+		<result column='plfm_cd' property='targetOsCode' ></result>
+		<result column='appr_stus' property='appStatus' ></result>
+		<result column='aprs_cnt' property='nPartyUserCount' ></result>
+		<result column='aprs_pnt' property='appraisalAvg' ></result>
+		<result column='aprs_str_dtm' property='startDtm' ></result>
+		<result column='aprs_end_dtm' property='endDtm' ></result>
+	</resultMap>
+	
+	<resultMap type='com.fourground.raisal.app.dto.AppInfoDetailVo' id='appDetailInfoMap'>
+		<id column='app_id' property='appInfoVo.appId' ></id>
+		<result column='app_nm' property='appInfoVo.appName' ></result>
+		<result column='app_desc' property='appDesc' ></result>
+		<result column='ref_url' property='appDownloadUrl' ></result>
+		<result column='plfm_cd' property='appInfoVo.targetOsCode' ></result>
+		<result column='appr_stus' property='appInfoVo.appStatus' ></result>
+		<result column='aprs_cnt' property='appInfoVo.nPartyUserCount' ></result>
+		<result column='aprs_pnt' property='appInfoVo.appraisalAvg' ></result>
+		<result column='aprs_elmt1' property='appElement.contents' ></result>
+		<result column='aprs_elmt2' property='appElement.design' ></result>
+		<result column='aprs_elmt3' property='appElement.satisfaction' ></result>
+		<result column='aprs_elmt4' property='appElement.useful' ></result>
+		<result column='aprs_str_dtm' property='appInfoVo.startDtm' ></result>
+		<result column='aprs_end_dtm' property='appInfoVo.endDtm' ></result>
+		<result column='mod_dtm' property='modDtm' ></result>
+		<result column='mod_id' property='modId' ></result>
+		<result column='reg_dtm' property='regDtm' ></result>
+		<result column='reg_id' property='regId' ></result>
+	</resultMap>
+	
+	<resultMap type='com.fourground.raisal.app.dto.AppraisalVo' id='appraisalMap'>
+		<!-- <id column='aprs_id' property='aprs_id'></id> -->
+		<result column='aprs_txt' property='raisalComment' ></result>
+		<result column='aprs_reg_id' property='userName' ></result>
+		<result column='plfm_cd' property='targetOsCode' ></result>
+		<result column='aprs_elmt1' property='raisalPoint.contents' ></result>
+		<result column='aprs_elmt2' property='raisalPoint.design' ></result>
+		<result column='aprs_elmt3' property='raisalPoint.satisfaction' ></result>
+		<result column='aprs_elmt4' property='raisalPoint.useful' ></result>
+	</resultMap>
+	
+	
+<!-- 	<sql id='selectMaster'>
+		select 
+			MST.app_id
+			,MST.app_nm
+			,MST.app_desc
+			,MST.appr_stus
+			,MST.aprs_str_dtm
+			,MST.aprs_end_dtm
+			,MST.mod_dtm
+			,MST.mod_id
+	</sql> -->
+	
+	<sql id='selectMaster'>
+		select 
+			MST.app_id
+			,MST.app_nm
+			,MST.app_desc
+			,MST.appr_stus
+			,MST.aprs_str_dtm
+			,MST.aprs_end_dtm
+			,MST.mod_dtm
+			,MST.mod_id
+			,MST.reg_dtm
+			,MST.reg_id
+			,(select group_concat(plfm_cd) from CO_REF_URL where app_id = MST.app_id group by app_id) as plfm_cd
+			,CNT.aprs_cnt
+			,CONVERT(CNT.aprs_pnt / CNT.aprs_cnt, DECIMAL(10,1)) AS aprs_pnt
+	</sql>
+	
+	<sql id='includeUrl'>
+			,URL.plfm_cd
+			,URL.ref_url
+			,URL.ref_cd
+			,URL.use_fg
+	</sql>
+	
+	<sql id='includeCount'>
+			,CNT.aprs_cnt
+			,CNT.aprs_pnt
+	</sql>
+	
+	<sql id='joinUrl'>
+		LEFT JOIN CO_REF_URL AS URL ON URL.app_id = MST.app_id
+	</sql>
+	
+	<sql id='joinCnt'>
+		LEFT JOIN CO_APPR_CNT AS CNT ON CNT.app_id = MST.app_id
+	</sql>
+	
+	<sql id='joinReply'>
+		LEFT JOIN CO_APPR_RPLY AS RPL ON RPL.aprs_id = MST.aprs_id
+	</sql>
+	
+	
+	<sql id='querySelectAprs'>
+		select
+			MST.aprs_id
+			<!-- ,MST.reg_id AS aprs_reg_id -->
+			,(select user_nm from CO_CH_ACNT where user_id = MST.reg_id) AS aprs_reg_id
+			,RPL.aprs_txt AS aprs_txt
+			,MST.plfm_cd
+			<!-- ,MST.aprs_pnt -->
+			,MST.aprs_elmt1
+			,MST.aprs_elmt2
+			,MST.aprs_elmt3
+			,MST.aprs_elmt4
+	</sql>
+	
+	<sql id='conditionAppId'>
+		AND MST.app_id = #{appId}
+	</sql>
+	
+	<sql id='conditionOsCode'>
+		AND URL.plfm_cd = #{plfmCd}
+	</sql>
+	
+	<select id='getAppDetailInfo' resultMap='appDetailInfoMap' parameterType='HashMap'>
+		<include refid='selectMaster'></include>
+			,URL.ref_url
+			,CONVERT(CNT.aprs_elmt1 / CNT.aprs_cnt, DECIMAL(10,1)) AS aprs_elmt1
+			,CONVERT(CNT.aprs_elmt2 / CNT.aprs_cnt, DECIMAL(10,1)) AS aprs_elmt2
+			,CONVERT(CNT.aprs_elmt3 / CNT.aprs_cnt, DECIMAL(10,1)) AS aprs_elmt3
+			,CONVERT(CNT.aprs_elmt4 / CNT.aprs_cnt, DECIMAL(10,1)) AS aprs_elmt4
+		FROM
+			CO_APPR_APP AS MST
+		<include refid='joinUrl'></include>
+		<include refid='joinCnt'></include>
+		WHERE 1=1
+		<include refid='conditionOsCode'></include>
+		<include refid='conditionAppId'></include>
+	</select>
+	
+<!-- 	<select id='selectApprCnt' resultMap='appDetailInfoMap' parameterType='HashMap'>
+		<include refid='selectMaster'></include>
+		<include refid='includeCount'></include>
+		FROM
+			CO_APPR_APP AS MST
+		<include refid='joinCnt'></include>
+		WHERE 1=1
+		<include refid='conditionAppId'></include>
+	</select> -->
+	
+	<select id='selectAppInfoList' resultMap='appInfoMap' parameterType='HashMap'>
+		<include refid='common.paging-top'></include>
+		<include refid='selectMaster'></include>
+		FROM
+			CO_APPR_APP AS MST
+		<include refid='joinCnt'></include>
+		WHERE 1=1
+		<include refid='common.paging-bottom'></include>
+	</select>
+	
+	<select id='selectAppInfoListCount' resultType='Long' parameterType='HashMap'>
+		<include refid='common.count-top'></include>
+		<include refid='selectMaster'></include>
+		FROM
+			CO_APPR_APP AS MST
+		<include refid='joinCnt'></include>
+		WHERE 1=1
+		<include refid='common.count-bottom'></include>
+	</select>
+	
+	
+	<select id='selectAppraisalList' resultMap='appraisalMap' parameterType='HashMap'>
+		<include refid='common.paging-top'></include>
+		<include refid='querySelectAprs'></include>
+		FROM
+			CO_APPR AS MST
+		<include refid='joinReply'></include>
+		WHERE 1=1
+		<include refid='conditionAppId'></include>
+		<include refid='common.paging-bottom'></include>
+	</select>
+	
+	<select id='selectAppraisalCount' resultType='Long' parameterType='HashMap'>
+		<include refid='common.count-top'></include>
+		<include refid='querySelectAprs'></include>
+		FROM
+			CO_APPR AS MST
+		<include refid='joinReply'></include>
+		WHERE 1=1
+		<include refid='conditionAppId'></include>
+		<include refid='common.count-bottom'></include>
+	</select>
+</mapper>

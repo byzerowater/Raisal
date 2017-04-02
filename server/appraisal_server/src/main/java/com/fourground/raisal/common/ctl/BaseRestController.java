@@ -10,15 +10,12 @@ public class BaseRestController {
 	protected final String BR = "<BR>";
 	
 	protected ResponseEntity<Object> success(Object data) {
-//		RestResult restResult = new RestResult();
 		return new ResponseEntity<Object>(data, HttpStatus.OK);
 	}
 	
 	protected ResponseEntity<Object> successWithPage(Object data) {
-		
 		RestResult restResult = new RestResult();
 		restResult.init(data);
-		
 		return new ResponseEntity<Object>(restResult, HttpStatus.OK);
 	}	
 	
