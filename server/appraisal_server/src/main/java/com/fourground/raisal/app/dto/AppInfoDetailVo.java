@@ -4,8 +4,8 @@ public class AppInfoDetailVo {
 
 	private String appDesc;
 	private String appDownloadUrl;
-	private String raisalStartDtm;
-	private String raisalEndDtm;
+	private String startDtm;
+	private String endDtm;
 	
 	private AppInfoVo appInfoVo;
 
@@ -25,20 +25,20 @@ public class AppInfoDetailVo {
 		this.appDownloadUrl = appDownloadUrl;
 	}
 
-	public String getRaisalStartDtm() {
-		return raisalStartDtm;
+	public String getStartDtm() {
+		return startDtm;
 	}
 
-	public void setRaisalStartDtm(String raisalStartDtm) {
-		this.raisalStartDtm = raisalStartDtm;
+	public void setStartDtm(String startDtm) {
+		this.startDtm = startDtm;
 	}
 
-	public String getRaisalEndDtm() {
-		return raisalEndDtm;
+	public String getEndDtm() {
+		return endDtm;
 	}
 
-	public void setRaisalEndDtm(String raisalEndDtm) {
-		this.raisalEndDtm = raisalEndDtm;
+	public void setEndDtm(String endDtm) {
+		this.endDtm = endDtm;
 	}
 
 	public AppInfoVo getAppInfoVo() {
