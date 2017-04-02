@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.write.review.WriteWriteReviewActivity">
+              tools:context="me.fourground.raisal.ui.write.review.WriteReviewActivity">
 
     <include layout="@layout/include_write_header" />
 
@@ -13,11 +13,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/btn_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
 
 </LinearLayout>

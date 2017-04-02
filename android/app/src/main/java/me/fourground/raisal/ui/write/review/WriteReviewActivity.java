@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.data.model.RegisterReviewRequest;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.util.ViewHelper;
@@ -19,13 +24,23 @@ import me.fourground.raisal.util.ViewHelper;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class WriteWriteReviewActivity extends BaseActivity implements WriteReviewMvpView {
+public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpView {
+
+    private static final String EXTRA_APP_DATA = "EXTRA_APP_DATA";
 
 
     @Inject
     WriteReviewPresenter mWriteReviewPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
+    @BindView(R.id.btn_pre)
+    Button mBtnPre;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+
+    private AppInfoData mAppInfoData;
+
+    private RegisterReviewRequest mRegisterReviewRequest = new RegisterReviewRequest();
 
     /**
      * WriteWriteReviewActivity 가져오기
@@ -33,8 +48,9 @@ public class WriteWriteReviewActivity extends BaseActivity implements WriteRevie
      * @param context Context
      * @return WriteWriteReviewActivity Intent
      */
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, WriteWriteReviewActivity.class);
+    public static Intent getStartIntent(Context context, AppInfoData appInfoData) {
+        Intent intent = new Intent(context, WriteReviewActivity.class);
+        intent.putExtra(EXTRA_APP_DATA, appInfoData);
         return intent;
     }
 
@@ -46,7 +62,11 @@ public class WriteWriteReviewActivity extends BaseActivity implements WriteRevie
         ButterKnife.bind(this);
         mWriteReviewPresenter.attachView(this);
 
-        ViewHelper.addFragment(R.id.fl_content, WriteWriteReviewActivity.this, WriteUsedFragment.newInstance());
+        mAppInfoData = getIntent().getParcelableExtra(EXTRA_APP_DATA);
+
+        mTvTitle.setText(R.string.text_write_review);
+        mBtnPre.setVisibility(View.GONE);
+        ViewHelper.addFragment(R.id.fl_content, WriteReviewActivity.this, WriteUsedFragment.newInstance());
     }
 
     @Override
@@ -69,15 +89,33 @@ public class WriteWriteReviewActivity extends BaseActivity implements WriteRevie
 
     }
 
+    public void registerApp() {
+        mWriteReviewPresenter.registerApp(mAppInfoData.getAppId(), mRegisterReviewRequest);
+    }
+
+    public AppInfoData getAppInfoData() {
+        return mAppInfoData;
+    }
+
+    public RegisterReviewRequest getRegisterReviewRequest() {
+        return mRegisterReviewRequest;
+    }
+
     @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_pre:
+                mBtnPre.setVisibility(View.GONE);
+                onBackPressed();
                 break;
             case R.id.btn_cancel:
-                break;
-            case R.id.btn_confirm:
+                finish();
                 break;
         }
+    }
+
+    @Override
+    public void onRegister() {
+        finish();
     }
 }

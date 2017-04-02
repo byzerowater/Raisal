@@ -1,11 +1,14 @@
 package me.fourground.raisal.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by YoungSoo Kim on 2017-04-01.
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class AppInfoData {
+public class AppInfoData implements Parcelable {
 
         /**
          * appId : string
@@ -79,4 +82,40 @@ public class AppInfoData {
         public void setTargetOsCode(String targetOsCode) {
             this.targetOsCode = targetOsCode;
         }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.appId);
+        dest.writeString(this.appName);
+        dest.writeString(this.appraisalAvg);
+        dest.writeInt(this.nPartyUserCount);
+        dest.writeString(this.stat);
+        dest.writeString(this.targetOsCode);
+    }
+
+    protected AppInfoData(Parcel in) {
+        this.appId = in.readString();
+        this.appName = in.readString();
+        this.appraisalAvg = in.readString();
+        this.nPartyUserCount = in.readInt();
+        this.stat = in.readString();
+        this.targetOsCode = in.readString();
+    }
+
+    public static final Parcelable.Creator<AppInfoData> CREATOR = new Parcelable.Creator<AppInfoData>() {
+        @Override
+        public AppInfoData createFromParcel(Parcel source) {
+            return new AppInfoData(source);
+        }
+
+        @Override
+        public AppInfoData[] newArray(int size) {
+            return new AppInfoData[size];
+        }
+    };
 }

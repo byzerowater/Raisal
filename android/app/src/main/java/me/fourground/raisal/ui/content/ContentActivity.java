@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,6 +15,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.ReviewData;
@@ -28,13 +32,6 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     private static final String EXTRA_APP_ID = "extra_app_id";
 
-
-    @Inject
-    ContentPresenter mContentPresenter;
-    @Inject
-    LoadingDialog mLoadingDialog;
-    @Inject
-    ReviewAdapter mReviewAdapter;
     @BindView(R.id.tv_name)
     TextView mTvName;
     @BindView(R.id.tv_store)
@@ -45,6 +42,15 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     TextView mTvDate;
     @BindView(R.id.rv_review)
     LinearRecyclerView mRvReview;
+
+    @Inject
+    ContentPresenter mContentPresenter;
+    @Inject
+    LoadingDialog mLoadingDialog;
+    @Inject
+    ReviewAdapter mReviewAdapter;
+    @Inject
+    Bus mEventBus;
 
     /**
      * ContentActivity 가져오기
@@ -66,8 +72,11 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
         setContentView(R.layout.activity_content);
         ButterKnife.bind(this);
         mContentPresenter.attachView(this);
+        mEventBus.register(this);
 
         mRvReview.setAdapter(mReviewAdapter);
+
+        mContentPresenter.getContent(getIntent().getStringExtra(EXTRA_APP_ID));
 
     }
 
@@ -75,6 +84,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     protected void onDestroy() {
         super.onDestroy();
         mContentPresenter.detachView();
+        mEventBus.unregister(this);
     }
 
     @Override
@@ -103,6 +113,13 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     @Override
     public void onReviewList(List<ReviewData> reviewDatas) {
         mReviewAdapter.addReviewDatas(reviewDatas);
+        mReviewAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void onRegisterCompleted(BusEvent.RegisterReviewCompleted event) {
+        ReviewData reviewData = event.getReviewData();
+        mReviewAdapter.addReviewData(reviewData);
         mReviewAdapter.notifyDataSetChanged();
     }
 }

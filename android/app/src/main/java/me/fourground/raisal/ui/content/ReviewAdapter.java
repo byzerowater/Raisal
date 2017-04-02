@@ -83,6 +83,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         mReviewDatas.addAll(reviewDatas);
     }
 
+    public void addReviewData(ReviewData reviewData) {
+        mReviewDatas.add(reviewData);
+    }
+
     /**
      * 리뷰 Holder
      */

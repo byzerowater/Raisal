@@ -10,9 +10,9 @@ import me.fourground.raisal.ui.mypage.app.MyAppActivity;
 import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 import me.fourground.raisal.ui.signin.SignInActivity;
 import me.fourground.raisal.ui.splash.SplashActivity;
-import me.fourground.raisal.ui.write.app.WriteWriteAppAppraisalActivity;
+import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
 import me.fourground.raisal.ui.write.app.WriteAppAppraisalCompleteActivity;
-import me.fourground.raisal.ui.write.review.WriteWriteReviewActivity;
+import me.fourground.raisal.ui.write.review.WriteReviewActivity;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
@@ -23,9 +23,9 @@ public interface ActivityComponent {
 
     void inject(MainActivity mainActivity);
 
-    void inject(WriteWriteAppAppraisalActivity writeAppAppraisalActivity);
+    void inject(WriteAppAppraisalActivity writeAppAppraisalActivity);
 
-    void inject(WriteWriteReviewActivity writeReviewActivity);
+    void inject(WriteReviewActivity writeReviewActivity);
 
     void inject(MyPageActivity myPageActivity);
 

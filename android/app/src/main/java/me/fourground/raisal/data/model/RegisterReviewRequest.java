@@ -11,13 +11,13 @@ public class RegisterReviewRequest {
     /**
      * useTerm : 앱이용기간
      * platformCode : OS종류(IOS,ADR)
-     * raisalPoint : {"contents":4.8,"design":4.8,"durability":4.8,"useful":4.8}
+     * point : {"contents":4.8,"design":4.8,"durability":4.8,"useful":4.8}
      * comment : 사용소감
      */
 
     private String useTerm;
     private String platformCode;
-    private PointData raisalPoint;
+    private PointData point;
     private String comment;
 
     public String getUseTerm() {
@@ -36,12 +36,12 @@ public class RegisterReviewRequest {
         this.platformCode = platformCode;
     }
 
-    public PointData getRaisalPoint() {
-        return raisalPoint;
+    public PointData getPoint() {
+        return point;
     }
 
-    public void setRaisalPoint(PointData raisalPoint) {
-        this.raisalPoint = raisalPoint;
+    public void setPoint(PointData point) {
+        this.point = point;
     }
 
     public String getComment() {
