@@ -10,78 +10,102 @@ import android.os.Parcelable;
  */
 public class AppInfoData implements Parcelable {
 
-        /**
-         * appId : string
-         * appName : string
-         * appraisalAvg : string
-         * nPartyUserCount : 0
-         * stat : string
-         * targetOsCode : string
-         */
 
-        private String appId;
-        private String appName;
-        private String appraisalAvg;
-        private int nPartyUserCount;
-        private String stat;
-        private String targetOsCode;
+    /**
+     * appId : string
+     * appName : string
+     * appStatus : string
+     * appraisalAvg : string
+     * endDtm : string
+     * nPartyUserCount : 0
+     * startDtm : string
+     * targetOsCode : string
+     */
 
-    public AppInfoData(String appId, String appName, String appraisalAvg, int nPartyUserCount, String stat, String targetOsCode) {
+    private String appId;
+    private String appName;
+    private String appStatus;
+    private String startDtm;
+    private String endDtm;
+    private String targetOsCode;
+    private float appraisalAvg;
+    private int nPartyUserCount;
+
+
+    public AppInfoData(String appId, String appName, String appStatus, String startDtm, String endDtm, String targetOsCode, float appraisalAvg, int nPartyUserCount) {
         this.appId = appId;
         this.appName = appName;
+        this.appStatus = appStatus;
+        this.startDtm = startDtm;
+        this.endDtm = endDtm;
+        this.targetOsCode = targetOsCode;
         this.appraisalAvg = appraisalAvg;
         this.nPartyUserCount = nPartyUserCount;
-        this.stat = stat;
-        this.targetOsCode = targetOsCode;
     }
 
     public String getAppId() {
-            return appId;
-        }
+        return appId;
+    }
 
-        public void setAppId(String appId) {
-            this.appId = appId;
-        }
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
-        public String getAppName() {
-            return appName;
-        }
+    public String getAppName() {
+        return appName;
+    }
 
-        public void setAppName(String appName) {
-            this.appName = appName;
-        }
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
-        public String getAppraisalAvg() {
-            return appraisalAvg;
-        }
+    public String getAppStatus() {
+        return appStatus;
+    }
 
-        public void setAppraisalAvg(String appraisalAvg) {
-            this.appraisalAvg = appraisalAvg;
-        }
+    public void setAppStatus(String appStatus) {
+        this.appStatus = appStatus;
+    }
 
-        public int getNPartyUserCount() {
-            return nPartyUserCount;
-        }
+    public float getAppraisalAvg() {
+        return appraisalAvg;
+    }
 
-        public void setNPartyUserCount(int nPartyUserCount) {
-            this.nPartyUserCount = nPartyUserCount;
-        }
+    public void setAppraisalAvg(float appraisalAvg) {
+        this.appraisalAvg = appraisalAvg;
+    }
 
-        public String getStat() {
-            return stat;
-        }
+    public String getEndDtm() {
+        return endDtm;
+    }
 
-        public void setStat(String stat) {
-            this.stat = stat;
-        }
+    public void setEndDtm(String endDtm) {
+        this.endDtm = endDtm;
+    }
 
-        public String getTargetOsCode() {
-            return targetOsCode;
-        }
+    public int getNPartyUserCount() {
+        return nPartyUserCount;
+    }
 
-        public void setTargetOsCode(String targetOsCode) {
-            this.targetOsCode = targetOsCode;
-        }
+    public void setNPartyUserCount(int nPartyUserCount) {
+        this.nPartyUserCount = nPartyUserCount;
+    }
+
+    public String getStartDtm() {
+        return startDtm;
+    }
+
+    public void setStartDtm(String startDtm) {
+        this.startDtm = startDtm;
+    }
+
+    public String getTargetOsCode() {
+        return targetOsCode;
+    }
+
+    public void setTargetOsCode(String targetOsCode) {
+        this.targetOsCode = targetOsCode;
+    }
 
     @Override
     public int describeContents() {
@@ -92,22 +116,27 @@ public class AppInfoData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.appId);
         dest.writeString(this.appName);
-        dest.writeString(this.appraisalAvg);
+        dest.writeString(this.appStatus);
+        dest.writeFloat(this.appraisalAvg);
+        dest.writeString(this.endDtm);
         dest.writeInt(this.nPartyUserCount);
-        dest.writeString(this.stat);
+        dest.writeString(this.startDtm);
         dest.writeString(this.targetOsCode);
     }
+
 
     protected AppInfoData(Parcel in) {
         this.appId = in.readString();
         this.appName = in.readString();
-        this.appraisalAvg = in.readString();
+        this.appStatus = in.readString();
+        this.appraisalAvg = in.readFloat();
+        this.endDtm = in.readString();
         this.nPartyUserCount = in.readInt();
-        this.stat = in.readString();
+        this.startDtm = in.readString();
         this.targetOsCode = in.readString();
     }
 
-    public static final Parcelable.Creator<AppInfoData> CREATOR = new Parcelable.Creator<AppInfoData>() {
+    public static final Creator<AppInfoData> CREATOR = new Creator<AppInfoData>() {
         @Override
         public AppInfoData createFromParcel(Parcel source) {
             return new AppInfoData(source);
@@ -118,4 +147,18 @@ public class AppInfoData implements Parcelable {
             return new AppInfoData[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "AppInfoData{" +
+                "appId='" + appId + '\'' +
+                ", appName='" + appName + '\'' +
+                ", appStatus='" + appStatus + '\'' +
+                ", appraisalAvg='" + appraisalAvg + '\'' +
+                ", endDtm='" + endDtm + '\'' +
+                ", nPartyUserCount=" + nPartyUserCount +
+                ", startDtm='" + startDtm + '\'' +
+                ", targetOsCode='" + targetOsCode + '\'' +
+                '}';
+    }
 }

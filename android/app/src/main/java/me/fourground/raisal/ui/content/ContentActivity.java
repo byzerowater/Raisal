@@ -103,11 +103,11 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     @Override
     public void onContent(ContentData contentData) {
-        AppInfoData appInfoVo = contentData.getAppInfoVo();
-        mTvName.setText(appInfoVo.getAppName());
-        mTvStore.setText(appInfoVo.getTargetOsCode());
-        mTvState.setText(appInfoVo.getStat());
-        mTvDate.setText(contentData.getStartDtm() + contentData.getEndDtm());
+        AppInfoData appInfo = contentData.getAppInfo();
+        mTvName.setText(appInfo.getAppName());
+        mTvStore.setText(appInfo.getTargetOsCode());
+        mTvState.setText(appInfo.getAppStatus());
+        mTvDate.setText(appInfo.getStartDtm() + appInfo.getEndDtm());
     }
 
     @Override

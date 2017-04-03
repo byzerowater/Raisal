@@ -101,7 +101,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         return mRegisterReviewRequest;
     }
 
-    @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})
+    @OnClick({R.id.btn_pre, R.id.btn_cancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_pre:

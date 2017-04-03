@@ -13,7 +13,6 @@ import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.injection.component.ApplicationComponent;
 import me.fourground.raisal.injection.component.DaggerApplicationComponent;
 import me.fourground.raisal.injection.module.ApplicationModule;
-
 import me.fourground.raisal.ui.signin.SignInActivity;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -24,7 +23,7 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class RaisalApplication extends Application  {
+public class RaisalApplication extends Application {
 
     @Inject
     Bus mEventBus;
@@ -36,9 +35,10 @@ public class RaisalApplication extends Application  {
     public void onCreate() {
         super.onCreate();
 
-//        if (BuildConfig.DEBUG)
-
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+        }
+
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
@@ -66,7 +66,7 @@ public class RaisalApplication extends Application  {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(s -> {
-                   startActivity(SignInActivity.getStartIntent(this));
+                    startActivity(SignInActivity.getStartIntent(this));
                 });
     }
 }

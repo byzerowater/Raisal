@@ -81,10 +81,12 @@ public class DataManager {
                     AppInfoData data = new AppInfoData(
                             registerData.getAppId(),
                             registAppRequest.getAppName(),
-                            registAppRequest.getAppDesc(),
-                            0,
                             Const.APPRAISAL_TYPE_ACTIVIE,
-                            Const.STORE_TYPE_ADR);
+                            "start",
+                            "end",
+                            Const.STORE_TYPE_ADR,
+                            0,
+                            0);
                     postEventSafelyAction(new BusEvent.RegisterAppCompleted(data));
                 });
     }
@@ -93,8 +95,9 @@ public class DataManager {
         return mNetworkService.registerApp(appId, registerReviewRequest)
                 .doOnNext(registerData ->  {
                     ReviewData data = new ReviewData();
-                    data.setComment(registerReviewRequest.getComment());
-                    data.setPoint(registerReviewRequest.getPoint());
+                    data.setAppComment(registerReviewRequest.getComment());
+                    data.setAppElement(registerReviewRequest.getAppElement());
+                    data.setTargetOsCode(Const.STORE_TYPE_ADR);
                     data.setUserName(mPreferencesHelper.getSignData().getNickName());
                     postEventSafelyAction(new BusEvent.RegisterReviewCompleted(data));
                 });

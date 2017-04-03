@@ -11,13 +11,13 @@ public class RegisterReviewRequest {
     /**
      * useTerm : 앱이용기간
      * platformCode : OS종류(IOS,ADR)
-     * point : {"contents":4.8,"design":4.8,"durability":4.8,"useful":4.8}
+     * appElement : {"contents":"콘텐츠점수(5)","design":"디자인점수(5)","satisfaction":"지속성(5)","useful":"사용성(5)"}
      * comment : 사용소감
      */
 
     private String useTerm;
     private String platformCode;
-    private PointData point;
+    private PointData appElement;
     private String comment;
 
     public String getUseTerm() {
@@ -36,12 +36,12 @@ public class RegisterReviewRequest {
         this.platformCode = platformCode;
     }
 
-    public PointData getPoint() {
-        return point;
+    public PointData getAppElement() {
+        return appElement;
     }
 
-    public void setPoint(PointData point) {
-        this.point = point;
+    public void setAppElement(PointData appElement) {
+        this.appElement = appElement;
     }
 
     public String getComment() {
@@ -51,6 +51,5 @@ public class RegisterReviewRequest {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
 
 }

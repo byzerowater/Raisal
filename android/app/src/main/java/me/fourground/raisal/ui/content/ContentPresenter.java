@@ -46,8 +46,10 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
     public void getContent(String appId) {
         getMvpView().showProgress(true);
 
+        mNextUrl =  mNextUrl.replace("{appId}" , appId);
+
         Observable<ContentData> content = mDataManager.getContent(appId);
-        Observable<List<ReviewData>> contentReviewList = mDataManager.getContentReviewList(appId)
+        Observable<List<ReviewData>> contentReviewList = mDataManager.getContentReviewList(mNextUrl)
                 .map(reviewListData -> {
                     mNextUrl = reviewListData.getLinks().getNext();
                     return reviewListData.getData();

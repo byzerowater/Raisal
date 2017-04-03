@@ -54,13 +54,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
         ReviewData reviewData = mReviewDatas.get(position);
 
         holder.mTvNickname.setText(reviewData.getUserName());
-        holder.mTvReview.setText(reviewData.getComment());
+        holder.mTvReview.setText(reviewData.getAppComment());
 
-        PointData point = reviewData.getPoint();
-        holder.mTvDesign.setText(String.valueOf(point.getDesign()));
-        holder.mTvContents.setText(String.valueOf(point.getContents()));
-        holder.mTvSatisfaction.setText(String.valueOf(point.getSatisfaction()));
-        holder.mTvUseful.setText(String.valueOf(point.getUseful()));
+        PointData point = reviewData.getAppElement();
+
+        String design = "0";
+        String contens = "0";
+        String satisfaction = "0";
+        String useful = "0";
+
+        if (point != null) {
+            design = String.valueOf(point.getDesign());
+            contens = String.valueOf(point.getContents());
+            satisfaction = String.valueOf(point.getSatisfaction());
+            useful = String.valueOf(point.getUseful());
+        }
+
+        holder.mTvDesign.setText(design);
+        holder.mTvContents.setText(contens);
+        holder.mTvSatisfaction.setText(satisfaction);
+        holder.mTvUseful.setText(useful);
     }
 
     @Override

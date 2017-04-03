@@ -9,29 +9,39 @@ public class ReviewData {
 
 
     /**
-     * comment : string
-     * point : {"contents":"string","design":"string","satisfaction":"string","useful":"string"}
+     * appComment : string
+     * appElement : {"contents":"string","design":"string","satisfaction":"string","useful":"string"}
+     * targetOsCode : string
      * userName : string
      */
 
-    private String comment;
-    private PointData point;
+    private String appComment;
+    private PointData appElement;
+    private String targetOsCode;
     private String userName;
 
-    public String getComment() {
-        return comment;
+    public String getAppComment() {
+        return appComment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setAppComment(String appComment) {
+        this.appComment = appComment;
     }
 
-    public PointData getPoint() {
-        return point;
+    public PointData getAppElement() {
+        return appElement;
     }
 
-    public void setPoint(PointData point) {
-        this.point = point;
+    public void setAppElement(PointData appElement) {
+        this.appElement = appElement;
+    }
+
+    public String getTargetOsCode() {
+        return targetOsCode;
+    }
+
+    public void setTargetOsCode(String targetOsCode) {
+        this.targetOsCode = targetOsCode;
     }
 
     public String getUserName() {
@@ -42,4 +52,13 @@ public class ReviewData {
         this.userName = userName;
     }
 
+    @Override
+    public String toString() {
+        return "ReviewData{" +
+                "appComment='" + appComment + '\'' +
+                ", appElement=" + appElement +
+                ", targetOsCode='" + targetOsCode + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
 }

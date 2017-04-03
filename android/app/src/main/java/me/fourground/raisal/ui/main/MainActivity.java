@@ -21,6 +21,7 @@ import me.fourground.raisal.ui.common.AppAdapter;
 import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
+import me.fourground.raisal.ui.write.review.WriteReviewActivity;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -64,8 +65,16 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         mRvApp.setAdapter(mAppAdapter);
 
-        mAppAdapter.setOnOrderItemClickListener(appItem -> {
-            ContentActivity.getStartIntent(MainActivity.this, appItem.getAppId());
+        mAppAdapter.setOnOrderItemClickListener(new AppAdapter.OnAppItemClickListener() {
+            @Override
+            public void onAppItemClick(AppInfoData appItem) {
+                startActivity(ContentActivity.getStartIntent(MainActivity.this, appItem.getAppId()));
+            }
+
+            @Override
+            public void onWriteItemClick(AppInfoData appItem) {
+                startActivity(WriteReviewActivity.getStartIntent(MainActivity.this, appItem));
+            }
         });
 
         mMainPresenter.getAppList();

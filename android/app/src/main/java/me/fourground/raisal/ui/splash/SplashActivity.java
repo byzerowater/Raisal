@@ -38,8 +38,11 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         mSplashPresenter.attachView(this);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         if (currentUser == null) {
-            mSplashPresenter.delaySplash();
+//            mSplashPresenter.delaySplash();
+            startActivity(SignInActivity.getStartIntent(SplashActivity.this));
+            finish();
         } else {
             signIn(currentUser);
         }
@@ -71,7 +74,6 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         mSplashPresenter.delaySplash();
     }
 
-    @Override
     public void onGoMain() {
         startActivity(SignInActivity.getStartIntent(this));
         finish();
@@ -79,11 +81,13 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     private void signIn(FirebaseUser user) {
         String loginType = Const.LOGIN_TYPE_GOOGLE;
-        for (UserInfo userInfo : user.getProviderData()) {
-            Timber.i("user " + userInfo.getProviderId());
-            if ("facebook.com".equals(userInfo.getProviderId())) {
-                loginType = Const.LOGIN_TYPE_FACEBOOK;
-                break;
+        if (user.getProviderData() != null) {
+            for (UserInfo userInfo : user.getProviderData()) {
+                Timber.i("user " + userInfo.getProviderId());
+                if ("facebook.com".equals(userInfo.getProviderId())) {
+                    loginType = Const.LOGIN_TYPE_FACEBOOK;
+                    break;
+                }
             }
         }
         // User is signed in

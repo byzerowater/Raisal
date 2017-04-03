@@ -5,11 +5,11 @@ import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
-import me.fourground.raisal.injection.ActivityContext;
-
 import dagger.Module;
 import dagger.Provides;
+import me.fourground.raisal.injection.ActivityContext;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
+import me.fourground.raisal.util.LoadingHelper;
 
 @Module
 public class ActivityModule {
@@ -38,6 +38,11 @@ public class ActivityModule {
     @Provides
     LoadingDialog provideLoadingDialog() {
         return new LoadingDialog(mActivity);
+    }
+
+    @Provides
+    LoadingHelper provideLoadingManager() {
+        return new LoadingHelper();
     }
 
 }

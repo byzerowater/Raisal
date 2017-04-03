@@ -20,6 +20,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -77,6 +78,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
                     @Override
                     public void onError(Throwable e) {
+                        Timber.e(e);
                         getMvpView().showProgress(false);
                         getMvpView().onError();
                     }

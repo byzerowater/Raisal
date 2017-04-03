@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.model.PointViewData;
+import me.fourground.raisal.ui.base.BaseFragment;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
 /**
@@ -27,7 +28,7 @@ import me.fourground.raisal.ui.views.LinearRecyclerView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class WritePointFragment extends Fragment {
+public class WritePointFragment extends BaseFragment {
 
 
     @BindView(R.id.rv_points)
@@ -47,6 +48,13 @@ public class WritePointFragment extends Fragment {
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        fragmentComponent().inject(this);
     }
 
     @Nullable
@@ -95,7 +103,7 @@ public class WritePointFragment extends Fragment {
     @OnClick(R.id.btn_confirm)
     public void onViewClicked() {
         WriteReviewActivity activity = (WriteReviewActivity) getActivity();
-        activity.getRegisterReviewRequest().setPoint(mWritePointAdapter.getPoint());
+        activity.getRegisterReviewRequest().setAppElement(mWritePointAdapter.getPoint());
         activity.getRegisterReviewRequest().setComment(mEtPlayStoreUrl.getText().toString());
         activity.registerApp();
     }

@@ -19,7 +19,10 @@ import butterknife.ButterKnife;
 import me.fourground.raisal.R;
 import me.fourground.raisal.common.Const;
 import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
+import me.fourground.raisal.ui.write.review.WriteReviewActivity;
 import me.fourground.raisal.util.ListUtil;
+import timber.log.Timber;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
@@ -36,6 +39,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public interface OnAppItemClickListener {
         void onAppItemClick(AppInfoData appItem);
+        void onWriteItemClick(AppInfoData appItem);
     }
 
     /**
@@ -76,7 +80,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         AppInfoData item = getItem(position);
         int type = VIEW_TYPE_EVALUATING;
-        if (Const.APPRAISAL_TYPE_FINISH.equals(item.getStat())) {
+        if (item != null && Const.APPRAISAL_TYPE_FINISH.equals(item.getAppStatus())) {
             type = VIEW_TYPE_END;
         }
         return type;
@@ -87,25 +91,34 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Context context = holder.itemView.getContext();
         AppInfoData data = mAppDatas.get(position);
 
-        if (Const.APPRAISAL_TYPE_FINISH.equals(data.getStat())) {
-            AppEvaluatingHolder evaluatingHolder = (AppEvaluatingHolder) holder;
-            evaluatingHolder.mTvName.setText(data.getAppName());
-            evaluatingHolder.mTvReviewCount.setText(String.valueOf(data.getNPartyUserCount()));
-            evaluatingHolder.mTvStore.setText(data.getTargetOsCode());
-            evaluatingHolder.mTvState.setText(data.getStat());
-        } else {
+        Timber.i(data.toString());
+
+        if (Const.APPRAISAL_TYPE_FINISH.equals(data.getAppStatus())) {
             AppEndHolder endHolder = (AppEndHolder) holder;
-            endHolder.mRbAverage.setRating(Float.parseFloat(data.getAppraisalAvg()));
-            endHolder.mTvAverage.setText(data.getAppraisalAvg());
+            endHolder.mRbAverage.setRating(data.getAppraisalAvg());
+            endHolder.mTvAverage.setText(String.valueOf(data.getAppraisalAvg()));
             endHolder.mTvDate.setText("add");
             endHolder.mTvReviewCount.setText(String.valueOf(data.getNPartyUserCount()));
             endHolder.mTvName.setText(data.getAppName());
             endHolder.mTvStore.setText(data.getTargetOsCode());
-            endHolder.mTvState.setText(data.getStat());
+            endHolder.mTvState.setText(data.getAppStatus());
+        } else {
+            AppEvaluatingHolder evaluatingHolder = (AppEvaluatingHolder) holder;
+            evaluatingHolder.mTvName.setText(data.getAppName());
+            evaluatingHolder.mTvReviewCount.setText(String.valueOf(data.getNPartyUserCount()));
+            evaluatingHolder.mTvStore.setText(data.getTargetOsCode());
+            evaluatingHolder.mTvState.setText(data.getAppStatus());
+            evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
+                if (mOnOrderItemClickListener != null) {
+                    mOnOrderItemClickListener.onWriteItemClick(data);
+                }
+            });
+
         }
 
         holder.itemView.setOnClickListener(
                 view -> {
+                    Timber.i("click");
                     if (mOnOrderItemClickListener != null) {
                         mOnOrderItemClickListener.onAppItemClick(data);
                     }
