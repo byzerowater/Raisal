@@ -2,22 +2,22 @@ package com.fourground.raisal.app.dto;
 
 public class AppraisalVo {
 
-	private String raisalComment;
-	private RaisalElement raisalPoint;
+	private String appComment;
+	private RaisalElement appElement;
 	private String userName;
 	private String targetOsCode;
 	
-	public String getRaisalComment() {
-		return raisalComment;
+	public String getAppComment() {
+		return appComment;
 	}
-	public void setRaisalComment(String raisalComment) {
-		this.raisalComment = raisalComment;
+	public void setAppComment(String appComment) {
+		this.appComment = appComment;
 	}
-	public RaisalElement getRaisalPoint() {
-		return raisalPoint;
+	public RaisalElement getAppElement() {
+		return appElement;
 	}
-	public void setRaisalPoint(RaisalElement raisalPoint) {
-		this.raisalPoint = raisalPoint;
+	public void setAppElement(RaisalElement appElement) {
+		this.appElement = appElement;
 	}
 	public String getUserName() {
 		return userName;

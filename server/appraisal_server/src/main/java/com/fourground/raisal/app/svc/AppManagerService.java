@@ -17,6 +17,7 @@ import com.fourground.raisal.app.dao.IAppraisalDao;
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
+import com.fourground.raisal.common.dto.RequestBodyVo;
 import com.fourground.raisal.user.dao.IChannelAccountDao;
 import com.fourground.raisal.user.dto.AuthInfoVo;
 
@@ -135,14 +136,12 @@ public class AppManagerService {
 		nInsertCnt = appraisalDao.insertAppMasterInfo(param);
 		
 		if(downloadInfoList != null && downloadInfoList.size() > 0) {
-			parameter.put("appId", appId);
-			parameter.put("userId", userId);
 			for(Map<String, Object> mapTemp : downloadInfoList) {
-				parameter.put("plfmCd", (String)mapTemp.get("platformCode"));
-				parameter.put("refUrl", (String)mapTemp.get("downUrl"));
-				parameter.put("refCd", "DU");	// Download Url
+				param.put("plfmCd", (String)mapTemp.get("platformCode"));
+				param.put("refUrl", (String)mapTemp.get("downUrl"));
+				param.put("refCd", "DU");	// Download Url
 
-				appraisalDao.insertRefUrl(parameter);
+				appraisalDao.insertRefUrl(param);
 			}
 		}
 		

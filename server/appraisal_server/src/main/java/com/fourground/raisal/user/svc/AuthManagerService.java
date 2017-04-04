@@ -22,6 +22,10 @@ public class AuthManagerService {
 	public AuthInfoVo generateAuthKeyForUser(Map<String, Object> parameter) throws Exception {
 		String userUid = (String)parameter.get("userUid");
 		
+		if(userUid == null || userUid.length() <= 0) {
+			throw new Exception("채널ID가 없습니다");
+		}
+		
 		// 인증키 생성
 		String authKey = generateLoginAuthKey(userUid);
 		

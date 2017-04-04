@@ -37,9 +37,8 @@ public class AccountRestController extends BaseRestController {
 			HttpServletRequest request
 			,@ApiParam(name="body", value="\"userUid\":\"채널사고유UID\"") @RequestBody RequestBodyVo requestBody)
 	{
-		Map<String,Object> parameter = requestBody.getBody();
-
-		MyChnlInfoVo myInfoVo = new MyChnlInfoVo();
+		Map<String, Object> parameter = requestBody.convertToMap();
+		MyChnlInfoVo myInfoVo = null;
 		
 		try {
 			myInfoVo = authManageService.getMyInfo(parameter);

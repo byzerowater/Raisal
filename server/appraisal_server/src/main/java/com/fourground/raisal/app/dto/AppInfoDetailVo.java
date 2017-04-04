@@ -9,7 +9,7 @@ public class AppInfoDetailVo extends BaseVo {
 	private String appDesc;
 	private String appDownloadUrl;
 	
-	private AppInfoVo appInfoVo;
+	private AppInfoVo appInfo;
 	
 	private RaisalElement appElement;
 
@@ -29,12 +29,12 @@ public class AppInfoDetailVo extends BaseVo {
 		this.appDownloadUrl = appDownloadUrl;
 	}
 
-	public AppInfoVo getAppInfoVo() {
-		return appInfoVo;
+	public AppInfoVo getAppInfo() {
+		return appInfo;
 	}
 
-	public void setAppInfoVo(AppInfoVo appInfoVo) {
-		this.appInfoVo = appInfoVo;
+	public void setAppInfo(AppInfoVo appInfo) {
+		this.appInfo = appInfo;
 	}
 
 	public RaisalElement getAppElement() {

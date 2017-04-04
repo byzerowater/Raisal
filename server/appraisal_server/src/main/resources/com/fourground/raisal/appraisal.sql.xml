@@ -19,20 +19,20 @@
 	</resultMap>
 	
 	<resultMap type='com.fourground.raisal.app.dto.AppInfoDetailVo' id='appDetailInfoMap'>
-		<id column='app_id' property='appInfoVo.appId' ></id>
-		<result column='app_nm' property='appInfoVo.appName' ></result>
+		<id column='app_id' property='appInfo.appId' ></id>
+		<result column='app_nm' property='appInfo.appName' ></result>
 		<result column='app_desc' property='appDesc' ></result>
 		<result column='ref_url' property='appDownloadUrl' ></result>
-		<result column='plfm_cd' property='appInfoVo.targetOsCode' ></result>
-		<result column='appr_stus' property='appInfoVo.appStatus' ></result>
-		<result column='aprs_cnt' property='appInfoVo.nPartyUserCount' ></result>
-		<result column='aprs_pnt' property='appInfoVo.appraisalAvg' ></result>
+		<result column='plfm_cd' property='appInfo.targetOsCode' ></result>
+		<result column='appr_stus' property='appInfo.appStatus' ></result>
+		<result column='aprs_cnt' property='appInfo.nPartyUserCount' ></result>
+		<result column='aprs_pnt' property='appInfo.appraisalAvg' ></result>
 		<result column='aprs_elmt1' property='appElement.contents' ></result>
 		<result column='aprs_elmt2' property='appElement.design' ></result>
 		<result column='aprs_elmt3' property='appElement.satisfaction' ></result>
 		<result column='aprs_elmt4' property='appElement.useful' ></result>
-		<result column='aprs_str_dtm' property='appInfoVo.startDtm' ></result>
-		<result column='aprs_end_dtm' property='appInfoVo.endDtm' ></result>
+		<result column='aprs_str_dtm' property='appInfo.startDtm' ></result>
+		<result column='aprs_end_dtm' property='appInfo.endDtm' ></result>
 		<result column='mod_dtm' property='modDtm' ></result>
 		<result column='mod_id' property='modId' ></result>
 		<result column='reg_dtm' property='regDtm' ></result>
@@ -41,13 +41,13 @@
 	
 	<resultMap type='com.fourground.raisal.app.dto.AppraisalVo' id='appraisalMap'>
 		<!-- <id column='aprs_id' property='aprs_id'></id> -->
-		<result column='aprs_txt' property='raisalComment' ></result>
+		<result column='aprs_txt' property='appComment' ></result>
 		<result column='aprs_reg_id' property='userName' ></result>
 		<result column='plfm_cd' property='targetOsCode' ></result>
-		<result column='aprs_elmt1' property='raisalPoint.contents' ></result>
-		<result column='aprs_elmt2' property='raisalPoint.design' ></result>
-		<result column='aprs_elmt3' property='raisalPoint.satisfaction' ></result>
-		<result column='aprs_elmt4' property='raisalPoint.useful' ></result>
+		<result column='aprs_elmt1' property='appElement.contents' ></result>
+		<result column='aprs_elmt2' property='appElement.design' ></result>
+		<result column='aprs_elmt3' property='appElement.satisfaction' ></result>
+		<result column='aprs_elmt4' property='appElement.useful' ></result>
 	</resultMap>
 	
 	
@@ -276,10 +276,10 @@
 			,#{appId}
 			,#{platformCode}
 			,#{aprsPtn}
-			,#{raisalPoint.contents}
-			,#{raisalPoint.design}
-			,#{raisalPoint.satisfaction}
-			,#{raisalPoint.useful}
+			,#{appElement.contents}
+			,#{appElement.design}
+			,#{appElement.satisfaction}
+			,#{appElement.useful}
 			,now()
 			,#{userId}
 			,now()
