@@ -67,7 +67,7 @@ public class MyPageActivity extends BaseActivity implements MyPageMvpView {
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

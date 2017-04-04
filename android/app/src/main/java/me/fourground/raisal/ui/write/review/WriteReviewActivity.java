@@ -83,7 +83,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

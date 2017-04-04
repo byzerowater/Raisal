@@ -19,6 +19,7 @@ import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.write.Checker;
 import me.fourground.raisal.util.FragmentHelper;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -74,10 +75,12 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
 
     @Override
     public void showProgress(boolean isShow) {
+
+        Timber.i("showProgress %s", isShow);
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

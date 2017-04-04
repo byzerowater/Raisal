@@ -66,7 +66,7 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

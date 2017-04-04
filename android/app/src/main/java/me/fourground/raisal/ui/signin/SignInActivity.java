@@ -247,7 +247,8 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+
+            mLoadingDialog.dismiss();
         }
     }
 

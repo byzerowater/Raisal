@@ -92,7 +92,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 
