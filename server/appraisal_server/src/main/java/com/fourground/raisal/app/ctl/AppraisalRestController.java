@@ -150,7 +150,7 @@ public class AppraisalRestController extends BaseRestController {
 							+BR+"\"downInfo\" : ["+BR+"{\"platformCode\":\"OS종류(IOS,ADR)\",\"downUrl\":\"다운로드주소\"},"
 							+BR+"{\"platformCode\":\"OS종류\",\"downUrl\":\"다운로드주소\"}]"+BR) @RequestBody RequestBodyVo requestBody)
 	{
-		Map<String,Object> parameter = requestBody.getBody();
+		Map<String, Object> parameter = requestBody.convertToMap();
 		ResultVo result = new ResultVo();
 		
 		// real
@@ -182,10 +182,10 @@ public class AppraisalRestController extends BaseRestController {
 			,@ApiParam(required=true, value="APP ID", name="appId") @PathVariable("appId") String appId
 			,@ApiParam(name="body"
 					,value="\"useTerm\":\"앱이용기간\","+BR+"\"platformCode\":\"OS종류(IOS,ADR)\","+BR
-					+"\"raisalPoint\" : "+BR+"{\"contents\":\"콘텐츠점수(5)\",\"design\":\"디자인점수(5)\",\"satisfaction\":\"지속성(5)\",\"useful\":\"사용성(5)\"},"+BR
+					+"\"appElement\" : "+BR+"{\"contents\":\"콘텐츠점수(5)\",\"design\":\"디자인점수(5)\",\"satisfaction\":\"지속성(5)\",\"useful\":\"사용성(5)\"},"+BR
 					+"\"comment\" : \"사용소감\""+BR) @RequestBody RequestBodyVo requestBody)
 	{
-		Map<String,Object> parameter = requestBody.getBody();
+		Map<String, Object> parameter = requestBody.convertToMap();
 		ResultVo result = new ResultVo();
 		
 		try {

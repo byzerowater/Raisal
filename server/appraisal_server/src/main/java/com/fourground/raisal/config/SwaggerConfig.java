@@ -18,7 +18,7 @@ public class SwaggerConfig {
           .select()                                  
 //          .apis(RequestHandlerSelectors.any())//.basePackage("com.fourground.raisal"))  
           .apis(RequestHandlerSelectors.any())
-          .paths(PathSelectors.any())                          
+          .paths(PathSelectors.any())            
           .build();                                           
     }
 }

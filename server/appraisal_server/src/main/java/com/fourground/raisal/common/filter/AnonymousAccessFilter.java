@@ -7,6 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+
+import com.fourground.raisal.common.exception.AccessDeniedException;
+
+@Component
 public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 	
     private String[] anonymousAccessibleResources = new String[0];
@@ -24,13 +29,13 @@ public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 		if(!isAnnonyAccessible /*&& userContainer.isAnonymous()*/) {
 			// authorizing api
 			String authKey = request.getHeader("Authorization");
-//			if(authKey == null) {
-//				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
-//				System.out.println(request.getRequestURI());
-//				throw new AccessDeniedException(msg);
-//			} else {
-//				// next
-//			}
+			if(authKey == null) {
+				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
+				System.out.println(request.getRequestURI());
+				throw new AccessDeniedException(msg);
+			} else {
+				// next
+			}
 		} else {
 			// non-authorizing api
 			// next

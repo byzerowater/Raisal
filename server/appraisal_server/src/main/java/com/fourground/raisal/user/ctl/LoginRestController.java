@@ -37,14 +37,13 @@ public class LoginRestController extends BaseRestController {
 			HttpServletRequest request
 			,@ApiParam(name="body",value="\"userUid\":\"채널사고유UID\","+BR+"\"channelCode\":\"채널사코드(G,F)\","+BR+"\"email\":\"등록이메일\""+BR) @RequestBody RequestBodyVo requestBody)
 	{
-		Map<String, Object> parameter = requestBody.getBody();
+		Map<String, Object> parameter = requestBody.convertToMap();
 		
 		AuthInfoVo authInfoVo = null;
-		
 		try {
 			authInfoVo = authManageService.generateAuthKeyForUser(parameter);
 		} catch(Exception ex) {
-			return dbFail(ex.getMessage());
+			return fail(null, ex.getMessage());
 		}
 		
 		return success(authInfoVo);
