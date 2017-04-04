@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.main;
+package me.fourground.raisal.ui.review;
 
 
 import java.util.List;
@@ -11,5 +11,7 @@ import me.fourground.raisal.ui.base.MvpView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public interface MainMvpView extends MvpView {
+public interface ReviewListMvpView extends MvpView {
+
+    void onAppList(List<AppInfoData> datas);
 }

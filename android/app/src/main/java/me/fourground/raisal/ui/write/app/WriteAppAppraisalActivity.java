@@ -18,7 +18,7 @@ import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.write.Checker;
-import me.fourground.raisal.util.ViewHelper;
+import me.fourground.raisal.util.FragmentHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -63,7 +63,7 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
 
         mTvTitle.setText(R.string.text_register);
         mBtnPre.setVisibility(View.GONE);
-        ViewHelper.addFragment(R.id.fl_content, this, WriteNameFragment.newInstance());
+        FragmentHelper.addFragment(R.id.fl_content, this, WriteNameFragment.newInstance());
     }
 
     @Override
@@ -101,12 +101,12 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
                 finish();
                 break;
             case R.id.btn_confirm:
-                Fragment fragment = ViewHelper.getFragment(R.id.fl_content, WriteAppAppraisalActivity.this);
+                Fragment fragment = FragmentHelper.getFragment(R.id.fl_content, WriteAppAppraisalActivity.this);
 
                 if (fragment != null) {
                     if (fragment instanceof Checker && ((Checker) fragment).checkInputText()) {
                         if (fragment instanceof WriteNameFragment) {
-                            ViewHelper.addToBackStackFragment(R.id.fl_content, WriteAppAppraisalActivity.this, WriteDescriptionFragment.newInstance());
+                            FragmentHelper.addToBackStackFragment(R.id.fl_content, WriteAppAppraisalActivity.this, WriteDescriptionFragment.newInstance());
                         } else {
                             mWriteAppAppraisalPresenter.registerApp(mRegisterAppRequest);
                         }

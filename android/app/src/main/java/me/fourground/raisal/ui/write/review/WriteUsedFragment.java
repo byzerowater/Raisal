@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.model.AppInfoData;
-import me.fourground.raisal.util.ViewHelper;
+import me.fourground.raisal.util.FragmentHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-26.
@@ -70,7 +70,7 @@ public class WriteUsedFragment extends Fragment {
                 ((WriteReviewActivity) getActivity()).getRegisterReviewRequest().setUseTerm("1");
                 break;
         }
-        ViewHelper.addToBackStackFragment(R.id.fl_content, getActivity(), WritePointFragment.newInstance());
+        FragmentHelper.addToBackStackFragment(R.id.fl_content, getActivity(), WritePointFragment.newInstance());
 
     }
 

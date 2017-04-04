@@ -37,4 +37,14 @@ public class FragmentModule {
     Context providesContext() {
         return mFragment.getActivity();
     }
+
+    @Provides
+    LoadingDialog provideLoadingDialog() {
+        return new LoadingDialog(mFragment.getActivity());
+    }
+
+    @Provides
+    LoadingHelper provideLoadingManager() {
+        return new LoadingHelper();
+    }
 }

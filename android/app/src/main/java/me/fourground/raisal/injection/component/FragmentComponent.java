@@ -4,6 +4,7 @@ package me.fourground.raisal.injection.component;
 import dagger.Component;
 import me.fourground.raisal.injection.PerFragment;
 import me.fourground.raisal.injection.module.FragmentModule;
+import me.fourground.raisal.ui.review.ReviewListFragment;
 import me.fourground.raisal.ui.write.review.WritePointFragment;
 
 /**
@@ -17,5 +18,7 @@ import me.fourground.raisal.ui.write.review.WritePointFragment;
 public interface FragmentComponent {
 
     void inject(WritePointFragment writePointFragment);
+
+    void inject(ReviewListFragment reviewListFragment);
 }
 

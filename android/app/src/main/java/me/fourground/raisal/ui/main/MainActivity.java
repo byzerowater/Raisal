@@ -3,44 +3,26 @@ package me.fourground.raisal.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-
-import java.util.List;
-
-import javax.inject.Inject;
+import android.support.design.widget.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
-import me.fourground.raisal.data.BusEvent;
-import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.ui.base.BaseActivity;
-import me.fourground.raisal.ui.common.AppAdapter;
-import me.fourground.raisal.ui.content.ContentActivity;
-import me.fourground.raisal.ui.dialog.LoadingDialog;
-import me.fourground.raisal.ui.views.LinearRecyclerView;
+import me.fourground.raisal.ui.review.ReviewListFragment;
+import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
+import me.fourground.raisal.util.FragmentHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class MainActivity extends BaseActivity implements MainMvpView {
+public class MainActivity extends BaseActivity {
 
-    @Inject
-    Bus mEventBus;
-    @Inject
-    MainPresenter mMainPresenter;
-    @Inject
-    AppAdapter mAppAdapter;
-    @Inject
-    LoadingDialog mLoadingDialog;
-
-    @BindView(R.id.rv_app)
-    LinearRecyclerView mRvApp;
+    @BindView(R.id.navigation)
+    BottomNavigationView mNavigation;
 
     /**
      * MainActivity 가져오기
@@ -56,61 +38,21 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityComponent().inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mEventBus.register(this);
 
-        mMainPresenter.attachView(this);
-
-        mRvApp.setAdapter(mAppAdapter);
-
-        mAppAdapter.setOnOrderItemClickListener(new AppAdapter.OnAppItemClickListener() {
-            @Override
-            public void onAppItemClick(AppInfoData appItem) {
-                startActivity(ContentActivity.getStartIntent(MainActivity.this, appItem.getAppId()));
+        mNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    FragmentHelper.addFragment(R.id.fl_content, MainActivity.this, ReviewListFragment.newInstance());
+                    return true;
+                case R.id.navigation_dashboard:
+                    startActivity(WriteAppAppraisalActivity.getStartIntent(MainActivity.this));
+                    return true;
+                case R.id.navigation_notifications:
+                    return true;
             }
-
-            @Override
-            public void onWriteItemClick(AppInfoData appItem) {
-                startActivity(WriteReviewActivity.getStartIntent(MainActivity.this, appItem));
-            }
+            return false;
         });
-
-        mMainPresenter.getAppList();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mMainPresenter.detachView();
-        mEventBus.unregister(this);
-    }
-
-    @Override
-    public void showProgress(boolean isShow) {
-        if (isShow) {
-            mLoadingDialog.show();
-        } else {
-            mLoadingDialog.hide();
-        }
-    }
-
-    @Override
-    public void onError() {
-
-    }
-
-    @Subscribe
-    public void onRegisterCompleted(BusEvent.RegisterAppCompleted event) {
-        AppInfoData appInfoData = event.getAppInfoData();
-        mAppAdapter.addAppData(appInfoData);
-        mAppAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onAppList(List<AppInfoData> datas) {
-        mAppAdapter.addAppDatas(datas);
-        mAppAdapter.notifyDataSetChanged();
     }
 }

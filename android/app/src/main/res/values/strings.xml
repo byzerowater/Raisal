@@ -32,4 +32,8 @@
     <string name="action_close">닫기</string>
     <string name="action_next">다음</string>
     <string name="action_retry_connect">재시도</string>
+
+    <string name="text_home">Home</string>
+    <string name="text_dashboard">Dashboard</string>
+    <string name="text_notifications">Notifications</string>
 </resources>

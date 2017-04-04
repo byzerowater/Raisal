@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentManager;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ViewHelper {
+public class FragmentHelper {
 
     public static void addFragment(int contentFrame, FragmentActivity activity, Fragment addFragment) {
         FragmentManager manager = activity.getSupportFragmentManager();

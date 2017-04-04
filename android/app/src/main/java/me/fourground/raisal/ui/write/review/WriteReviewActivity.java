@@ -17,7 +17,8 @@ import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.RegisterReviewRequest;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
-import me.fourground.raisal.util.ViewHelper;
+import me.fourground.raisal.util.FragmentHelper;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -66,7 +67,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
         mTvTitle.setText(R.string.text_write_review);
         mBtnPre.setVisibility(View.GONE);
-        ViewHelper.addFragment(R.id.fl_content, WriteReviewActivity.this, WriteUsedFragment.newInstance());
+        FragmentHelper.addFragment(R.id.fl_content, WriteReviewActivity.this, WriteUsedFragment.newInstance());
     }
 
     @Override
@@ -77,6 +78,8 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
     @Override
     public void showProgress(boolean isShow) {
+
+        Timber.i("showProgress %s " , isShow);
         if (isShow) {
             mLoadingDialog.show();
         } else {
