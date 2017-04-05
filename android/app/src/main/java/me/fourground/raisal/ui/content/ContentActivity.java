@@ -3,6 +3,7 @@ package me.fourground.raisal.ui.content;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
@@ -51,6 +53,10 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     ReviewAdapter mReviewAdapter;
     @Inject
     Bus mEventBus;
+    @BindView(R.id.btn_back)
+    Button mBtnBack;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     /**
      * ContentActivity 가져오기
@@ -121,5 +127,9 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
         ReviewData reviewData = event.getReviewData();
         mReviewAdapter.addReviewData(reviewData);
         mReviewAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.btn_back)
+    public void onViewClicked() {
     }
 }

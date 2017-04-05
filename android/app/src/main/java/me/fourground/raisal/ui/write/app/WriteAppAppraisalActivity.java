@@ -30,7 +30,7 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
 
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.btn_pre)
+    @BindView(R.id.btn_back)
     Button mBtnPre;
     @BindView(R.id.btn_confirm)
     Button mBtnConfirm;
@@ -93,10 +93,10 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
         return mRegisterAppRequest;
     }
 
-    @OnClick({R.id.btn_pre, R.id.btn_cancel, R.id.btn_confirm})
+    @OnClick({R.id.btn_back, R.id.btn_cancel, R.id.btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_pre:
+            case R.id.btn_back:
                 mBtnPre.setVisibility(View.GONE);
                 onBackPressed();
                 break;

@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="aaa" />
+        android:textColor="@color/black_272727_ff"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/tv_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aaa" />
+            android:text="aaa"
+            android:textColor="@color/gray_575757_ff"
+            android:textSize="14sp"/>
 
         <TextView
             android:id="@+id/tv_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="aaa" />
+            android:layout_width="40dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/rect_stroke_blue"
+            android:gravity="center"
+            android:text="aaa"
+            android:textSize="9sp"/>
     </LinearLayout>
 
 </merge>

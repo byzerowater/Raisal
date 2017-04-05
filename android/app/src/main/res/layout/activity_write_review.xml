@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context="me.fourground.raisal.ui.write.review.WriteReviewActivity">
 
-    <include layout="@layout/include_write_header" />
+    <include layout="@layout/include_header" />
 
     <FrameLayout
         android:id="@+id/fl_content"
