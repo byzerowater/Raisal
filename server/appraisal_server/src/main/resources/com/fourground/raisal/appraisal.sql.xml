@@ -120,11 +120,21 @@
 	</sql>
 	
 	<sql id='conditionAppId'>
+		<if test='appId != null'>
 		AND MST.app_id = #{appId}
+		</if>
 	</sql>
 	
 	<sql id='conditionOsCode'>
+		<if test='plfmCd != null'>
 		AND URL.plfm_cd = #{plfmCd}
+		</if>
+	</sql>
+	
+	<sql id='conditionUserId'>
+		<if test='userId != null'>
+		AND MST.reg_id = #{userId}
+		</if>
 	</sql>
 	
 	<select id='getSeq' resultType='String' parameterType='String'>
@@ -166,6 +176,7 @@
 			CO_APPR_APP AS MST
 		<include refid='joinCnt'></include>
 		WHERE 1=1
+		<include refid='conditionUserId'></include>
 		<include refid='common.paging-bottom'></include>
 	</select>
 	
@@ -176,6 +187,7 @@
 			CO_APPR_APP AS MST
 		<include refid='joinCnt'></include>
 		WHERE 1=1
+		<include refid='conditionUserId'></include>
 		<include refid='common.count-bottom'></include>
 	</select>
 	
@@ -188,6 +200,7 @@
 		<include refid='joinReply'></include>
 		WHERE 1=1
 		<include refid='conditionAppId'></include>
+		<include refid='conditionUserId'></include>
 		<include refid='common.paging-bottom'></include>
 	</select>
 	
@@ -199,6 +212,7 @@
 		<include refid='joinReply'></include>
 		WHERE 1=1
 		<include refid='conditionAppId'></include>
+		<include refid='conditionUserId'></include>
 		<include refid='common.count-bottom'></include>
 	</select>
 	

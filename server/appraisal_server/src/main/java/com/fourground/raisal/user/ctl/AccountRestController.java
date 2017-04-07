@@ -48,4 +48,33 @@ public class AccountRestController extends BaseRestController {
 		
 		return success(myInfoVo);
 	}
+	
+	@ApiOperation(value="어카운트 API"
+			,notes="1>내 닉네임 수정하기"
+			,response=MyChnlInfoVo.class)
+	@RequestMapping(value="/update", method={RequestMethod.POST})
+	public ResponseEntity<Object> updateMyNick(
+			HttpServletRequest request
+			,@ApiParam(name="body", value="\"userNm\":\"닉네임\"") @RequestBody RequestBodyVo requestBody) {
+		
+		Map<String, Object> parameter = requestBody.convertToMap();
+		MyChnlInfoVo myInfoVo = null;
+		
+		try {
+			myInfoVo = authManageService.updateMyInfo(parameter);
+		} catch (Exception e) {
+			try {
+				myInfoVo = authManageService.getMyInfo(parameter);
+			} catch(Exception ex) {
+				return dbFail(ex.getMessage());
+			}
+			return noContent(myInfoVo, e.getMessage());
+		}
+		
+		return success(myInfoVo);
+	}
+	
+	// 내가 요청한 평가 목록
+	
+	// 내가 쓴 평가 목록
 }

@@ -30,7 +30,7 @@ public class BaseRestController {
 	protected ResponseEntity<Object> authFail(String errMsg) {
 		return new ResponseEntity<Object>(null, HttpStatus.UNAUTHORIZED);
 	}
-	
+
 	protected ResponseEntity<Object> noContent(Object data, String errMsg) {
 		return new ResponseEntity<Object>(data, HttpStatus.NO_CONTENT);
 	}

@@ -72,6 +72,47 @@ public class AppraisalRestController extends BaseRestController {
 		return successWithPage(resultData);
 	}
 	
+	@ApiOperation(value="내가 등록한 평가앱 목록 조회"
+			,notes="1>조회"
+			,response=AppInfoVo.class)
+	@RequestMapping(value="/my/select", method={RequestMethod.GET})
+	public ResponseEntity<Object> selectMyAppraisalList(
+			HttpServletRequest request
+			,@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer reqPage
+			,@ApiParam(required=false, value="페이지당조회수", name="size") @RequestParam(value="size",required=false) Integer size)
+	{
+		Map<String,Object> parameter = new HashMap<String, Object>();
+		Map<String, Object> resultData = new HashMap<String, Object>();
+		
+		
+		String authKey = request.getHeader("Authorization");
+		// Searching my userid
+		
+		
+		
+		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
+		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
+		
+		int totPages = this.getCalcuTotPage(appManagerService.selectAppListCount(parameter)
+				,nListLength);
+
+		parameter.put("pagingYn", "Y");
+		parameter.put("pagingOrder", "reg_dtm");
+		parameter.put("pagingOffset", nReqPage * nListLength);
+		parameter.put("length", nListLength);
+		
+		List<AppInfoVo> appInfoVoList = new ArrayList<AppInfoVo>();
+		appInfoVoList = appManagerService.selectAppList(parameter);
+		
+		resultData.put("data", appInfoVoList);
+		resultData.put("baseUrl", "/api/raisal/my/select");
+		resultData.put("totPages", totPages);
+		resultData.put("currPage", reqPage);
+		resultData.put("size", size);
+		
+		return successWithPage(resultData);
+	}
+	
 	@ApiOperation(value="평가앱 상세 기본정보 조회"
 			,notes="1>상세조회"
 			,response=AppInfoDetailVo.class)

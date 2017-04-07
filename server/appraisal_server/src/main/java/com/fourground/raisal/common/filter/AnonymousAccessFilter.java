@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.fourground.raisal.common.exception.AccessDeniedException;
-
 @Component
 public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 	
@@ -30,9 +28,9 @@ public class AnonymousAccessFilter extends BaseWebSecurityFilter {
 			// authorizing api
 			String authKey = request.getHeader("Authorization");
 			if(authKey == null) {
-				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
-				System.out.println(request.getRequestURI());
-				throw new AccessDeniedException(msg);
+//				String msg = "unknown user's request[path=" + request.getRequestURI() + "] is denied;";
+//				System.out.println(request.getRequestURI());
+//				throw new AccessDeniedException(msg);
 			} else {
 				// next
 			}

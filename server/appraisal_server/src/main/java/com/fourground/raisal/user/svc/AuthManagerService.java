@@ -59,11 +59,44 @@ public class AuthManagerService {
 	public MyChnlInfoVo getMyInfo(Map<String, Object> parameter) {
 		return chnlAccntDao.getMyInfo(parameter);
 	}
+	
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public MyChnlInfoVo updateMyInfo(Map<String, Object> parameter) throws Exception {
+		
+		String userNickNm = (String)parameter.get("userNm");
+		
+		// nickname 무결성 체크 (중복체크 포함)
+		if(!validateNickName(userNickNm)) {
+			throw new Exception("Invalid policy for nick name");
+		}
+		if(!duplicateNickName(userNickNm)) {
+			throw new Exception("Duplicate nick name");
+		}
+		
+		int nCnt = chnlAccntDao.updateChnlAccntByUserid(parameter);
+		if(nCnt < 0) {
+			throw new Exception("Fail to DB Update");
+		}
+		
+		return chnlAccntDao.getMyInfo(parameter);
+	}
 
 	private AuthInfoVo getAuthInfo(Map<String, Object> parameter) {
 		// 로그인 방식에 따라 둘 중 선택
 		// return chnlAccntDao.getAuthkey((String)parameter.get("userUid"));
 		return chnlAccntDao.getAuthKeyMap(parameter);
+	}
+	
+	// nick validation
+	private boolean validateNickName(String nickNm) {
+		if(nickNm == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean duplicateNickName(String nickNm) {
+		return true;
 	}
 
 	private String generateLoginAuthKey(String userId) {
