@@ -60,7 +60,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 //        if (isShow) {
 //            mLoadingDialog.show();
 //        } else {
-//            mLoadingDialog.hide();
+//            mLoadingDialog.dismiss();
 //        }
     }
 

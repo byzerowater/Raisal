@@ -32,8 +32,7 @@
     <string name="action_close">닫기</string>
     <string name="action_next">다음</string>
     <string name="action_retry_connect">재시도</string>
-
-    <string name="text_home">Home</string>
-    <string name="text_dashboard">Dashboard</string>
-    <string name="text_notifications">Notifications</string>
+    <string name="action_join_appraisal">평가 참여하기</string>
+    <string name="action_app_down">앱 다운로드</string>
+    <string name="action_write_review">평가 참여하기</string>
 </resources>

@@ -98,7 +98,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

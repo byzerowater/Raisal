@@ -64,7 +64,7 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 

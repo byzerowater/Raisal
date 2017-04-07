@@ -34,7 +34,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     WriteReviewPresenter mWriteReviewPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
-    @BindView(R.id.btn_pre)
+    @BindView(R.id.btn_back)
     Button mBtnPre;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
@@ -83,7 +83,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         if (isShow) {
             mLoadingDialog.show();
         } else {
-            mLoadingDialog.hide();
+            mLoadingDialog.dismiss();
         }
     }
 
@@ -104,10 +104,10 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         return mRegisterReviewRequest;
     }
 
-    @OnClick({R.id.btn_pre, R.id.btn_cancel})
+    @OnClick({R.id.btn_back, R.id.btn_cancel})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_pre:
+            case R.id.btn_back:
                 mBtnPre.setVisibility(View.GONE);
                 onBackPressed();
                 break;
