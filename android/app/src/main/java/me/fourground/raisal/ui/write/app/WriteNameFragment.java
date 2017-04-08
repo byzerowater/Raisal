@@ -29,6 +29,8 @@ import me.fourground.raisal.util.StringUtil;
  */
 public class WriteNameFragment extends Fragment implements Checker {
 
+    private static final String ANDROID_STORE_URL_PREFIX = "play.google.com/store/apps/details?";
+
 
     Unbinder unbinder;
     @BindView(R.id.et_name)
@@ -64,19 +66,33 @@ public class WriteNameFragment extends Fragment implements Checker {
 
     @Override
     public boolean checkInputText() {
+        boolean isPass = false;
         String name = mEtName.getText().toString();
         String storeUrl = mEtPlayStoreUrl.getText().toString();
 
-        RegisterAppRequest registerAppRequest = ((WriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
+        if (StringUtil.isEmpty(name)) {
+            isPass = false;
+            mTilName.setError(getString(R.string.text_error_input_name));
+        }
 
-        registerAppRequest.setAppName(name);
+        if (StringUtil.isEmpty(storeUrl) || !storeUrl.contains(ANDROID_STORE_URL_PREFIX)) {
+            isPass = false;
+            mTilPlayStoreUrl.setError(getString(R.string.text_error_store_url));
+        }
 
-        List<StoreInfoData> storeInfoDataList = new ArrayList<>();
+        if (isPass) {
+            setAppInfo(name, storeUrl);
+        }
 
-        storeInfoDataList.add(new StoreInfoData(Const.STORE_TYPE_ADR, mEtPlayStoreUrl.getText().toString()));
-
-        registerAppRequest.setDownInfo(storeInfoDataList);
-
-        return !StringUtil.isEmpty(name) && !StringUtil.isEmpty(storeUrl);
+        return isPass;
     }
+
+    private void setAppInfo(String name, String storeUrl) {
+        RegisterAppRequest registerAppRequest = ((WriteAppAppraisalActivity) getActivity()).getRegisterAppRequest();
+        registerAppRequest.setAppName(name);
+        List<StoreInfoData> storeInfoDataList = new ArrayList<>();
+        storeInfoDataList.add(new StoreInfoData(Const.STORE_TYPE_ADR, storeUrl));
+        registerAppRequest.setDownInfo(storeInfoDataList);
+    }
+
 }

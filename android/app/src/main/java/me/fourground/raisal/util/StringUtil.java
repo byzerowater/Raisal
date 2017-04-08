@@ -24,4 +24,16 @@ public class StringUtil {
 
         return isEmpty;
     }
+
+    public static int getInt(String s) {
+        int number = 0;
+
+        try {
+            number = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return number;
+    }
 }

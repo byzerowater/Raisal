@@ -5,11 +5,10 @@
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/ServiceNameTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black_272727_ff"
-        android:textSize="26sp"
-        android:textStyle="bold"/>
+        android:text="NAME"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -19,21 +18,18 @@
 
         <TextView
             android:id="@+id/tv_store"
+            style="@style/StoreTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="aaa"
-            android:textColor="@color/gray_575757_ff"
-            android:textSize="14sp"/>
+            android:text="STORE"/>
 
         <TextView
             android:id="@+id/tv_state"
             android:layout_width="40dp"
             android:layout_height="13dp"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/rect_stroke_blue"
-            android:gravity="center"
-            android:text="aaa"
-            android:textSize="9sp"/>
+            android:text="STATE"
+            style="@style/StateTextStyle"/>
     </LinearLayout>
 
 </merge>

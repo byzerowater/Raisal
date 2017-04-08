@@ -63,7 +63,6 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
         mWriteAppAppraisalPresenter.attachView(this);
 
         mTvTitle.setText(R.string.text_register);
-        mBtnPre.setVisibility(View.GONE);
         FragmentHelper.addFragment(R.id.fl_content, this, WriteNameFragment.newInstance());
     }
 
@@ -107,9 +106,13 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
                 Fragment fragment = FragmentHelper.getFragment(R.id.fl_content, WriteAppAppraisalActivity.this);
 
                 if (fragment != null) {
-                    if (fragment instanceof Checker && ((Checker) fragment).checkInputText()) {
+                    if (fragment instanceof Checker
+                            && ((Checker) fragment).checkInputText()) {
                         if (fragment instanceof WriteNameFragment) {
-                            FragmentHelper.addToBackStackFragment(R.id.fl_content, WriteAppAppraisalActivity.this, WriteDescriptionFragment.newInstance());
+                            FragmentHelper.addToBackStackFragment(
+                                    R.id.fl_content,
+                                    WriteAppAppraisalActivity.this,
+                                    WriteDescriptionFragment.newInstance());
                         } else {
                             mWriteAppAppraisalPresenter.registerApp(mRegisterAppRequest);
                         }

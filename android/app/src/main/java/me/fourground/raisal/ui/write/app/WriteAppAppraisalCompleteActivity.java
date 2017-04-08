@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
+import me.fourground.raisal.common.Const;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.util.DateUtil;
+import me.fourground.raisal.util.StringUtil;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -20,8 +25,8 @@ import me.fourground.raisal.ui.base.BaseActivity;
 public class WriteAppAppraisalCompleteActivity extends BaseActivity {
 
     private static final String EXTRA_APPRAISAL_DATE = "extra_appraisal_date";
-
-
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
     @BindView(R.id.tv_date)
     TextView mTvDate;
 
@@ -29,7 +34,7 @@ public class WriteAppAppraisalCompleteActivity extends BaseActivity {
      * AppAppraisalCompleteActivity 가져오기
      *
      * @param context Context
-     * @param date 평가기간
+     * @param date    평가기간
      * @return MainActivity Intent
      */
     public static Intent getStartIntent(Context context, String date) {
@@ -45,10 +50,15 @@ public class WriteAppAppraisalCompleteActivity extends BaseActivity {
         setContentView(R.layout.activity_write_app_appraisal_complete);
         ButterKnife.bind(this);
 
-        String date = getIntent().getStringExtra(EXTRA_APPRAISAL_DATE);
-        mTvDate.setText(date);
-    }
+        mTvTitle.setText(getString(R.string.text_title_register_complete));
 
+        String date = getIntent().getStringExtra(EXTRA_APPRAISAL_DATE);
+        Calendar currentCalendar = Calendar.getInstance();
+        String startDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_VIEW);
+        currentCalendar.add(Calendar.DATE, StringUtil.getInt(date));
+        String endDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_VIEW);
+        mTvDate.setText(getString(R.string._text_review_date, startDate, endDate));
+    }
 
     @OnClick({R.id.btn_write, R.id.btn_main})
     public void onViewClicked(View view) {

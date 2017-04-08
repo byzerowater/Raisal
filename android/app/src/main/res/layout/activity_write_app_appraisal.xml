@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context="me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity">
 
-    <include layout="@layout/include_header" />
+    <include layout="@layout/include_header"/>
 
     <FrameLayout
         android:id="@+id/fl_content"
@@ -17,7 +17,11 @@
     <Button
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="55dp"
+        android:background="@color/blue_0090ff_ff"
+        android:textColor="@color/white_ffffff_ff"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
 
 </LinearLayout>

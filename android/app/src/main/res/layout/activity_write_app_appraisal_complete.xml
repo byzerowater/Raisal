@@ -6,28 +6,56 @@
               android:orientation="vertical"
               tools:context="me.fourground.raisal.ui.write.app.WriteAppAppraisalCompleteActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <include layout="@layout/include_header"/>
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btn_write"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <Button
-        android:id="@+id/btn_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:text="@string/text_register_complete"
+            android:textColor="@color/black_272727_ff"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray_a7a7a7_ff"
+            android:textSize="12sp"/>
 
+        <Button
+            android:id="@+id/btn_write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rect_stroke_gray"
+            android:text="@string/action_app_register"
+            android:textColor="@color/blue_0090ff_ff"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btn_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rect_stroke_gray"
+            android:text="@string/action_go_main"
+            android:textColor="@color/blue_0090ff_ff"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -16,77 +16,43 @@ public class PointData implements Parcelable {
      * useful : 4.8
      */
 
-    private double contents;
-    private double design;
-    private double satisfaction;
-    private double useful;
+    private float contents;
+    private float design;
+    private float satisfaction;
+    private float useful;
 
-    public double getContents() {
+    public float getContents() {
         return contents;
     }
 
-    public void setContents(double contents) {
+    public void setContents(float contents) {
         this.contents = contents;
     }
 
-    public double getDesign() {
+    public float getDesign() {
         return design;
     }
 
-    public void setDesign(double design) {
+    public void setDesign(float design) {
         this.design = design;
     }
 
-    public double getSatisfaction() {
+    public float getSatisfaction() {
         return satisfaction;
     }
 
-    public void setSatisfaction(double satisfaction) {
+    public void setSatisfaction(float satisfaction) {
         this.satisfaction = satisfaction;
     }
 
-    public double getUseful() {
+    public float getUseful() {
         return useful;
     }
 
-    public void setUseful(double useful) {
+    public void setUseful(float useful) {
         this.useful = useful;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(this.contents);
-        dest.writeDouble(this.design);
-        dest.writeDouble(this.satisfaction);
-        dest.writeDouble(this.useful);
-    }
-
-    public PointData() {
-    }
-
-    protected PointData(Parcel in) {
-        this.contents = in.readDouble();
-        this.design = in.readDouble();
-        this.satisfaction = in.readDouble();
-        this.useful = in.readDouble();
-    }
-
-    public static final Parcelable.Creator<PointData> CREATOR = new Parcelable.Creator<PointData>() {
-        @Override
-        public PointData createFromParcel(Parcel source) {
-            return new PointData(source);
-        }
-
-        @Override
-        public PointData[] newArray(int size) {
-            return new PointData[size];
-        }
-    };
 
     @Override
     public String toString() {
@@ -97,4 +63,39 @@ public class PointData implements Parcelable {
                 ", useful=" + useful +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(this.contents);
+        dest.writeFloat(this.design);
+        dest.writeFloat(this.satisfaction);
+        dest.writeFloat(this.useful);
+    }
+
+    public PointData() {
+    }
+
+    protected PointData(Parcel in) {
+        this.contents = in.readFloat();
+        this.design = in.readFloat();
+        this.satisfaction = in.readFloat();
+        this.useful = in.readFloat();
+    }
+
+    public static final Creator<PointData> CREATOR = new Creator<PointData>() {
+        @Override
+        public PointData createFromParcel(Parcel source) {
+            return new PointData(source);
+        }
+
+        @Override
+        public PointData[] newArray(int size) {
+            return new PointData[size];
+        }
+    };
 }

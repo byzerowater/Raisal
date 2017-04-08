@@ -18,4 +18,7 @@ public class Const {
     public static final String APPRAISAL_TYPE_ACTIVIE = "A";
     public static final String APPRAISAL_TYPE_INACTIVE = "I";
     public static final String APPRAISAL_TYPE_FINISH = "F";
+
+    public static final String DATE_FORMAT_SERVER = "yyyyMMdd";
+    public static final String DATE_FORMAT_VIEW = "yyyy-MM-dd";
 }
