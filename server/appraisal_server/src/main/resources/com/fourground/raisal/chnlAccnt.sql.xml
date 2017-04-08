@@ -83,6 +83,13 @@
 		<include refid='Condition_JustOne'></include>
 	</select>
 	
+	<select id="getCountMatchingNick" parameterType="String" resultType="Integer">
+		SELECT COUNT(user_nm)
+		FROM CO_CH_ACNT
+		WHERE 1=1
+		AND user_nm = #{userNm}
+	</select>
+	
 	<insert id="insertChnlAccnt" parameterType="HashMap">
 		INSERT INTO CO_CH_ACNT (
 			user_id

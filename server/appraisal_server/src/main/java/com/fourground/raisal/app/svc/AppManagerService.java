@@ -17,7 +17,6 @@ import com.fourground.raisal.app.dao.IAppraisalDao;
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
-import com.fourground.raisal.common.dto.RequestBodyVo;
 import com.fourground.raisal.user.dao.IChannelAccountDao;
 import com.fourground.raisal.user.dto.AuthInfoVo;
 
@@ -98,6 +97,12 @@ public class AppManagerService {
 		return aprsId;
 	}
 	
+	public AuthInfoVo getAuthInfo(Map<String, Object> parameter) {
+		// 로그인 방식에 따라 둘 중 선택
+		// return chnlAccntDao.getAuthkey((String)parameter.get("userUid"));
+		return channelAccountDao.getAuthKeyMap(parameter);
+	}
+	
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
 	public String registAppInfo(Map<String, Object> parameter, String authKey) throws Exception {
 		@SuppressWarnings("unchecked")
@@ -146,6 +151,11 @@ public class AppManagerService {
 		}
 		
 		return appId;
+	}
+	
+	private boolean duplicateActiveApp(String downloadUrl) {
+		
+		return true;
 	}
 	
 	private String getEndDtm(Date today, String aprsTerm) {

@@ -1,5 +1,8 @@
 package com.fourground.raisal.common.ctl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,18 +23,26 @@ public class BaseRestController {
 	}	
 	
 	protected ResponseEntity<Object> dbFail(String errMsg) {
-		return new ResponseEntity<Object>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("errorMsg", errMsg);
+		return new ResponseEntity<Object>(errMsg, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	protected ResponseEntity<Object> fail(Object data, String errMsg) {
-		return new ResponseEntity<Object>(data, HttpStatus.BAD_REQUEST);
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("errorMsg", errMsg);
+		return new ResponseEntity<Object>(rtnMap, HttpStatus.BAD_REQUEST);
 	}
 	
 	protected ResponseEntity<Object> authFail(String errMsg) {
-		return new ResponseEntity<Object>(null, HttpStatus.UNAUTHORIZED);
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("errorMsg", errMsg);
+		return new ResponseEntity<Object>(errMsg, HttpStatus.UNAUTHORIZED);
 	}
 
 	protected ResponseEntity<Object> noContent(Object data, String errMsg) {
-		return new ResponseEntity<Object>(data, HttpStatus.NO_CONTENT);
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+		rtnMap.put("errorMsg", errMsg);
+		return new ResponseEntity<Object>(errMsg, HttpStatus.NO_CONTENT);
 	}
 }

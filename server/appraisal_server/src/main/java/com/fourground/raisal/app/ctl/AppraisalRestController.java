@@ -25,6 +25,7 @@ import com.fourground.raisal.common.Constants;
 import com.fourground.raisal.common.ctl.BaseRestController;
 import com.fourground.raisal.common.dto.RequestBodyVo;
 import com.fourground.raisal.common.dto.ResultVo;
+import com.fourground.raisal.user.dto.AuthInfoVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -84,11 +85,31 @@ public class AppraisalRestController extends BaseRestController {
 		Map<String,Object> parameter = new HashMap<String, Object>();
 		Map<String, Object> resultData = new HashMap<String, Object>();
 		
-		
-		String authKey = request.getHeader("Authorization");
 		// Searching my userid
-		
-		
+		try {
+			String authKey = request.getHeader("Authorization");
+			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";
+			if(authKey != null && authKey.length() > 0) {
+				parameter.put("authKey", authKey);
+				
+				AuthInfoVo authInfo = appManagerService.getAuthInfo(parameter);
+				if(authInfo != null) {
+					String userId = authInfo.getUserId();
+					if(userId != null && userId.length() > 0) {
+						parameter.put("userId", userId);
+						parameter.remove("authKey");
+					} else {
+						return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+					}
+				} else {
+					return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+				}
+			} else {
+				return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+			}
+		} catch (Exception e) {
+			return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+		}
 		
 		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
 		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
@@ -173,6 +194,73 @@ public class AppraisalRestController extends BaseRestController {
 		
 		resultData.put("data", collectAppraisalList);
 		resultData.put("baseUrl", "/api/raisal/collect/"+appId);
+		resultData.put("totPages", totPages);
+		resultData.put("currPage", reqPage);
+		resultData.put("size", size);
+		
+		return successWithPage(resultData);
+	}
+	
+	@ApiOperation(value="내가 쓴 평가앱 상세 평가내용 조회"
+			,notes="1>상세조회"
+			,response=AppraisalVo.class)
+	@RequestMapping(value="/my/collect", method={RequestMethod.GET})
+	public ResponseEntity<Object> collectMyAppraisalList(
+			HttpServletRequest request
+			,@ApiParam(required=false, value="조회페이지", name="page") @RequestParam(value="page",required=false) Integer reqPage
+			,@ApiParam(required=false, value="페이지당조회수", name="size") @RequestParam(value="size",required=false) Integer size)
+	{
+		Map<String,Object> parameter = new HashMap<String, Object>();
+		Map<String, Object> resultData = new HashMap<String, Object>();
+		
+		// Searching my userid
+		try {
+			String authKey = request.getHeader("Authorization");
+			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";
+			if(authKey != null && authKey.length() > 0) {
+				parameter.put("authKey", authKey);
+				
+				AuthInfoVo authInfo = appManagerService.getAuthInfo(parameter);
+				if(authInfo != null) {
+					String userId = authInfo.getUserId();
+					if(userId != null && userId.length() > 0) {
+						parameter.put("userId", userId);
+						parameter.remove("authKey");
+					} else {
+						return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+					}
+				} else {
+					return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+				}
+			} else {
+				return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+			}
+		} catch (Exception e) {
+			return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+		}
+
+		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
+		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
+		
+		int totPages = this.getCalcuTotPage(appManagerService.selectAppraisalListCount(parameter)
+				,nListLength);
+
+		parameter.put("pagingYn", "Y");
+		parameter.put("pagingOrder", "aprs_id");
+		parameter.put("pagingOffset", nReqPage * nListLength);
+		parameter.put("length", nListLength);
+		
+//		if(request.getHeader("osType") != null && request.getHeader("osType").equals("ios")) {
+//			parameter.put("plfmCd", "IOS");
+//		} else {
+//			parameter.put("plfmCd", "ADR");
+//		}
+		
+		List<AppraisalVo> collectAppraisalList = new ArrayList<AppraisalVo>();
+		collectAppraisalList = appManagerService.selectAppraisalList(parameter);
+		
+		resultData.put("data", collectAppraisalList);
+		resultData.put("baseUrl", "/api/raisal/my/collect/");
 		resultData.put("totPages", totPages);
 		resultData.put("currPage", reqPage);
 		resultData.put("size", size);
