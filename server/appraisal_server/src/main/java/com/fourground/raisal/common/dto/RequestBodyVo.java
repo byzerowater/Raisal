@@ -30,6 +30,8 @@ public class RequestBodyVo implements Serializable {
 	private String platformCode;
 	private Map<String, Object> appElement;
 	private String comment;
+	
+	private String userNm;
 
 	public Map<String, Object> getBody() {
 		return body;
@@ -155,5 +157,13 @@ public class RequestBodyVo implements Serializable {
 			}
 			return rtnMap;
 		}
+	}
+
+	public String getUserNm() {
+		return userNm;
+	}
+
+	public void setUserNm(String userNm) {
+		this.userNm = userNm;
 	}
 }

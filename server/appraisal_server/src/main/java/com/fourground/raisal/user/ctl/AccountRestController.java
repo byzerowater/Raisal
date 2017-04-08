@@ -61,6 +61,18 @@ public class AccountRestController extends BaseRestController {
 		MyChnlInfoVo myInfoVo = null;
 		
 		try {
+			String authKey = request.getHeader("Authorization");
+			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";
+			if(authKey != null && authKey.length() > 0) {
+				parameter.put("authKey", authKey);
+			} else {
+				return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+			}
+		} catch (Exception e) {
+			return authFail("세션이 만료 됐습니다. 다시 로그인 해 주세요.");
+		}
+		
+		try {
 			myInfoVo = authManageService.updateMyInfo(parameter);
 		} catch (Exception e) {
 			try {
@@ -68,7 +80,7 @@ public class AccountRestController extends BaseRestController {
 			} catch(Exception ex) {
 				return dbFail(ex.getMessage());
 			}
-			return noContent(myInfoVo, e.getMessage());
+			return fail(myInfoVo, e.getMessage());
 		}
 		
 		return success(myInfoVo);
@@ -77,4 +89,5 @@ public class AccountRestController extends BaseRestController {
 	// 내가 요청한 평가 목록
 	
 	// 내가 쓴 평가 목록
+	
 }

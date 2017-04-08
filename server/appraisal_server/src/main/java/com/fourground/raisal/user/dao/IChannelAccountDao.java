@@ -13,4 +13,5 @@ public interface IChannelAccountDao {
 	public int insertChnlAccnt(Map<String, Object> parameter);
 	public int updateChnlAccntByUserid(Map<String, Object> parameter);
 	public int deleteChnlAccnt(Map<String, Object> parameter);
+	public int getCountMatchingNick(String userNm);
 }

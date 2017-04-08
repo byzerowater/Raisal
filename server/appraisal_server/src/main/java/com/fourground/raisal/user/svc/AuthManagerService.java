@@ -1,5 +1,7 @@
 package com.fourground.raisal.user.svc;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fourground.raisal.common.AES256Util;
+import com.fourground.raisal.common.Constants;
 import com.fourground.raisal.user.dao.IChannelAccountDao;
 import com.fourground.raisal.user.dto.AuthInfoVo;
 import com.fourground.raisal.user.dto.MyChnlInfoVo;
@@ -66,11 +70,28 @@ public class AuthManagerService {
 		String userNickNm = (String)parameter.get("userNm");
 		
 		// nickname 무결성 체크 (중복체크 포함)
-		if(!validateNickName(userNickNm)) {
-			throw new Exception("Invalid policy for nick name");
+		try {
+			if(!validateNickName(userNickNm)) {
+				throw new Exception("Invalid policy for nick name");
+			}
+		} catch (Exception ex) {
+			throw new Exception("Invalid policy for nick name :" + ex.getMessage());
 		}
 		if(!duplicateNickName(userNickNm)) {
 			throw new Exception("Duplicate nick name");
+		}
+		
+		AuthInfoVo authInfo = this.getAuthInfo(parameter);
+		if(authInfo != null) {
+			String userId = authInfo.getUserId();
+			if(userId != null && userId.length() > 0) {
+				parameter.put("userUid", userId);
+				parameter.remove("authKey");
+			} else {
+				throw new Exception("Invalid authkey. Retry login.");
+			}
+		} else {
+			throw new Exception("Fail authorization");
 		}
 		
 		int nCnt = chnlAccntDao.updateChnlAccntByUserid(parameter);
@@ -88,18 +109,46 @@ public class AuthManagerService {
 	}
 	
 	// nick validation
-	private boolean validateNickName(String nickNm) {
+	private boolean validateNickName(String nickNm) throws Exception {
 		if(nickNm == null) {
-			return false;
+			throw new Exception("Nick name is empty");
 		}
+		
+		if(nickNm.length() > 10) {
+			throw new Exception("Nick name is too long");
+		}
+		
+		if(!nickNm.matches("[0-9|a-z|A-Z|ㄱ-ㅎ|ㅏ-ㅣ|가-힝]*")){
+			throw new Exception("Cannot use special character in your nick.");
+		}
+		
 		return true;
 	}
 	
 	private boolean duplicateNickName(String nickNm) {
-		return true;
+		int nCount = chnlAccntDao.getCountMatchingNick(nickNm);
+		return !(nCount > 0);
 	}
 
 	private String generateLoginAuthKey(String userId) {
+		String authKey = null;
+		
+		try {
+			authKey = getAESEncrypt(userId);
+		} catch (Exception ex) {
+		}
+//		return authKey;
+		// development
 		return "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";
 	}
-}
+	
+	private String getAESEncrypt(String source) throws Exception {
+		AES256Util aes256 = new AES256Util(Constants.aesKey);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy$yyMM$dd$HH$mm$ss$");
+		Date now = new Date();
+		
+		String sourceData = source + sdf.format(now);
+		return aes256.aesEncode(sourceData);
+	}
+}		

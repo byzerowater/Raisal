@@ -68,7 +68,8 @@
 			MST.app_id
 			,MST.app_nm
 			,MST.app_desc
-			,MST.appr_stus
+			-- ,MST.appr_stus
+			,IF( DATE_FORMAT(NOW(),'%Y%m%d') > MST.aprs_end_dtm , 'F', 'A') as appr_stus
 			,MST.aprs_str_dtm
 			,MST.aprs_end_dtm
 			,MST.mod_dtm
@@ -222,7 +223,8 @@
 			,app_titl
 			,app_nm
 			,app_desc
-			,appr_stus
+			-- ,appr_stus
+			,IF( DATE_FORMAT(NOW(),'%Y%m%d') > aprs_end_dtm , 'F', 'A') as appr_stus
 			,aprs_str_dtm
 			,aprs_end_dtm
 			,mod_dtm
