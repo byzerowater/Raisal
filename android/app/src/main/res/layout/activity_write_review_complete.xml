@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.write.app.WriteAppAppraisalCompleteActivity">
+              tools:context="me.fourground.raisal.ui.write.review.WriteReviewCompleteActivity">
 
     <include layout="@layout/include_header"/>
 
@@ -22,13 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
-            android:text="@string/text_register_service_complete"
+            android:text="@string/text_register_review_complete"
             android:textColor="@color/black_272727_ff"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -36,12 +36,12 @@
             android:textSize="12sp"/>
 
         <Button
-            android:id="@+id/btn_write"
+            android:id="@+id/btn_my_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:background="@drawable/rect_stroke_gray"
-            android:text="@string/action_app_register"
+            android:text="@string/action_go_my_review"
             android:textColor="@color/blue_0090ff_ff"
             android:textSize="14sp"
             android:textStyle="bold"/>

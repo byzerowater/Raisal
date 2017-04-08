@@ -1,59 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               tools:context=".ui.write.review.WritePointFragment">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_weight="1"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="26dp"
+        android:background="@color/gray_eeeeee_ff"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="@string/text_appraisal_service"
+        android:textColor="@color/gray_575757_ff"
+        android:textSize="9sp"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
             <me.fourground.raisal.ui.views.LinearRecyclerView
                 android:id="@+id/rv_points"
-                tools:listitem="@layout/item_review_point"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_review_point"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_play_store_url"
+                android:id="@+id/til_impression"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/text_hint_input_url"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:hint="@string/text_hint_service_concept"
                 android.support.design:counterEnabled="true"
-                android.support.design:counterMaxLength="30"
+                android.support.design:counterMaxLength="200"
                 android.support.design:errorEnabled="true"
                 android.support.design:hintAnimationEnabled="true"
                 android.support.design:hintEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_play_store_url"
+                    android:id="@+id/et_impression"
+                    style="@style/InputTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="227dp"
+                    android:background="@color/gray_f7f7f7_ff"
+                    android:gravity="top"
+                    android:maxLength="200"
+                    android:padding="12dp"
+                    android:textSize="12sp"/>
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+
 
     </android.support.v4.widget.NestedScrollView>
 
     <Button
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="55dp"
+        android:background="@color/blue_0090ff_ff"
+        android:text="@string/action_register"
+        android:textColor="@color/white_ffffff_ff"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

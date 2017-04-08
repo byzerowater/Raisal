@@ -56,7 +56,6 @@ public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.Po
         PointViewData pointData = mPointDatas.get(position);
 
         holder.mTvTitle.setText(pointData.getTitle());
-        holder.mTvExplanation.setText(pointData.getExplanation());
         holder.mRbPointDesign.setRating(pointData.getPoint());
 
         holder.mRbPointDesign.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
@@ -103,8 +102,6 @@ public class WritePointAdapter extends RecyclerView.Adapter<WritePointAdapter.Po
 
         @BindView(R.id.tv_title)
         TextView mTvTitle;
-        @BindView(R.id.tv_explanation)
-        TextView mTvExplanation;
         @BindView(R.id.rb_point)
         RatingBar mRbPointDesign;
 

@@ -22,7 +22,6 @@ import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.util.DateUtil;
 import me.fourground.raisal.util.ListUtil;
 import me.fourground.raisal.util.Util;
-import timber.log.Timber;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
@@ -94,39 +93,45 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (Const.APPRAISAL_TYPE_FINISH.equals(data.getAppStatus())) {
             AppEndHolder endHolder = (AppEndHolder) holder;
-            endHolder.mRbAverage.setRating(data.getAppraisalAvg());
-            endHolder.mTvAverage.setText(String.valueOf(data.getAppraisalAvg()));
-            endHolder.mTvDate.setText(context.getString(R.string._text_date,
-                    DateUtil.convertDateFormat(data.getStartDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW),
-                    DateUtil.convertDateFormat(data.getEndDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW)
-            ));
-            endHolder.mTvName.setText(data.getAppName());
-            endHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
-            endHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
-            endHolder.mTvState.setText(context.getString(R.string.text_appraisal_end));
-            endHolder.mTvState.setSelected(false);
+            setFinishItemView(context, endHolder, data);
         } else {
             AppEvaluatingHolder evaluatingHolder = (AppEvaluatingHolder) holder;
-            evaluatingHolder.mTvName.setText(data.getAppName());
-            evaluatingHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
-            evaluatingHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, String.valueOf(data.getNPartyUserCount())));
-            evaluatingHolder.mTvState.setText(context.getString(R.string.text_appraisal_evaluating));
-            evaluatingHolder.mTvState.setSelected(true);
-            evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
-                if (mOnOrderItemClickListener != null) {
-                    mOnOrderItemClickListener.onWriteItemClick(data);
-                }
-            });
-
+            setEvaluatingView(context, evaluatingHolder, data);
         }
 
         holder.itemView.setOnClickListener(
                 view -> {
-                    Timber.i("click");
                     if (mOnOrderItemClickListener != null) {
                         mOnOrderItemClickListener.onAppItemClick(data);
                     }
                 });
+    }
+
+    private void setFinishItemView(Context context, AppEndHolder endHolder, AppInfoData data) {
+        endHolder.mRbAverage.setRating(data.getAppraisalAvg());
+        endHolder.mTvAverage.setText(String.valueOf(data.getAppraisalAvg()));
+        endHolder.mTvDate.setText(context.getString(R.string._text_date,
+                DateUtil.convertDateFormat(data.getStartDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW),
+                DateUtil.convertDateFormat(data.getEndDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW)
+        ));
+        endHolder.mTvName.setText(data.getAppName());
+        endHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
+        endHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+        endHolder.mTvState.setText(context.getString(R.string.text_appraisal_end));
+        endHolder.mTvState.setSelected(false);
+    }
+
+    private void setEvaluatingView(Context context, AppEvaluatingHolder evaluatingHolder, AppInfoData data) {
+        evaluatingHolder.mTvName.setText(data.getAppName());
+        evaluatingHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
+        evaluatingHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+        evaluatingHolder.mTvState.setText(context.getString(R.string.text_appraisal_evaluating));
+        evaluatingHolder.mTvState.setSelected(true);
+        evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
+            if (mOnOrderItemClickListener != null) {
+                mOnOrderItemClickListener.onWriteItemClick(data);
+            }
+        });
     }
 
     @Override

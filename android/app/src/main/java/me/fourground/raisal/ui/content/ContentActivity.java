@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
@@ -25,14 +23,11 @@ import me.fourground.raisal.common.Const;
 import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.ContentData;
-import me.fourground.raisal.data.model.PointData;
 import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
-import me.fourground.raisal.util.DateUtil;
-import me.fourground.raisal.util.Util;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -49,45 +44,17 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     @Inject
     LoadingDialog mLoadingDialog;
     @Inject
-    ReviewAdapter mReviewAdapter;
+    ContentAdapter mContentAdapter;
     @Inject
     Bus mEventBus;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tv_name)
-    TextView mTvName;
-    @BindView(R.id.tv_store)
-    TextView mTvStore;
-    @BindView(R.id.tv_state)
-    TextView mTvState;
-    @BindView(R.id.tv_date)
-    TextView mTvDate;
-    @BindView(R.id.tv_explanation)
-    TextView mTvExplanation;
-    @BindView(R.id.tv_review_count)
-    TextView mTvReviewCount;
-    @BindView(R.id.tv_average)
-    TextView mTvAverage;
-    @BindView(R.id.rb_average)
-    RatingBar mRbAverage;
-    @BindView(R.id.rb_design)
-    RatingBar mRbDesign;
-    @BindView(R.id.rb_useful)
-    RatingBar mRbUseful;
-    @BindView(R.id.rb_contents)
-    RatingBar mRbContents;
-    @BindView(R.id.rb_satisfaction)
-    RatingBar mRbSatisfaction;
-    @BindView(R.id.ll_average)
-    LinearLayout mLlAverage;
-    @BindView(R.id.rv_review)
-    LinearRecyclerView mRvReview;
+    @BindView(R.id.rv_content)
+    LinearRecyclerView mRvContent;
     @BindView(R.id.btn_write_review)
     Button mBtnWriteReview;
     @BindView(R.id.btn_back)
     Button mBtnBack;
-    @BindView(R.id.tv_empty_text)
-    TextView mTvEmptyText;
 
     private AppInfoData mAppInfoData;
     private String mDownUrl = null;
@@ -118,7 +85,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
         mBtnBack.setVisibility(View.VISIBLE);
         mTvTitle.setText(getString(R.string.text_title_content));
 
-        mRvReview.setAdapter(mReviewAdapter);
+        mRvContent.setAdapter(mContentAdapter);
 
         mContentPresenter.getContent(getIntent().getStringExtra(EXTRA_APP_ID));
 
@@ -150,45 +117,15 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     public void onContent(ContentData contentData) {
         AppInfoData appInfo = contentData.getAppInfo();
 
-        mTvName.setText(appInfo.getAppName());
-        mTvStore.setText(Util.getStoreType(ContentActivity.this, appInfo.getTargetOsCode()));
-
         boolean isEnd = Const.APPRAISAL_TYPE_FINISH.equals(appInfo.getAppStatus());
         if (isEnd) {
-            mTvState.setText(getString(R.string.text_appraisal_end));
             mBtnWriteReview.setVisibility(View.GONE);
         } else {
-            mTvState.setText(getString(R.string.text_appraisal_evaluating));
             mBtnWriteReview.setVisibility(View.VISIBLE);
         }
 
-        mTvState.setSelected(isEnd);
-
-        mTvDate.setText(getString(R.string._text_date,
-                DateUtil.convertDateFormat(appInfo.getStartDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW),
-                DateUtil.convertDateFormat(appInfo.getEndDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW)
-        ));
-
-        if (appInfo.getNPartyUserCount() == 0) {
-            mTvEmptyText.setVisibility(View.VISIBLE);
-            mLlAverage.setVisibility(View.GONE);
-        } else {
-            mTvEmptyText.setVisibility(View.GONE);
-            mLlAverage.setVisibility(View.VISIBLE);
-        }
-
-        mTvExplanation.setText(contentData.getAppDesc());
-
-        mTvReviewCount.setText(getString(R.string._text_content_review_count, appInfo.getNPartyUserCount()));
-
-        mTvAverage.setText(String.valueOf(appInfo.getAppraisalAvg()));
-        mRbAverage.setRating(appInfo.getAppraisalAvg());
-
-        PointData appElement = contentData.getAppElement();
-        mRbDesign.setRating(appElement.getDesign());
-        mRbContents.setRating(appElement.getContents());
-        mRbSatisfaction.setRating(appElement.getSatisfaction());
-        mRbUseful.setRating(appElement.getUseful());
+        mContentAdapter.addContentData(contentData);
+        mContentAdapter.notifyDataSetChanged();
 
         mDownUrl = contentData.getAppDownloadUrl();
         mAppInfoData = appInfo;
@@ -196,18 +133,15 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     @Override
     public void onReviewList(List<ReviewData> reviewDatas) {
-        mReviewAdapter.addReviewDatas(reviewDatas);
-        mReviewAdapter.notifyDataSetChanged();
+        mContentAdapter.addReviewDatas(reviewDatas);
+        mContentAdapter.notifyDataSetChanged();
     }
 
     @Subscribe
     public void onRegisterCompleted(BusEvent.RegisterReviewCompleted event) {
         ReviewData reviewData = event.getReviewData();
-        mReviewAdapter.addReviewData(reviewData);
-        mReviewAdapter.notifyDataSetChanged();
-
-        mTvEmptyText.setVisibility(View.GONE);
-        mLlAverage.setVisibility(View.VISIBLE);
+        mContentAdapter.addReviewData(reviewData);
+        mContentAdapter.notifyDataSetChanged();
     }
 
 

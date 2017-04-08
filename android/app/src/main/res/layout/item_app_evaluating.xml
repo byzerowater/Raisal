@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
-        android:text="aaa"
+        android:text="REVIEW COUNT"
         android:textColor="@color/black_272727_ff"
         android:textSize="16sp"
         android:textStyle="bold"/>

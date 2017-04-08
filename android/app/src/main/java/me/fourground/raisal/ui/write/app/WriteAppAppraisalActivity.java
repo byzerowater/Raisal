@@ -31,7 +31,7 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.btn_back)
-    Button mBtnPre;
+    Button mBtnBack;
     @BindView(R.id.btn_confirm)
     Button mBtnConfirm;
 
@@ -42,6 +42,8 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     LoadingDialog mLoadingDialog;
 
     RegisterAppRequest mRegisterAppRequest = new RegisterAppRequest();
+    @BindView(R.id.btn_cancel)
+    Button mBtnCancel;
 
     /**
      * WriteWriteAppAppraisalActivity 가져오기
@@ -62,7 +64,8 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
         ButterKnife.bind(this);
         mWriteAppAppraisalPresenter.attachView(this);
 
-        mTvTitle.setText(R.string.text_register);
+        mTvTitle.setText(R.string.text_title_register);
+        mBtnCancel.setVisibility(View.VISIBLE);
         FragmentHelper.addFragment(R.id.fl_content, this, WriteNameFragment.newInstance());
     }
 
@@ -96,7 +99,8 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
-                mBtnPre.setVisibility(View.GONE);
+                mBtnBack.setVisibility(View.GONE);
+                mBtnConfirm.setText(getString(R.string.action_next));
                 onBackPressed();
                 break;
             case R.id.btn_cancel:
@@ -109,6 +113,8 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
                     if (fragment instanceof Checker
                             && ((Checker) fragment).checkInputText()) {
                         if (fragment instanceof WriteNameFragment) {
+                            mBtnBack.setVisibility(View.VISIBLE);
+                            mBtnConfirm.setText(getString(R.string.action_register));
                             FragmentHelper.addToBackStackFragment(
                                     R.id.fl_content,
                                     WriteAppAppraisalActivity.this,

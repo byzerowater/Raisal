@@ -35,9 +35,11 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     @Inject
     LoadingDialog mLoadingDialog;
     @BindView(R.id.btn_back)
-    Button mBtnPre;
+    Button mBtnBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @BindView(R.id.btn_cancel)
+    Button mBtnCancel;
 
     private AppInfoData mAppInfoData;
 
@@ -63,10 +65,10 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         ButterKnife.bind(this);
         mWriteReviewPresenter.attachView(this);
 
+        mBtnCancel.setVisibility(View.VISIBLE);
         mAppInfoData = getIntent().getParcelableExtra(EXTRA_APP_DATA);
 
-        mTvTitle.setText(R.string.text_write_review);
-        mBtnPre.setVisibility(View.GONE);
+        mTvTitle.setText(R.string.text_title_write_review);
         FragmentHelper.addFragment(R.id.fl_content, WriteReviewActivity.this, WriteUsedFragment.newInstance());
     }
 
@@ -79,7 +81,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     @Override
     public void showProgress(boolean isShow) {
 
-        Timber.i("showProgress %s " , isShow);
+        Timber.i("showProgress %s ", isShow);
         if (isShow) {
             mLoadingDialog.show();
         } else {
@@ -108,7 +110,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
-                mBtnPre.setVisibility(View.GONE);
+                mBtnBack.setVisibility(View.GONE);
                 onBackPressed();
                 break;
             case R.id.btn_cancel:
@@ -117,8 +119,14 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
         }
     }
 
+    public void goWritePoint() {
+        mBtnBack.setVisibility(View.VISIBLE);
+        FragmentHelper.addToBackStackFragment(R.id.fl_content, WriteReviewActivity.this, WritePointFragment.newInstance());
+    }
+
     @Override
     public void onRegister() {
+
         finish();
     }
 }

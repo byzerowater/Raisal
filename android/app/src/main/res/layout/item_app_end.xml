@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="aaa"
+            android:text="AVERAGE"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="aaa"
+            android:text="REVIEW COUNT"
             android:textSize="16sp"/>
 
     </LinearLayout>
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:text="aaa"
+        android:text="DATE"
         android:textColor="@color/gray_878787_ff"
         android:textSize="9sp"/>
 

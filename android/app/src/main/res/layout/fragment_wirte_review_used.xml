@@ -4,26 +4,39 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
               tools:context=".ui.write.review.WriteUsedFragment">
 
     <TextView
         android:id="@+id/tv_name"
+        style="@style/ServiceNameTextStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="NAME"/>
 
     <TextView
         android:id="@+id/tv_store"
+        style="@style/StoreTextStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="STORE"/>
 
     <TextView
+        style="@style/RegisterTitleTextStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/text_used_service"/>
 
     <RelativeLayout
         android:id="@+id/rl_btn_used"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,10 +50,16 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_e9e9e9_ff"/>
+
     <RelativeLayout
         android:id="@+id/rl_btn_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"

@@ -7,12 +7,10 @@ package me.fourground.raisal.data.model;
  */
 public class PointViewData {
     private String title;
-    private String explanation;
     private float point;
 
-    public PointViewData(String title, String explanation) {
+    public PointViewData(String title) {
         this.title = title;
-        this.explanation = explanation;
     }
 
     public String getTitle() {
@@ -21,14 +19,6 @@ public class PointViewData {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getExplanation() {
-        return explanation;
-    }
-
-    public void setExplanation(String explanation) {
-        this.explanation = explanation;
     }
 
     public float getPoint() {

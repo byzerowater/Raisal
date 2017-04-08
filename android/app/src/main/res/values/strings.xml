@@ -4,29 +4,22 @@
 
     <string name="app_name">Raisal</string>
 
-    <string name="text_loading">loading</string>
-
-    <string name="text_register">등록하기</string>
-    <string name="text_write_review">리뷰쓰기</string>
     <string name="text_hint_input_name">서비스 이름을 입력하세요.</string>
     <string name="text_error_input_name">서비스 이름은 필수 입니다.</string>
     <string name="text_hint_input_url">Google Play URL을 입력하세요.</string>
     <string name="text_error_store_url">URL이 올바르지 않습니다. Google Play 에서 공유 URL을 복사 후 넣어주세요</string>
 
-    <string name="text_used">예전 또는 현재 사용한 적 있다.</string>
-    <string name="text_first_time">처음 사용해봤다.</string>
+    <string name="text_used">예전 또는 현재 사용한 적 있다</string>
+    <string name="text_first_time">처음 사용해봤다</string>
 
     <string name="text_network_error">네트워크에 접속할 수 없습니다.</string>
     <string name="text_network_error_guide">네트워크 연결 상태를 확인해 주세요.</string>
 
     <string name="text_design">디자인</string>
-    <string name="text_design_guide">레이아웃, 색상, 아이콘 등</string>
     <string name="text_useful">사용성</string>
-    <string name="text_useful_guide">메뉴 이동, 인터랙션 등</string>
     <string name="text_contents">콘텐츠</string>
-    <string name="text_contents_guide">정보의 유효성, 재미요소 등</string>
     <string name="text_satisfaction">만족도</string>
-    <string name="text_satisfaction_guide">서비스의 필요성, 지속적인 사용 유무 등</string>
+
     <string name="text_empty_review">아직 작성된 리뷰가 없습니다</string>
     <string name="text_name">이름</string>
     <string name="text_device_os">Device OS</string>
@@ -36,13 +29,23 @@
 
     <string name="text_service_explanation">서비스 설명 (200자 내) - 선택</string>
     <string name="text_hint_service_concept">서비스 컨셉을 간략하게 써주세요</string>
-    <string name="text_register_complete">서비스가 정상적으로 등록되었습니다</string>
+    <string name="text_register_service_complete">서비스가 정상적으로 등록되었습니다</string>
+    <string name="text_used_service">이 서비스를 사용한 경험이 있나요?</string>
+    <string name="text_appraisal_service">서비스를 이용해 본 느낌을 5점만점으로 평가해주세요</string>
+    <string name="text_design_question">디자인은 어떤가요?</string>
+    <string name="text_useful_question">서비스가 복잡하지는 않나요?</string>
+    <string name="text_contents_question">유용한 정보 또는 기능이 있나요?</string>
+    <string name="text_satisfaction_question">앞으로도 이 서비스를 사용할 생각이 있나요?</string>
 
     <string name="text_appraisal_evaluating">평가중</string>
     <string name="text_appraisal_end">평가종료</string>
 
     <string name="text_title_content">서비스 설명</string>
     <string name="text_title_register_complete">등록 완료</string>
+    <string name="text_title_register">등록하기</string>
+    <string name="text_title_write_review">리뷰 쓰기</string>
+    <string name="text_title_register_review_complete">리뷰 쓰기 완료</string>
+    <string name="text_register_review_complete">리뷰가 정상적으로 등록되었습니다</string>
 
     <string name="_text_date">%1$s ~ %2$s</string>
     <string name="_text_review_count">%d명이 리뷰를 남겼습니다.</string>
@@ -53,10 +56,13 @@
     <string name="action_confirm">확인</string>
     <string name="action_close">닫기</string>
     <string name="action_next">다음</string>
+    <string name="action_cancel">취소</string>
     <string name="action_retry_connect">재시도</string>
     <string name="action_join_appraisal">평가 참여하기</string>
     <string name="action_app_down">앱 다운로드</string>
     <string name="action_write_review">평가 참여하기</string>
     <string name="action_app_register">서비스 추가등록</string>
-    <string name="action_go_main">메인으로 이동</string>
+    <string name="action_go_main">메인페이지로 이동</string>
+    <string name="action_go_my_review">내가 작성한 리뷰 보기</string>
+    <string name="action_register">제출하기</string>
 </resources>

@@ -14,7 +14,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.model.AppInfoData;
-import me.fourground.raisal.util.FragmentHelper;
+import me.fourground.raisal.util.Util;
 
 /**
  * Created by YoungSoo Kim on 2017-03-26.
@@ -51,7 +51,7 @@ public class WriteUsedFragment extends Fragment {
         AppInfoData appInfoData = ((WriteReviewActivity) getActivity()).getAppInfoData();
 
         mTvName.setText(appInfoData.getAppName());
-        mTvStore.setText(appInfoData.getTargetOsCode());
+        mTvStore.setText(Util.getStoreType(getActivity(), appInfoData.getTargetOsCode()));
     }
 
     @Override
@@ -70,8 +70,8 @@ public class WriteUsedFragment extends Fragment {
                 ((WriteReviewActivity) getActivity()).getRegisterReviewRequest().setUseTerm("1");
                 break;
         }
-        FragmentHelper.addToBackStackFragment(R.id.fl_content, getActivity(), WritePointFragment.newInstance());
 
+        ((WriteReviewActivity) getActivity()).goWritePoint();
     }
 
 }

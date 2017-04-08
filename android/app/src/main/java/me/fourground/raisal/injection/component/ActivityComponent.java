@@ -13,6 +13,7 @@ import me.fourground.raisal.ui.splash.SplashActivity;
 import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
 import me.fourground.raisal.ui.write.app.WriteAppAppraisalCompleteActivity;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
+import me.fourground.raisal.ui.write.review.WriteReviewCompleteActivity;
 
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
@@ -36,5 +37,7 @@ public interface ActivityComponent {
     void inject(MyAppActivity myAppActivity);
 
     void inject(ContentActivity contentActivity);
+
+    void inject(WriteReviewCompleteActivity writeReviewCompleteActivity);
 }
 

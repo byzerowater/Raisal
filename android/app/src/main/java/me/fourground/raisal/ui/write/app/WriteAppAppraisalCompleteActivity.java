@@ -14,6 +14,7 @@ import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.common.Const;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.main.MainActivity;
 import me.fourground.raisal.util.DateUtil;
 import me.fourground.raisal.util.StringUtil;
 
@@ -67,6 +68,9 @@ public class WriteAppAppraisalCompleteActivity extends BaseActivity {
                 startActivity(WriteAppAppraisalActivity.getStartIntent(WriteAppAppraisalCompleteActivity.this));
                 break;
             case R.id.btn_main:
+                Intent mainIntent = MainActivity.getStartIntent(WriteAppAppraisalCompleteActivity.this);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(mainIntent);
                 break;
         }
         finish();
