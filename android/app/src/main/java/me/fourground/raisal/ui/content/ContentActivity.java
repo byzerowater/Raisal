@@ -1,5 +1,6 @@
 package me.fourground.raisal.ui.content;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -152,7 +153,11 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
                 onBackPressed();
                 break;
             case R.id.btn_app_down:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mDownUrl)));
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mDownUrl)));
+                } catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_write_review:
                 startActivity(WriteReviewActivity.getStartIntent(ContentActivity.this, mAppInfoData));

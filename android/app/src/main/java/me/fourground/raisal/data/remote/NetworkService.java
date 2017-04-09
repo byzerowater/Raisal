@@ -48,7 +48,7 @@ public interface NetworkService {
      * @return
      */
     @POST("/api/raisal/vote/{appId}")
-    Observable<RegisterData> registerApp(@Path("appId") String appId, @Body RegisterReviewRequest reviewRequest);
+    Observable<RegisterData> registerReview(@Path("appId") String appId, @Body RegisterReviewRequest reviewRequest);
 
 
     /**

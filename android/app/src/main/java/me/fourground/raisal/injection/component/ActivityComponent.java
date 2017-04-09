@@ -5,7 +5,7 @@ import me.fourground.raisal.injection.PerActivity;
 import me.fourground.raisal.injection.module.ActivityModule;
 import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.main.MainActivity;
-import me.fourground.raisal.ui.mypage.MyPageActivity;
+import me.fourground.raisal.ui.mypage.MyPageFragment;
 import me.fourground.raisal.ui.mypage.app.MyAppActivity;
 import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 import me.fourground.raisal.ui.signin.SignInActivity;
@@ -28,16 +28,16 @@ public interface ActivityComponent {
 
     void inject(WriteReviewActivity writeReviewActivity);
 
-    void inject(MyPageActivity myPageActivity);
+    void inject(MyPageFragment myPageActivity);
 
     void inject(WriteAppAppraisalCompleteActivity writeAppAppraisalCompleteActivity);
 
     void inject(MyReviewActivity myReviewActivity);
 
-    void inject(MyAppActivity myAppActivity);
-
     void inject(ContentActivity contentActivity);
 
     void inject(WriteReviewCompleteActivity writeReviewCompleteActivity);
+
+    void inject(MyAppActivity myAppActivity);
 }
 

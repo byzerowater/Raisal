@@ -40,7 +40,7 @@ public class WriteReviewPresenter extends BasePresenter<WriteReviewMvpView> {
 
     public void registerApp(String appId, RegisterReviewRequest registerReviewRequest) {
         getMvpView().showProgress(true);
-        mSubscription = mDataManager.registerApp(appId, registerReviewRequest)
+        mSubscription = mDataManager.registerReview(appId, registerReviewRequest)
                 .retryWhen(err ->
                         err.flatMap(e -> {
                             PublishSubject<Integer> choice = PublishSubject.create();

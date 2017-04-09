@@ -63,7 +63,6 @@
         android:hint="@string/text_hint_service_concept"
         android.support.design:counterEnabled="true"
         android.support.design:counterMaxLength="200"
-        android.support.design:errorEnabled="true"
         android.support.design:hintAnimationEnabled="true"
         android.support.design:hintEnabled="true">
 

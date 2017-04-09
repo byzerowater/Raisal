@@ -3,6 +3,8 @@ package me.fourground.raisal.ui.mypage.review;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -27,11 +29,12 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
     MyReviewPresenter mMyReviewPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
-
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.rv_review)
     LinearRecyclerView mRvReview;
+    @BindView(R.id.btn_back)
+    Button mBtnBack;
 
     /**
      * MyReviewActivity 가져오기
@@ -51,6 +54,8 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
         setContentView(R.layout.activity_my_review);
         ButterKnife.bind(this);
         mMyReviewPresenter.attachView(this);
+        mBtnBack.setVisibility(View.VISIBLE);
+        mTvTitle.setText(getString(R.string.text_my_review));
     }
 
     @Override
@@ -75,5 +80,7 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
 
     @OnClick(R.id.btn_back)
     public void onViewClicked() {
+        finish();
     }
+
 }

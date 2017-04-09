@@ -91,8 +91,8 @@ public class DataManager {
                 });
     }
 
-    public Observable<RegisterData> registerApp(String appId, RegisterReviewRequest registerReviewRequest) {
-        return mNetworkService.registerApp(appId, registerReviewRequest)
+    public Observable<RegisterData> registerReview(String appId, RegisterReviewRequest registerReviewRequest) {
+        return mNetworkService.registerReview(appId, registerReviewRequest)
                 .doOnNext(registerData ->  {
                     ReviewData data = new ReviewData();
                     data.setAppComment(registerReviewRequest.getComment());
@@ -103,12 +103,15 @@ public class DataManager {
                 });
     }
 
+    public String getNickName() {
+        return mPreferencesHelper.getSignData().getNickName();
+    }
+
     private String removeAccessToken() {
         String accessToken = mPreferencesHelper.getAccessToken();
         mPreferencesHelper.putAccessToken(null);
         return accessToken;
     }
-
 
 //    public Single<List<Shot>> getShots(int perPage, int page) {
 //        return mEnvironmentService.getShots(BuildConfig.DRIBBBLE_ACCESS_TOKEN, perPage, page);

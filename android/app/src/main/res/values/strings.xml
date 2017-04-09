@@ -23,7 +23,7 @@
     <string name="text_empty_review">아직 작성된 리뷰가 없습니다</string>
     <string name="text_name">이름</string>
     <string name="text_device_os">Device OS</string>
-    <string name="text_device_andorid">android</string>
+    <string name="text_device_andorid">Android</string>
     <string name="text_device_ios">IOS</string>
     <string name="text_review_date">리뷰기간</string>
 
@@ -52,6 +52,9 @@
     <string name="_text_content_review_count">%d명의 리뷰</string>
     <string name="_text_review_date">평가기간 : 1$s ~ %2$s</string>
 
+    <string name="text_my_app">내가 등록한 서비스</string>
+    <string name="text_my_review">내가 쓴 리뷰</string>
+
 
     <string name="action_confirm">확인</string>
     <string name="action_close">닫기</string>
@@ -65,4 +68,5 @@
     <string name="action_go_main">메인페이지로 이동</string>
     <string name="action_go_my_review">내가 작성한 리뷰 보기</string>
     <string name="action_register">제출하기</string>
+    <string name="action_change_nickname">닉네임 변경</string>
 </resources>

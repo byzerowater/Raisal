@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.util.DateUtil;
 import me.fourground.raisal.util.ListUtil;
 import me.fourground.raisal.util.Util;
+import timber.log.Timber;
 
 import static android.support.v7.widget.RecyclerView.ViewHolder;
 
@@ -31,7 +33,7 @@ import static android.support.v7.widget.RecyclerView.ViewHolder;
  * byzerowater@gmail.com
  * 앱 평가 Adapter
  */
-public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     private static final int VIEW_TYPE_EVALUATING = 1;
     private static final int VIEW_TYPE_END = 2;
@@ -61,7 +63,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflate = LayoutInflater.from(parent.getContext());
         ViewHolder viewHolder = null;
         if (viewType == VIEW_TYPE_EVALUATING) {
@@ -79,6 +81,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         AppInfoData item = getItem(position);
+        Timber.i(item.toString());
         int type = VIEW_TYPE_EVALUATING;
         if (item != null && Const.APPRAISAL_TYPE_FINISH.equals(item.getAppStatus())) {
             type = VIEW_TYPE_END;
@@ -116,7 +119,15 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ));
         endHolder.mTvName.setText(data.getAppName());
         endHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
-        endHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+
+        if (data.getNPartyUserCount() == 0) {
+            endHolder.mTvEmptyText.setVisibility(View.VISIBLE);
+            endHolder.mLlAverage.setVisibility(View.GONE);
+        } else {
+            endHolder.mTvEmptyText.setVisibility(View.GONE);
+            endHolder.mLlAverage.setVisibility(View.VISIBLE);
+            endHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+        }
         endHolder.mTvState.setText(context.getString(R.string.text_appraisal_end));
         endHolder.mTvState.setSelected(false);
     }
@@ -124,7 +135,16 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void setEvaluatingView(Context context, AppEvaluatingHolder evaluatingHolder, AppInfoData data) {
         evaluatingHolder.mTvName.setText(data.getAppName());
         evaluatingHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
-        evaluatingHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+
+        if (data.getNPartyUserCount() == 0) {
+            evaluatingHolder.mTvEmptyText.setVisibility(View.VISIBLE);
+            evaluatingHolder.mTvReviewCount.setVisibility(View.GONE);
+        } else {
+            evaluatingHolder.mTvEmptyText.setVisibility(View.GONE);
+            evaluatingHolder.mTvReviewCount.setVisibility(View.VISIBLE);
+            evaluatingHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+        }
+
         evaluatingHolder.mTvState.setText(context.getString(R.string.text_appraisal_evaluating));
         evaluatingHolder.mTvState.setSelected(true);
         evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
@@ -143,7 +163,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int itemCount = getItemCount();
         AppInfoData item = null;
 
-        if (itemCount > position && position < 0) {
+        if (itemCount > position && position >= 0) {
             item = mAppDatas.get(position);
         }
 
@@ -177,6 +197,8 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mTvReviewCount;
         @BindView(R.id.btn_join_review)
         Button mBtnJoinReview;
+        @BindView(R.id.tv_empty_text)
+        TextView mTvEmptyText;
 
         public AppEvaluatingHolder(View itemView) {
             super(itemView);
@@ -202,6 +224,10 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mTvReviewCount;
         @BindView(R.id.tv_date)
         TextView mTvDate;
+        @BindView(R.id.tv_empty_text)
+        TextView mTvEmptyText;
+        @BindView(R.id.ll_average)
+        LinearLayout mLlAverage;
 
         public AppEndHolder(View itemView) {
             super(itemView);

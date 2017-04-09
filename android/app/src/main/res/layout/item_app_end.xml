@@ -2,44 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="32dp">
 
-    <include layout="@layout/include_item_review"/>
+    <include layout="@layout/include_app_info_main"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp">
 
-        <RatingBar
-            android:id="@+id/rb_average"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:max="10"
-            android:numStars="5"
-            android:rating="2"
-            android:stepSize="0.1"/>
-
         <TextView
-            android:id="@+id/tv_average"
+            android:id="@+id/tv_empty_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="AVERAGE"
+            android:text="@string/text_empty_review"
+            android:textColor="@color/gray_a7a7a7_ff"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/tv_review_count"
+        <LinearLayout
+            android:id="@+id/ll_average"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="REVIEW COUNT"
-            android:textSize="16sp"/>
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <RatingBar
+                android:id="@+id/rb_average"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:max="10"
+                android:numStars="5"
+                android:rating="2"
+                android:stepSize="0.1"/>
+
+            <TextView
+                android:id="@+id/tv_average"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="AVERAGE"
+                android:textColor="@color/black_272727_ff"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_review_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="REVIEW COUNT"
+                android:textColor="@color/gray_575757_ff"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_date"
@@ -49,5 +70,11 @@
         android:text="DATE"
         android:textColor="@color/gray_878787_ff"
         android:textSize="9sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/gray_e7e7e7_ff"/>
 
 </LinearLayout>

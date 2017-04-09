@@ -72,12 +72,20 @@ public class WriteNameFragment extends Fragment implements Checker {
 
         if (StringUtil.isEmpty(name)) {
             isPass = false;
+            mTilName.setErrorEnabled(true);
             mTilName.setError(getString(R.string.text_error_input_name));
+        } else {
+            mTilName.setError("");
+            mTilName.setErrorEnabled(false);
         }
 
         if (StringUtil.isEmpty(storeUrl) || !storeUrl.contains(ANDROID_STORE_URL_PREFIX)) {
             isPass = false;
+            mTilPlayStoreUrl.setErrorEnabled(true);
             mTilPlayStoreUrl.setError(getString(R.string.text_error_store_url));
+        } else {
+            mTilPlayStoreUrl.setError("");
+            mTilPlayStoreUrl.setErrorEnabled(false);
         }
 
         if (isPass) {

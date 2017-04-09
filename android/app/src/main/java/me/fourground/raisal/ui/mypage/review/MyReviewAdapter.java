@@ -17,8 +17,6 @@ import butterknife.ButterKnife;
 import me.fourground.raisal.R;
 import me.fourground.raisal.util.ListUtil;
 
-import static android.support.v7.widget.RecyclerView.ViewHolder;
-
 /**
  * Created by YoungSoo Kim on 2017-03-29.
  * 4ground Ltd
@@ -63,22 +61,18 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
         int itemCount = getItemCount();
         String item = null;
 
-        if (itemCount > position && position < 0) {
+        if (itemCount > position && position >= 0) {
             item = mReviewDatas.get(position);
         }
 
         return item;
     }
 
-    public void setReviewDatas(List<String> reviewDatas) {
-        mReviewDatas = reviewDatas;
+    public void addReviewDatas(List<String> reviewDatas) {
+        mReviewDatas.addAll(reviewDatas);
     }
 
-    /**
-     * 리뷰 Holder
-     */
-    static class ReviewHolder extends ViewHolder {
-
+    static class ReviewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)
         TextView mTvName;
         @BindView(R.id.tv_store)
@@ -98,10 +92,9 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
         @BindView(R.id.tv_satisfaction)
         TextView mTvSatisfaction;
 
-        public ReviewHolder(View itemView) {
+        ReviewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
-
 }

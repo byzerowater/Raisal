@@ -26,6 +26,7 @@ import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -116,6 +117,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
 
     @Override
     public void onAppList(List<AppInfoData> datas) {
+        Timber.i("onAppList %s" , datas.toString());
         mAppAdapter.addAppDatas(datas);
         mAppAdapter.notifyDataSetChanged();
     }

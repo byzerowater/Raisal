@@ -166,7 +166,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         int itemCount = getItemCount();
         Object item = null;
 
-        if (itemCount > position && position < 0) {
+        if (itemCount > position && position >= 0) {
             item = mReviewDatas.get(position);
         }
 

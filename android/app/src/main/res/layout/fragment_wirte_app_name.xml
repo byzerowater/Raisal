@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="@string/text_hint_input_name"
-        android.support.design:errorEnabled="true"
         android.support.design:hintAnimationEnabled="true"
         android.support.design:hintEnabled="true">
 
@@ -31,7 +30,9 @@
             android:id="@+id/et_name"
             style="@style/InputTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -55,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="@string/text_hint_input_url"
-        android.support.design:errorEnabled="true"
         android.support.design:hintAnimationEnabled="true"
         android.support.design:hintEnabled="true">
 
@@ -63,6 +63,8 @@
             android:id="@+id/et_play_store_url"
             style="@style/InputTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

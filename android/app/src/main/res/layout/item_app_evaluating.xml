@@ -2,19 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="32dp">
 
-    <include layout="@layout/include_item_review"/>
+    <include
+        layout="@layout/include_app_info_main"/>
 
-    <TextView
-        android:id="@+id/tv_review_count"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:text="REVIEW COUNT"
-        android:textColor="@color/black_272727_ff"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="22dp">
+
+        <TextView
+            android:id="@+id/tv_review_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REVIEW COUNT"
+            android:textColor="@color/black_272727_ff"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_empty_review"
+            android:textColor="@color/gray_a7a7a7_ff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_join_review"
