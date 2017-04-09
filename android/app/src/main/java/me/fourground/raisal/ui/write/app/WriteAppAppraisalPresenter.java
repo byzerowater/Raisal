@@ -42,25 +42,26 @@ public class WriteAppAppraisalPresenter extends BasePresenter<WriteAppAppraisalM
     public void registerApp(RegisterAppRequest registerAppRequest) {
         getMvpView().showProgress(true);
         mSubscription = mDataManager.registerApp(registerAppRequest)
-                .retryWhen(err ->
-                        err.flatMap(e -> {
-                            PublishSubject<Integer> choice = PublishSubject.create();
-                            Context context = (Context) getMvpView();
-                            DialogFactory.createDialog(context,
-                                    context.getString(R.string.text_network_error),
-                                    context.getString(R.string.action_close),
-                                    context.getString(R.string.action_retry_connect),
-                                    (dialog, which) -> {
-                                        choice.onError(e);
-                                    },
-                                    (dialog, which) -> {
-                                        choice.onNext(1);
-                                    }).show();
-
-                            return choice;
-                        })
-                )
                 .subscribeOn(Schedulers.io())
+                .retryWhen(err ->
+                        err.observeOn(AndroidSchedulers.mainThread())
+                                .flatMap(e -> {
+                                    PublishSubject<Integer> choice = PublishSubject.create();
+                                    Context context = (Context) getMvpView();
+                                    DialogFactory.createDialog(context,
+                                            context.getString(R.string.text_network_error),
+                                            context.getString(R.string.action_close),
+                                            context.getString(R.string.action_retry_connect),
+                                            (dialog, which) -> {
+                                                choice.onError(e);
+                                            },
+                                            (dialog, which) -> {
+                                                choice.onNext(1);
+                                            }).show();
+
+                                    return choice;
+                                })
+                )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RegisterData>() {
                     @Override

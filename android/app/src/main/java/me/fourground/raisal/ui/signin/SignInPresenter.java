@@ -49,22 +49,23 @@ public class SignInPresenter extends BasePresenter<SignInMvpView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(err ->
-                        err.flatMap(e -> {
-                            PublishSubject<Integer> choice = PublishSubject.create();
-                            Context context = (Context) getMvpView();
-                            DialogFactory.createDialog(context,
-                                    context.getString(R.string.text_network_error),
-                                    context.getString(R.string.action_close),
-                                    context.getString(R.string.action_retry_connect),
-                                    (dialog, which) -> {
-                                        choice.onError(e);
-                                    },
-                                    (dialog, which) -> {
-                                        choice.onNext(1);
-                                    }).show();
+                        err.observeOn(AndroidSchedulers.mainThread())
+                                .flatMap(e -> {
+                                    PublishSubject<Integer> choice = PublishSubject.create();
+                                    Context context = (Context) getMvpView();
+                                    DialogFactory.createDialog(context,
+                                            context.getString(R.string.text_network_error),
+                                            context.getString(R.string.action_close),
+                                            context.getString(R.string.action_retry_connect),
+                                            (dialog, which) -> {
+                                                choice.onError(e);
+                                            },
+                                            (dialog, which) -> {
+                                                choice.onNext(1);
+                                            }).show();
 
-                            return choice;
-                        })
+                                    return choice;
+                                })
                 )
                 .subscribe(new Subscriber<SignData>() {
                     @Override

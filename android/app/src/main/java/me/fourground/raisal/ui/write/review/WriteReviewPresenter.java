@@ -1,6 +1,7 @@
 package me.fourground.raisal.ui.write.review;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
 
@@ -34,7 +35,7 @@ public class WriteReviewPresenter extends BasePresenter<WriteReviewMvpView> {
 
     @Override
     public void detachView() {
-      super.detachView();
+        super.detachView();
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
@@ -42,22 +43,27 @@ public class WriteReviewPresenter extends BasePresenter<WriteReviewMvpView> {
         getMvpView().showProgress(true);
         mSubscription = mDataManager.registerReview(appId, registerReviewRequest)
                 .retryWhen(err ->
-                        err.flatMap(e -> {
-                            PublishSubject<Integer> choice = PublishSubject.create();
-                            Context context = (Context) getMvpView();
-                            DialogFactory.createDialog(context,
-                                    context.getString(R.string.text_network_error),
-                                    context.getString(R.string.action_close),
-                                    context.getString(R.string.action_retry_connect),
-                                    (dialog, which) -> {
-                                        choice.onError(e);
-                                    },
-                                    (dialog, which) -> {
-                                        choice.onNext(1);
-                                    }).show();
-
-                            return choice;
-                        })
+                        err.observeOn(AndroidSchedulers.mainThread())
+                                .flatMap(e -> {
+                                    PublishSubject<Integer> choice = PublishSubject.create();
+                                    Context context = null;
+                                    if (getMvpView() instanceof Fragment) {
+                                        context = ((Fragment) getMvpView()).getActivity();
+                                    } else {
+                                        context = (Context) getMvpView();
+                                    }
+                                    DialogFactory.createDialog(context,
+                                            context.getString(R.string.text_network_error),
+                                            context.getString(R.string.action_close),
+                                            context.getString(R.string.action_retry_connect),
+                                            (dialog, which) -> {
+                                                choice.onError(e);
+                                            },
+                                            (dialog, which) -> {
+                                                choice.onNext(1);
+                                            }).show();
+                                    return choice;
+                                })
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

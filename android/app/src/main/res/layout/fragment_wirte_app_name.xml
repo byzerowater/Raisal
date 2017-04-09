@@ -5,10 +5,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
               tools:context=".ui.write.app.WriteNameFragment">
 
     <TextView
@@ -21,6 +17,8 @@
         android:id="@+id/til_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginStart="-4dp"
         android:layout_marginTop="10dp"
         android:hint="@string/text_hint_input_name"
         android.support.design:hintAnimationEnabled="true"
@@ -54,6 +52,8 @@
         android:id="@+id/til_play_store_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginStart="-4dp"
         android:layout_marginTop="10dp"
         android:hint="@string/text_hint_input_url"
         android.support.design:hintAnimationEnabled="true"

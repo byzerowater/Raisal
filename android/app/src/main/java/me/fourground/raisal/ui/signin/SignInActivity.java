@@ -73,6 +73,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 

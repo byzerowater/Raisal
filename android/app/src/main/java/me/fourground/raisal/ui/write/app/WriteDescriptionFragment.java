@@ -52,6 +52,12 @@ public class WriteDescriptionFragment extends Fragment implements Checker {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        selectButton(DAY_TYEP_14);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

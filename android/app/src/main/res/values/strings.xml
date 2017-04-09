@@ -69,4 +69,6 @@
     <string name="action_go_my_review">내가 작성한 리뷰 보기</string>
     <string name="action_register">제출하기</string>
     <string name="action_change_nickname">닉네임 변경</string>
+    <string name="action_during_7_day">7일 동안</string>
+    <string name="action_during_14_day">14일 동안</string>
 </resources>

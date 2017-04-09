@@ -29,7 +29,7 @@ import me.fourground.raisal.util.StringUtil;
  */
 public class WriteNameFragment extends Fragment implements Checker {
 
-    private static final String ANDROID_STORE_URL_PREFIX = "play.google.com/store/apps/details?";
+//    private static final String ANDROID_STORE_URL_PREFIX = "play.google.com/store/apps/details?";
 
 
     Unbinder unbinder;
@@ -66,7 +66,7 @@ public class WriteNameFragment extends Fragment implements Checker {
 
     @Override
     public boolean checkInputText() {
-        boolean isPass = false;
+        boolean isPass = true;
         String name = mEtName.getText().toString();
         String storeUrl = mEtPlayStoreUrl.getText().toString();
 
@@ -79,7 +79,7 @@ public class WriteNameFragment extends Fragment implements Checker {
             mTilName.setErrorEnabled(false);
         }
 
-        if (StringUtil.isEmpty(storeUrl) || !storeUrl.contains(ANDROID_STORE_URL_PREFIX)) {
+        if (StringUtil.isEmpty(storeUrl)/* || !storeUrl.contains(ANDROID_STORE_URL_PREFIX)*/) {
             isPass = false;
             mTilPlayStoreUrl.setErrorEnabled(true);
             mTilPlayStoreUrl.setError(getString(R.string.text_error_store_url));

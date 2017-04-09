@@ -46,7 +46,7 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
     public void getContent(String appId) {
         getMvpView().showProgress(true);
 
-        mNextUrl =  mNextUrl.replace("{appId}" , appId);
+        mNextUrl = mNextUrl.replace("{appId}", appId);
 
         Observable<ContentData> content = mDataManager.getContent(appId);
         Observable<List<ReviewData>> contentReviewList = mDataManager.getContentReviewList(mNextUrl)
@@ -57,22 +57,23 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
 
         mSubscription = Observable.merge(content, contentReviewList)
                 .retryWhen(err ->
-                        err.flatMap(e -> {
-                            PublishSubject<Integer> choice = PublishSubject.create();
-                            Context context = (Context) getMvpView();
-                            DialogFactory.createDialog(context,
-                                    context.getString(R.string.text_network_error),
-                                    context.getString(R.string.action_close),
-                                    context.getString(R.string.action_retry_connect),
-                                    (dialog, which) -> {
-                                        choice.onError(e);
-                                    },
-                                    (dialog, which) -> {
-                                        choice.onNext(1);
-                                    }).show();
+                        err.observeOn(AndroidSchedulers.mainThread())
+                                .flatMap(e -> {
+                                    PublishSubject<Integer> choice = PublishSubject.create();
+                                    Context context = (Context) getMvpView();
+                                    DialogFactory.createDialog(context,
+                                            context.getString(R.string.text_network_error),
+                                            context.getString(R.string.action_close),
+                                            context.getString(R.string.action_retry_connect),
+                                            (dialog, which) -> {
+                                                choice.onError(e);
+                                            },
+                                            (dialog, which) -> {
+                                                choice.onNext(1);
+                                            }).show();
 
-                            return choice;
-                        })
+                                    return choice;
+                                })
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -99,27 +100,28 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
     }
 
     public void getReviewList() {
-        mSubscription =mDataManager.getContentReviewList(mNextUrl)
+        mSubscription = mDataManager.getContentReviewList(mNextUrl)
                 .map(reviewListData -> {
                     mNextUrl = reviewListData.getLinks().getNext();
                     return reviewListData.getData();
                 }).retryWhen(err ->
-                        err.flatMap(e -> {
-                            PublishSubject<Integer> choice = PublishSubject.create();
-                            Context context = (Context) getMvpView();
-                            DialogFactory.createDialog(context,
-                                    context.getString(R.string.text_network_error),
-                                    context.getString(R.string.action_close),
-                                    context.getString(R.string.action_retry_connect),
-                                    (dialog, which) -> {
-                                        choice.onError(e);
-                                    },
-                                    (dialog, which) -> {
-                                        choice.onNext(1);
-                                    }).show();
+                        err.observeOn(AndroidSchedulers.mainThread())
+                                .flatMap(e -> {
+                                    PublishSubject<Integer> choice = PublishSubject.create();
+                                    Context context = (Context) getMvpView();
+                                    DialogFactory.createDialog(context,
+                                            context.getString(R.string.text_network_error),
+                                            context.getString(R.string.action_close),
+                                            context.getString(R.string.action_retry_connect),
+                                            (dialog, which) -> {
+                                                choice.onError(e);
+                                            },
+                                            (dialog, which) -> {
+                                                choice.onNext(1);
+                                            }).show();
 
-                            return choice;
-                        })
+                                    return choice;
+                                })
                 )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
