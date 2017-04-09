@@ -48,6 +48,8 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     private static final int REQUEST_SIGN_IN = 0x15;
 
+    private static final String EXTRA_IS_AUTHENTICATION_ERROR = "extra_is_authentication_error";
+
     @BindView(R.id.sib_google)
     Button mSibGoogle;
 
@@ -65,6 +67,9 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     private GoogleApiClient mGoogleApiClient;
     private CallbackManager mCallbackManager;
 
+    private boolean
+            isAuthenticationError = false;
+
     /**
      * SignInActivity 가져오기
      *
@@ -73,7 +78,20 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);
+        return intent;
+    }
+
+    /**
+     * SignInActivity 가져오기
+     *
+     * @param context               Context
+     * @param isAuthenticationError Context
+     * @return SignInActivity Intent
+     */
+    public static Intent getStartIntent(Context context, boolean isAuthenticationError) {
+        Intent intent = new Intent(context, SignInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(EXTRA_IS_AUTHENTICATION_ERROR, isAuthenticationError);
         return intent;
     }
 
@@ -84,6 +102,8 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         mSignInPresenter.attachView(this);
+
+        isAuthenticationError = getIntent().getBooleanExtra(EXTRA_IS_AUTHENTICATION_ERROR, false);
         initGoogleLogin();
         initFacebookLogin();
         initFirebaseAuth();
@@ -272,7 +292,9 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     @Override
     public void onSignIn() {
-        startActivity(MainActivity.getStartIntent(SignInActivity.this));
+        if (!isAuthenticationError) {
+            startActivity(MainActivity.getStartIntent(SignInActivity.this));
+        }
         finish();
     }
 }

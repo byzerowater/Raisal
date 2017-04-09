@@ -66,7 +66,7 @@ public class RaisalApplication extends Application {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(s -> {
-                    startActivity(SignInActivity.getStartIntent(this));
+                    startActivity(SignInActivity.getStartIntent(this, true));
                 });
     }
 }
