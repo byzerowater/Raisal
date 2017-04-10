@@ -29,12 +29,12 @@ public class WriteReviewCompleteActivity extends BaseActivity {
      * AppAppraisalCompleteActivity 가져오기
      *
      * @param context Context
-     * @param date    평가기간
+     * @param name    앱 이름
      * @return MainActivity Intent
      */
-    public static Intent getStartIntent(Context context, String date) {
+    public static Intent getStartIntent(Context context, String name) {
         Intent intent = new Intent(context, WriteReviewCompleteActivity.class);
-        intent.putExtra(EXTRA_APP_NAME, date);
+        intent.putExtra(EXTRA_APP_NAME, name);
         return intent;
     }
 

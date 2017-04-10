@@ -46,11 +46,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:hint="@string/text_hint_service_concept"
                 android.support.design:counterEnabled="true"
                 android.support.design:counterMaxLength="200"
                 android.support.design:hintAnimationEnabled="true"
-                android.support.design:hintEnabled="true">
+                android.support.design:hintEnabled="false">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/et_impression"
@@ -59,6 +58,7 @@
                     android:layout_height="227dp"
                     android:background="@color/gray_f7f7f7_ff"
                     android:gravity="top"
+                    android:hint="@string/text_hint_service_concept"
                     android:maxLength="200"
                     android:padding="12dp"
                     android:textSize="12sp"/>

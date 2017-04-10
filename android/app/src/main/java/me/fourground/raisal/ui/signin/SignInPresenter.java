@@ -71,7 +71,7 @@ public class SignInPresenter extends BasePresenter<SignInMvpView> {
                     @Override
                     public void onCompleted() {
                         getMvpView().showProgress(false);
-                        getMvpView().onSignIn();
+
                     }
 
                     @Override
@@ -82,6 +82,7 @@ public class SignInPresenter extends BasePresenter<SignInMvpView> {
 
                     @Override
                     public void onNext(SignData signData) {
+                        getMvpView().onSignIn();
                     }
                 });
 

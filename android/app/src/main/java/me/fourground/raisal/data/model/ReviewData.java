@@ -15,10 +15,19 @@ public class ReviewData {
      * userName : string
      */
 
+    private String appId;
     private String appComment;
     private PointData appElement;
     private String targetOsCode;
     private String userName;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
     public String getAppComment() {
         return appComment;
@@ -55,7 +64,8 @@ public class ReviewData {
     @Override
     public String toString() {
         return "ReviewData{" +
-                "appComment='" + appComment + '\'' +
+                "appId='" + appId + '\'' +
+                ", appComment='" + appComment + '\'' +
                 ", appElement=" + appElement +
                 ", targetOsCode='" + targetOsCode + '\'' +
                 ", userName='" + userName + '\'' +

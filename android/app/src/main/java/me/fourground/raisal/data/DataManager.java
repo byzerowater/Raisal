@@ -1,5 +1,7 @@
 package me.fourground.raisal.data;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -17,6 +19,8 @@ import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
 import me.fourground.raisal.data.remote.EventPosterHelper;
 import me.fourground.raisal.data.remote.NetworkService;
+import me.fourground.raisal.util.DateUtil;
+import me.fourground.raisal.util.StringUtil;
 import rx.Observable;
 import rx.functions.Action0;
 
@@ -78,28 +82,35 @@ public class DataManager {
     public Observable<RegisterData> registerApp(RegisterAppRequest registAppRequest) {
         return mNetworkService.registerApp(registAppRequest)
                 .doOnNext(registerData -> {
+
+                    Calendar currentCalendar = Calendar.getInstance();
+                    String startDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_SERVER);
+                    currentCalendar.add(Calendar.DATE, StringUtil.getInt(registAppRequest.getReqTerm()));
+                    String endDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_SERVER);
+
                     AppInfoData data = new AppInfoData(
                             registerData.getAppId(),
                             registAppRequest.getAppName(),
                             Const.APPRAISAL_TYPE_ACTIVIE,
-                            "start",
-                            "end",
+                            startDate,
+                            endDate,
                             Const.STORE_TYPE_ADR,
                             0,
                             0);
-                    postEventSafelyAction(new BusEvent.RegisterAppCompleted(data));
+                    mEventPoster.postEventSafely(new BusEvent.RegisterAppCompleted(data));
                 });
     }
 
     public Observable<RegisterData> registerReview(String appId, RegisterReviewRequest registerReviewRequest) {
         return mNetworkService.registerReview(appId, registerReviewRequest)
-                .doOnNext(registerData ->  {
+                .doOnNext(registerData -> {
                     ReviewData data = new ReviewData();
+                    data.setAppId(appId);
                     data.setAppComment(registerReviewRequest.getComment());
                     data.setAppElement(registerReviewRequest.getAppElement());
                     data.setTargetOsCode(Const.STORE_TYPE_ADR);
                     data.setUserName(mPreferencesHelper.getSignData().getNickName());
-                    postEventSafelyAction(new BusEvent.RegisterReviewCompleted(data));
+                    mEventPoster.postEventSafely(new BusEvent.RegisterReviewCompleted(data));
                 });
     }
 

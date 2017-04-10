@@ -175,11 +175,26 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     public void addAppData(AppInfoData appData) {
-        mAppDatas.add(appData);
+        mAppDatas.add(0, appData);
     }
 
     public void setOnOrderItemClickListener(OnAppItemClickListener onOrderItemClickListener) {
         mOnOrderItemClickListener = onOrderItemClickListener;
+    }
+
+    public int getAppInfoPosition(String appId) {
+        int itemCount = getItemCount();
+        int position = -1;
+
+        for (int i = 0; i < itemCount; i++) {
+            AppInfoData appData = getItem(i);
+            if (appId.equals(appData.getAppId())) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
     }
 
 

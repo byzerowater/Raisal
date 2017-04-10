@@ -73,6 +73,12 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mBtnBack.setVisibility(View.GONE);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mWriteReviewPresenter.detachView();
@@ -110,7 +116,6 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
-                mBtnBack.setVisibility(View.GONE);
                 onBackPressed();
                 break;
             case R.id.btn_cancel:
@@ -126,7 +131,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
     @Override
     public void onRegister() {
-
+        startActivity(WriteReviewCompleteActivity.getStartIntent(WriteReviewActivity.this, mAppInfoData.getAppName()));
         finish();
     }
 }

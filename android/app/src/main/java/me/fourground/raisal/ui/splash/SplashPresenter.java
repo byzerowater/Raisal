@@ -74,7 +74,6 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
                     @Override
                     public void onCompleted() {
                         getMvpView().showProgress(false);
-                        getMvpView().onSignIn();
                     }
 
                     @Override
@@ -86,6 +85,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
                     @Override
                     public void onNext(SignData signData) {
+                        getMvpView().onSignIn();
                     }
                 });
 
@@ -98,7 +98,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
         mSubscription = Observable.timer(2, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-                getMvpView().onGoMain();
+
             }
 
             @Override
@@ -108,7 +108,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
             @Override
             public void onNext(Long aLong) {
-
+                getMvpView().onGoMain();
             }
         });
     }

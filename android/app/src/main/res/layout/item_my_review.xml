@@ -7,10 +7,7 @@
     <include layout="@layout/include_app_info"/>
 
     <include
-        layout="@layout/include_review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        layout="@layout/include_review"/>
 
     <View
         android:layout_width="match_parent"

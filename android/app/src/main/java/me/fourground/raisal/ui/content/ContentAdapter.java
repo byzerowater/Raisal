@@ -185,6 +185,10 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mReviewDatas.add(0, contentData);
     }
 
+    public ContentData getContentData() {
+        return (ContentData) mReviewDatas.get(0);
+    }
+
     /**
      * 리뷰 Holder
      */

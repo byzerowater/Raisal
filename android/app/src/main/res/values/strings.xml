@@ -50,7 +50,7 @@
     <string name="_text_date">%1$s ~ %2$s</string>
     <string name="_text_review_count">%d명이 리뷰를 남겼습니다.</string>
     <string name="_text_content_review_count">%d명의 리뷰</string>
-    <string name="_text_review_date">평가기간 : 1$s ~ %2$s</string>
+    <string name="_text_review_date">평가기간 : %1$s ~ %2$s</string>
 
     <string name="text_my_app">내가 등록한 서비스</string>
     <string name="text_my_review">내가 쓴 리뷰</string>

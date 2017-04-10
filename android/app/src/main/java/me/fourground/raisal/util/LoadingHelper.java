@@ -29,9 +29,9 @@ public class LoadingHelper {
      */
     private boolean mIsLoading = false;
     /**
-     * 전체 아이템 수
+     * 다음 페이지
      */
-    private int mTotalCount = 0;
+    private String mNextPage = null;
     /**
      * 마지막 뷰 아이템 위치
      */
@@ -75,7 +75,7 @@ public class LoadingHelper {
                         mLastVisibleItem = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
                     }
 
-                    if (mTotalItemCount <= mLastVisibleItem + VISIBLE_THRESHOLD && mTotalItemCount < mTotalCount) {
+                    if (mTotalItemCount <= mLastVisibleItem + VISIBLE_THRESHOLD && !StringUtil.isEmpty(mNextPage)) {
                         if (mOnLoadingListener != null) {
                             mOnLoadingListener.onLoadMore();
                         }
@@ -95,11 +95,11 @@ public class LoadingHelper {
         mIsLoading = loading;
     }
 
-    public void setTotalCount(int totalCount) {
-        mTotalCount = totalCount;
+    public String getNextPage() {
+        return mNextPage;
     }
 
-    public int getTotalCount() {
-        return mTotalCount;
+    public void setNextPage(String nextPage) {
+        mNextPage = nextPage;
     }
 }

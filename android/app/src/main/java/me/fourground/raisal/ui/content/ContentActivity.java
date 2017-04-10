@@ -24,11 +24,13 @@ import me.fourground.raisal.common.Const;
 import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.ContentData;
+import me.fourground.raisal.data.model.PointData;
 import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
+import me.fourground.raisal.util.LoadingHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -48,6 +50,10 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     ContentAdapter mContentAdapter;
     @Inject
     Bus mEventBus;
+    @Inject
+    LoadingHelper mLoadingHelper;
+
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.rv_content)
@@ -87,8 +93,14 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
         mTvTitle.setText(getString(R.string.text_title_content));
 
         mRvContent.setAdapter(mContentAdapter);
+        mLoadingHelper.setRecyclerView(mRvContent);
+        String appId = getIntent().getStringExtra(EXTRA_APP_ID);
 
-        mContentPresenter.getContent(getIntent().getStringExtra(EXTRA_APP_ID));
+        mLoadingHelper.setOnLoadingListener(() -> {
+            mContentPresenter.getReviewList();
+        });
+
+        mContentPresenter.getContent(appId);
 
 
     }
@@ -116,6 +128,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     @Override
     public void onContent(ContentData contentData) {
+
         AppInfoData appInfo = contentData.getAppInfo();
 
         boolean isEnd = Const.APPRAISAL_TYPE_FINISH.equals(appInfo.getAppStatus());
@@ -134,15 +147,48 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     @Override
     public void onReviewList(List<ReviewData> reviewDatas) {
+        mLoadingHelper.setNextPage(mContentPresenter.getNextUrl());
+        mLoadingHelper.setLoading(false);
+
         mContentAdapter.addReviewDatas(reviewDatas);
         mContentAdapter.notifyDataSetChanged();
     }
 
     @Subscribe
-    public void onRegisterCompleted(BusEvent.RegisterReviewCompleted event) {
+    public void onRegisterReviewCompleted(BusEvent.RegisterReviewCompleted event) {
         ReviewData reviewData = event.getReviewData();
-        mContentAdapter.addReviewData(reviewData);
-        mContentAdapter.notifyDataSetChanged();
+
+        ContentData contentData = mContentAdapter.getContentData();
+        AppInfoData appInfo = contentData.getAppInfo();
+
+        if (reviewData.getAppId().equals(appInfo.getAppId())) {
+
+            PointData appPoint = contentData.getAppElement();
+            PointData reviewPoint = reviewData.getAppElement();
+
+            int nPartyUserCount = appInfo.getNPartyUserCount();
+
+            float totalContens = appPoint.getContents() * nPartyUserCount + reviewPoint.getContents();
+            float totalDesign = appPoint.getDesign() * nPartyUserCount + reviewPoint.getDesign();
+            float totalSatisfaction = appPoint.getSatisfaction() * nPartyUserCount + reviewPoint.getSatisfaction();
+            float totalUseful = appPoint.getUseful() * nPartyUserCount + reviewPoint.getUseful();
+
+            nPartyUserCount++;
+
+            appPoint.setContents(totalContens / nPartyUserCount);
+            appPoint.setDesign(totalDesign / nPartyUserCount);
+            appPoint.setSatisfaction(totalSatisfaction / nPartyUserCount);
+            appPoint.setUseful(totalUseful / nPartyUserCount);
+
+            appInfo.setNPartyUserCount(nPartyUserCount);
+
+            float avg = (totalContens + totalDesign + totalSatisfaction + totalUseful) / nPartyUserCount / 4;
+
+            appInfo.setAppraisalAvg(avg);
+
+            mContentAdapter.addReviewData(reviewData);
+            mContentAdapter.notifyDataSetChanged();
+        }
     }
 
 

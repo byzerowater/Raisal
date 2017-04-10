@@ -3,8 +3,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="32dp">
 
     <include layout="@layout/include_app_info_main"/>
@@ -27,7 +25,8 @@
         <LinearLayout
             android:id="@+id/ll_average"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
             <RatingBar
                 android:id="@+id/rb_average"

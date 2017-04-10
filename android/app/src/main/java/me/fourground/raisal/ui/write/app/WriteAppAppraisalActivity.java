@@ -70,6 +70,13 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mBtnBack.setVisibility(View.GONE);
+        mBtnConfirm.setText(getString(R.string.action_next));
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mWriteAppAppraisalPresenter.detachView();
@@ -99,8 +106,6 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
-                mBtnBack.setVisibility(View.GONE);
-                mBtnConfirm.setText(getString(R.string.action_next));
                 onBackPressed();
                 break;
             case R.id.btn_cancel:

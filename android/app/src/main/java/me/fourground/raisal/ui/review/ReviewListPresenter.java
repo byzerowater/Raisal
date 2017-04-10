@@ -13,6 +13,7 @@ import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.ui.base.BasePresenter;
 import me.fourground.raisal.util.DialogFactory;
+import me.fourground.raisal.util.StringUtil;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,67 +44,65 @@ public class ReviewListPresenter extends BasePresenter<ReviewListMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void getAppList() {
-        getMvpView().showProgress(true);
-        mSubscription = mDataManager.getAppList(mNextUrl)
-                .retryWhen(err ->
-                        err.observeOn(AndroidSchedulers.mainThread())
-                                .flatMap(e -> {
-                                    PublishSubject<Integer> choice = PublishSubject.create();
-                                    Context context = null;
-                                    if (getMvpView() instanceof Fragment) {
-                                        context = ((Fragment) getMvpView()).getActivity();
-                                    } else {
-                                        context = (Context) getMvpView();
-                                    }
-                                    DialogFactory.createDialog(context,
-                                            context.getString(R.string.text_network_error),
-                                            context.getString(R.string.action_close),
-                                            context.getString(R.string.action_retry_connect),
-                                            (dialog, which) -> {
-                                                choice.onError(e);
-                                            },
-                                            (dialog, which) -> {
-                                                choice.onNext(1);
-                                            }).show();
+    public void getAppList(boolean isShowProgress) {
+        if (!StringUtil.isEmpty(mNextUrl)) {
+            if (isShowProgress) {
+                getMvpView().showProgress(true);
+            }
+            mSubscription = mDataManager.getAppList(mNextUrl)
+                    .retryWhen(err ->
+                            err.observeOn(AndroidSchedulers.mainThread())
+                                    .flatMap(e -> {
+                                        PublishSubject<Integer> choice = PublishSubject.create();
+                                        Context context = null;
+                                        if (getMvpView() instanceof Fragment) {
+                                            context = ((Fragment) getMvpView()).getActivity();
+                                        } else {
+                                            context = (Context) getMvpView();
+                                        }
+                                        DialogFactory.createDialog(context,
+                                                context.getString(R.string.text_network_error),
+                                                context.getString(R.string.action_close),
+                                                context.getString(R.string.action_retry_connect),
+                                                (dialog, which) -> {
+                                                    choice.onError(e);
+                                                },
+                                                (dialog, which) -> {
+                                                    choice.onNext(1);
+                                                }).show();
 
-                                    return choice;
-                                })
-                )
-                .
+                                        return choice;
+                                    })
+                    )
+                    .map(appListData -> {
+                        mNextUrl = appListData.getLinks().getNext();
+                        return appListData.getData();
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<List<AppInfoData>>() {
+                                   @Override
+                                   public void onCompleted() {
+                                       getMvpView().showProgress(false);
+                                   }
 
-                        map(appListData ->
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Timber.e(e);
+                                       getMvpView().onError();
+                                       getMvpView().showProgress(false);
+                                   }
 
-                        {
-                            mNextUrl = appListData.getLinks().getNext();
-                            return appListData.getData();
-                        })
-                .
+                                   @Override
+                                   public void onNext(List<AppInfoData> datas) {
+                                       getMvpView().onAppList(datas);
+                                   }
+                               }
+                    );
+        }
+    }
 
-                        subscribeOn(Schedulers.io())
-                .
-
-                        observeOn(AndroidSchedulers.mainThread())
-                .
-
-                        subscribe(new Subscriber<List<AppInfoData>>() {
-                                      @Override
-                                      public void onCompleted() {
-                                          getMvpView().showProgress(false);
-                                      }
-
-                                      @Override
-                                      public void onError(Throwable e) {
-                                          Timber.e(e);
-                                          getMvpView().onError();
-                                          getMvpView().showProgress(false);
-                                      }
-
-                                      @Override
-                                      public void onNext(List<AppInfoData> datas) {
-                                          getMvpView().onAppList(datas);
-                                      }
-                                  }
-                        );
+    public String getNextUrl() {
+        return mNextUrl;
     }
 }

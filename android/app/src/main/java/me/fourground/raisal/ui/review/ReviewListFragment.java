@@ -20,12 +20,14 @@ import butterknife.Unbinder;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BaseFragment;
 import me.fourground.raisal.ui.common.AppAdapter;
 import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 import me.fourground.raisal.ui.write.review.WriteReviewActivity;
+import me.fourground.raisal.util.LoadingHelper;
 import timber.log.Timber;
 
 /**
@@ -38,11 +40,13 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
     @Inject
     Bus mEventBus;
     @Inject
-    ReviewListPresenter mMainPresenter;
+    ReviewListPresenter mReviewListPresenter;
     @Inject
     AppAdapter mAppAdapter;
     @Inject
     LoadingDialog mLoadingDialog;
+    @Inject
+    LoadingHelper mLoadingHelper;
 
     @BindView(R.id.rv_app)
     LinearRecyclerView mRvApp;
@@ -68,7 +72,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
         View view = inflater.inflate(R.layout.fragment_review, container, false);
         unbinder = ButterKnife.bind(this, view);
         mEventBus.register(this);
-        mMainPresenter.attachView(this);
+        mReviewListPresenter.attachView(this);
         return view;
     }
 
@@ -91,7 +95,13 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
             }
         });
 
-        mMainPresenter.getAppList();
+        mLoadingHelper.setOnLoadingListener(() -> {
+            mReviewListPresenter.getAppList(false);
+        });
+
+        mLoadingHelper.setRecyclerView(mRvApp);
+
+        mReviewListPresenter.getAppList(true);
     }
 
     @Override
@@ -111,13 +121,29 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
     @Subscribe
     public void onRegisterCompleted(BusEvent.RegisterAppCompleted event) {
         AppInfoData appInfoData = event.getAppInfoData();
+
+        Timber.i("onRegisterCompleted " + appInfoData.toString());
         mAppAdapter.addAppData(appInfoData);
         mAppAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onRegisterReviewCompleted(BusEvent.RegisterReviewCompleted event) {
+        ReviewData reviewData = event.getReviewData();
+
+        int appInfoPosition = mAppAdapter.getAppInfoPosition(reviewData.getAppId());
+        if (appInfoPosition != -1) {
+            AppInfoData appInfo = mAppAdapter.getItem(appInfoPosition);
+            appInfo.setNPartyUserCount(appInfo.getNPartyUserCount() + 1);
+            mAppAdapter.notifyItemChanged(appInfoPosition);
+        }
+    }
+
     @Override
     public void onAppList(List<AppInfoData> datas) {
-        Timber.i("onAppList %s" , datas.toString());
+        mLoadingHelper.setNextPage(mReviewListPresenter.getNextUrl());
+        mLoadingHelper.setLoading(false);
+
         mAppAdapter.addAppDatas(datas);
         mAppAdapter.notifyDataSetChanged();
     }
@@ -126,7 +152,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        mMainPresenter.detachView();
+        mReviewListPresenter.detachView();
         mEventBus.unregister(this);
     }
 }

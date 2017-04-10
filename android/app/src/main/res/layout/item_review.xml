@@ -13,11 +13,7 @@
         android:textColor="@color/gray_a7a7a7_ff"
         android:textSize="9sp"/>
 
-    <include
-        layout="@layout/include_review"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <include layout="@layout/include_review"/>
 
     <View
         android:layout_width="match_parent"
