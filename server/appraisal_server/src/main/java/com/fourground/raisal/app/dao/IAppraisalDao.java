@@ -24,4 +24,6 @@ public interface IAppraisalDao {
 	// Appr
 	public int insertAppraisalDetail(Map<String, Object> parameter);
 	public int insertAppraisalReply(Map<String, Object> parameter);
+	
+	public int getCountDownloadUrlInActive(Map<String, Object> parameter);
 }

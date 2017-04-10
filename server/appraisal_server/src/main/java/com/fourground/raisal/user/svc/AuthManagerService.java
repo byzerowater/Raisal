@@ -3,6 +3,7 @@ package com.fourground.raisal.user.svc;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,13 @@ public class AuthManagerService {
 				// 기존회원이면 UPDATE
 				nRowCnt = chnlAccntDao.updateChnlAccntByUserid(parameter);
 			} else {
+				String randomNick = generateRandomNick(userUid);
+				
+				if(randomNick != null || randomNick.length() < 10) {
+					throw new Exception("Don't generate Nickname.");
+				}
+				
+				parameter.put("userNm", randomNick);
 				nRowCnt = chnlAccntDao.insertChnlAccnt(parameter);
 				myAccntInfo =  this.getAuthInfo(parameter);
 			}
@@ -129,7 +137,51 @@ public class AuthManagerService {
 		int nCount = chnlAccntDao.getCountMatchingNick(nickNm);
 		return !(nCount > 0);
 	}
+	
+	private String generateRandom(String userId) {
+		Random rnd =new Random();
+		StringBuffer rtnNick = new StringBuffer();
 
+		for(int i=0;i<10;i++){
+		    if(rnd.nextBoolean()){
+		    	rtnNick.append((char)((int)(rnd.nextInt(26))+97));
+		    }else{
+		    	rtnNick.append((rnd.nextInt(10))); 
+		    }
+		}
+//		if(userId != null && userId.length() > 3) {
+//			buf.append(userId.substring(userId.length()-3));
+//		}
+		if(rtnNick.toString() != null) {
+			return rtnNick.toString().toUpperCase();
+		} else {
+			return rtnNick.toString();
+		}
+	}
+	
+	private String generateRandomNick(String userId) {
+
+		String rndNick = "";
+		boolean bUniq = false;
+		
+		int nTryCnt = 0;
+		
+		// DB에 있는지 검사
+		while(!bUniq && nTryCnt < 5) {
+			// 랜덤생성
+			rndNick = generateRandom(userId);
+			
+			bUniq = this.duplicateNickName(rndNick);
+			if(!bUniq) {
+				nTryCnt++;
+			} else {
+				break;
+			}
+		}
+		
+		return rndNick;
+	}
+	
 	private String generateLoginAuthKey(String userId) {
 		String authKey = null;
 		
