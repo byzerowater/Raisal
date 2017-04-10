@@ -168,6 +168,11 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
             int nPartyUserCount = appInfo.getNPartyUserCount();
 
+            if (appPoint == null) {
+                appPoint = new PointData();
+                contentData.setAppElement(appPoint);
+            }
+
             float totalContens = appPoint.getContents() * nPartyUserCount + reviewPoint.getContents();
             float totalDesign = appPoint.getDesign() * nPartyUserCount + reviewPoint.getDesign();
             float totalSatisfaction = appPoint.getSatisfaction() * nPartyUserCount + reviewPoint.getSatisfaction();

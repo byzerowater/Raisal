@@ -24,7 +24,8 @@
             android:layout_centerInParent="true"
             android:text="TITLE"
             android:textColor="@color/blue_0090ff_ff"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btn_cancel"

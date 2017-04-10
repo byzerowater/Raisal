@@ -81,7 +81,6 @@ public class WritePointFragment extends BaseFragment {
         mWritePointAdapter.addPointDatas(pointViewDatas);
 
         mRvPoints.setAdapter(mWritePointAdapter);
-
     }
 
     @Override

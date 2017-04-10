@@ -82,7 +82,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (data instanceof ContentData) {
             ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
-            serAppInfoView(context, contentViewHolder, (ContentData) data);
+            setAppInfoView(context, contentViewHolder, (ContentData) data);
         } else {
             ReviewHolder reviewHolder = (ReviewHolder) holder;
             setReviewView(context, reviewHolder, (ReviewData) data);
@@ -115,7 +115,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         reviewHolder.mTvUseful.setText(useful);
     }
 
-    private void serAppInfoView(Context context, ContentViewHolder contentViewHolder, ContentData data) {
+    private void setAppInfoView(Context context, ContentViewHolder contentViewHolder, ContentData data) {
         AppInfoData appInfo = data.getAppInfo();
 
         contentViewHolder.mTvName.setText(appInfo.getAppName());
@@ -151,10 +151,12 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         contentViewHolder.mRbAverage.setRating(appInfo.getAppraisalAvg());
 
         PointData appElement = data.getAppElement();
-        contentViewHolder.mRbDesign.setRating(appElement.getDesign());
-        contentViewHolder.mRbContents.setRating(appElement.getContents());
-        contentViewHolder.mRbSatisfaction.setRating(appElement.getSatisfaction());
-        contentViewHolder.mRbUseful.setRating(appElement.getUseful());
+        if (appElement != null) {
+            contentViewHolder.mRbDesign.setRating(appElement.getDesign());
+            contentViewHolder.mRbContents.setRating(appElement.getContents());
+            contentViewHolder.mRbSatisfaction.setRating(appElement.getSatisfaction());
+            contentViewHolder.mRbUseful.setRating(appElement.getUseful());
+        }
     }
 
     @Override

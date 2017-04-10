@@ -76,6 +76,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     public void onBackPressed() {
         super.onBackPressed();
         mBtnBack.setVisibility(View.GONE);
+
     }
 
     @Override
