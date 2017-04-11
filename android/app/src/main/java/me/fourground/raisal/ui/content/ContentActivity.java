@@ -76,6 +76,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
      */
     public static Intent getStartIntent(Context context, String appId) {
         Intent intent = new Intent(context, ContentActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra(EXTRA_APP_ID, appId);
         return intent;
     }

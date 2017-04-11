@@ -132,7 +132,11 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
     @Override
     public void onRegister() {
-        startActivity(WriteReviewCompleteActivity.getStartIntent(WriteReviewActivity.this, mAppInfoData.getAppName()));
+        startActivity(
+                WriteReviewCompleteActivity.getStartIntent(
+                        WriteReviewActivity.this,
+                        mAppInfoData.getAppId(),
+                        mAppInfoData.getAppName()));
         finish();
     }
 }
