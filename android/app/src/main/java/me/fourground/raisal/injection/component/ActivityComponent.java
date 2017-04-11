@@ -7,6 +7,7 @@ import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.main.MainActivity;
 import me.fourground.raisal.ui.mypage.MyPageFragment;
 import me.fourground.raisal.ui.mypage.app.MyAppActivity;
+import me.fourground.raisal.ui.mypage.nickname.MyNickNameActivity;
 import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 import me.fourground.raisal.ui.signin.SignInActivity;
 import me.fourground.raisal.ui.splash.SplashActivity;
@@ -39,5 +40,7 @@ public interface ActivityComponent {
     void inject(WriteReviewCompleteActivity writeReviewCompleteActivity);
 
     void inject(MyAppActivity myAppActivity);
+
+    void inject(MyNickNameActivity myNickNameActivity);
 }
 

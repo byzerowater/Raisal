@@ -4,7 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_ffffff_ff"
+    android:background="@color/blue_0090ff_ff"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="me.fourground.raisal.ui.splash.SplashActivity">
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="113dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white_ffffff_ff"
+        android:textSize="47sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_app_explanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_app_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/text_app_explanation"
+        android:textColor="@color/white_ffffff_ff"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/text_4ground_team_project"
+        android:textColor="@color/white_ffffff_ff"
+        android:textSize="9sp"/>
+
 
 </RelativeLayout>

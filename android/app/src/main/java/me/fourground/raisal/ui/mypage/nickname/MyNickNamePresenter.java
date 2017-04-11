@@ -1,15 +1,13 @@
-package me.fourground.raisal.ui.mypage.app;
+package me.fourground.raisal.ui.mypage.nickname;
 
 import android.content.Context;
-
-import com.google.firebase.auth.FirebaseUser;
 
 import javax.inject.Inject;
 
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.DataManager;
 import me.fourground.raisal.data.model.SignData;
-import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.model.UpdateNickNameRequest;
 import me.fourground.raisal.ui.base.BasePresenter;
 import me.fourground.raisal.util.DialogFactory;
 import rx.Subscriber;
@@ -23,13 +21,13 @@ import rx.subjects.PublishSubject;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
+public class MyNickNamePresenter extends BasePresenter<MyNickNameMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
     @Inject
-    public MyAppPresenter(DataManager dataManager) {
+    public MyNickNamePresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
@@ -40,12 +38,10 @@ public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void updateNickName(FirebaseUser user, String channelCode) {
+    public void updateNickName(String nickName) {
         getMvpView().showProgress(true);
-        mSubscription = mDataManager.signIn(new SignInRequest(
-                user.getUid(),
-                user.getEmail(),
-                channelCode))
+        mSubscription = mDataManager.updateNickName(
+                new UpdateNickNameRequest(nickName))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(err ->
@@ -82,6 +78,7 @@ public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
 
                     @Override
                     public void onNext(SignData signData) {
+                        getMvpView().onComplete();
                     }
                 });
 

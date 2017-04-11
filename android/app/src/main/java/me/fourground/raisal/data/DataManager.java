@@ -17,6 +17,7 @@ import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.data.model.ReviewListData;
 import me.fourground.raisal.data.model.SignData;
 import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.model.UpdateNickNameRequest;
 import me.fourground.raisal.data.remote.EventPosterHelper;
 import me.fourground.raisal.data.remote.NetworkService;
 import me.fourground.raisal.util.DateUtil;
@@ -48,10 +49,9 @@ public class DataManager {
 
     public Observable<SignData> signIn(SignInRequest signInRequest) {
         return mNetworkService.signIn(signInRequest)
-                .map(signData -> {
+                .doOnNext(signData -> {
                     mPreferencesHelper.putAccessToken(signData.getAuthKey());
                     mPreferencesHelper.putSignData(signData);
-                    return signData;
                 });
     }
 
@@ -111,6 +111,13 @@ public class DataManager {
                     data.setTargetOsCode(Const.STORE_TYPE_ADR);
                     data.setUserName(mPreferencesHelper.getSignData().getNickName());
                     mEventPoster.postEventSafely(new BusEvent.RegisterReviewCompleted(data));
+                });
+    }
+
+    public Observable<SignData> updateNickName(UpdateNickNameRequest nickNameRequest) {
+        return mNetworkService.updateNickName(nickNameRequest)
+                .doOnNext(signData -> {
+                    mPreferencesHelper.putSignData(signData);
                 });
     }
 

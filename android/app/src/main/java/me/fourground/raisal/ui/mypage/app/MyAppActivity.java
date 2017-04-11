@@ -78,4 +78,5 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
     @OnClick(R.id.btn_back)
     public void onViewClicked() {
     }
+
 }

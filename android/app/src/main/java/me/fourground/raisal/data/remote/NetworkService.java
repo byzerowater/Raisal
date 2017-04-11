@@ -1,6 +1,7 @@
 package me.fourground.raisal.data.remote;
 
 import me.fourground.raisal.data.model.AppListData;
+import me.fourground.raisal.data.model.UpdateNickNameRequest;
 import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.data.model.RegisterData;
@@ -49,6 +50,15 @@ public interface NetworkService {
      */
     @POST("/api/raisal/vote/{appId}")
     Observable<RegisterData> registerReview(@Path("appId") String appId, @Body RegisterReviewRequest reviewRequest);
+
+    /**
+     * 닉네임 변경
+     *
+     * @param nickNameRequest
+     * @return
+     */
+    @POST("/api/account/update")
+    Observable<SignData> updateNickName(@Body UpdateNickNameRequest nickNameRequest);
 
 
     /**
