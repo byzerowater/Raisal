@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
+import com.fourground.raisal.app.dto.AppraisalProVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
 import com.fourground.raisal.app.svc.AppManagerService;
 import com.fourground.raisal.common.Constants;
@@ -203,7 +204,7 @@ public class AppraisalRestController extends BaseRestController {
 	
 	@ApiOperation(value="내가 쓴 평가앱 상세 평가내용 조회"
 			,notes="1>상세조회"
-			,response=AppraisalVo.class)
+			,response=AppraisalProVo.class)
 	@RequestMapping(value="/my/collect", method={RequestMethod.GET})
 	public ResponseEntity<Object> collectMyAppraisalList(
 			HttpServletRequest request
@@ -292,7 +293,7 @@ public class AppraisalRestController extends BaseRestController {
 			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";					
 			appId = appManagerService.registAppInfo(parameter, authKey);
 		} catch (Exception ex) {
-			return authFail(ex.getMessage());
+			return fail(null, ex.getMessage());
 		}
 		
 		result.setSuccess(true);

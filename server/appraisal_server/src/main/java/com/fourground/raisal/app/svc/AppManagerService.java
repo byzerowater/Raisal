@@ -108,6 +108,10 @@ public class AppManagerService {
 		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> downloadInfoList = (List<Map<String,Object>>)parameter.get("downInfo");
 		
+		if(!duplicateActiveApp(downloadInfoList)) {
+			throw new Exception("이미 평가 진행중인 앱입니다.");
+		}
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Date today = new Date();
 		
@@ -153,9 +157,19 @@ public class AppManagerService {
 		return appId;
 	}
 	
-	private boolean duplicateActiveApp(String downloadUrl) {
-		
-		return true;
+	private boolean duplicateActiveApp(List<Map<String, Object>> downloadInfoList) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		int nRowCnt = 0;
+		if(downloadInfoList != null && downloadInfoList.size() > 0) {
+			for(Map<String, Object> mapTemp : downloadInfoList) {
+				param.put("plfmCd", (String)mapTemp.get("platformCode"));
+				param.put("refUrl", (String)mapTemp.get("downUrl"));
+				param.put("refCd", "DU");	// Download Url
+
+				nRowCnt = appraisalDao.getCountDownloadUrlInActive(param);
+			}
+		}
+		return !(nRowCnt > 0);
 	}
 	
 	private String getEndDtm(Date today, String aprsTerm) {

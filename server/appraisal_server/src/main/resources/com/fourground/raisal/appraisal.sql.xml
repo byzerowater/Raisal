@@ -217,14 +217,24 @@
 		<include refid='common.count-bottom'></include>
 	</select>
 	
+	<select id='getCountDownloadUrlInActive' parameterType="HashMap" resultType="Integer">
+		SELECT COUNT(URL.app_id)
+		FROM CO_APPR_APP AS APP
+		LEFT JOIN CO_REF_URL AS URL ON URL.app_id = APP.app_id
+		WHERE 1=1
+		AND APP.appr_stus = 'A'
+		AND URL.ref_url = #{refUrl}
+		AND URL.plfm_cd = #{plfmCd}
+		AND URL.ref_cd = #{refCd}
+	</select>
+	
 	<insert id='insertAppMasterInfo' parameterType='HashMap'>
 		INSERT INTO CO_APPR_APP (
 			app_id
 			,app_titl
 			,app_nm
 			,app_desc
-			-- ,appr_stus
-			,IF( DATE_FORMAT(NOW(),'%Y%m%d') > aprs_end_dtm , 'F', 'A') as appr_stus
+			,appr_stus
 			,aprs_str_dtm
 			,aprs_end_dtm
 			,mod_dtm
