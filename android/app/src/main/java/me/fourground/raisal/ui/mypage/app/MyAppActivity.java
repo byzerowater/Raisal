@@ -12,7 +12,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
-import me.fourground.raisal.ui.common.AppAdapter;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
 
@@ -29,7 +28,7 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
     @Inject
     LoadingDialog mLoadingDialog;
     @Inject
-    AppAdapter mAppAdapter;
+    MyAppAdapter mAppAdapter;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.rv_app)
