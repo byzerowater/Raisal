@@ -7,15 +7,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
+import me.fourground.raisal.data.BusEvent;
+import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.data.model.MyReviewData;
+import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BaseActivity;
+import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
+import me.fourground.raisal.util.LoadingHelper;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -24,23 +35,29 @@ import me.fourground.raisal.ui.views.LinearRecyclerView;
  */
 public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
 
-
     @Inject
-    MyReviewPresenter mMyReviewPresenter;
+    Bus mEventBus;
+    @Inject
+    MyReviewPresenter mMyAppPresenter;
     @Inject
     LoadingDialog mLoadingDialog;
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
-    @BindView(R.id.rv_review)
-    LinearRecyclerView mRvReview;
+    @Inject
+    MyReviewAdapter mAppAdapter;
+    @Inject
+    LoadingHelper mLoadingHelper;
+
     @BindView(R.id.btn_back)
     Button mBtnBack;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.rv_app)
+    LinearRecyclerView mRvApp;
 
     /**
-     * MyReviewActivity 가져오기
+     * MyAppActivity 가져오기
      *
      * @param context Context
-     * @return MyReviewActivity Intent
+     * @return MyAppActivity Intent
      */
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MyReviewActivity.class);
@@ -51,17 +68,56 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
-        setContentView(R.layout.activity_my_review);
+        setContentView(R.layout.activity_my_app);
         ButterKnife.bind(this);
-        mMyReviewPresenter.attachView(this);
+        mEventBus.register(this);
+        mMyAppPresenter.attachView(this);
+
         mBtnBack.setVisibility(View.VISIBLE);
         mTvTitle.setText(getString(R.string.text_my_review));
+
+        mRvApp.setAdapter(mAppAdapter);
+
+        mAppAdapter.setOnReviewItemClickListener(myReviewData -> {
+            AppInfoData appInfoData = myReviewData.getAppInfo();
+            startActivity(ContentActivity.getStartIntent(MyReviewActivity.this, appInfoData.getAppId()));
+        });
+
+        mLoadingHelper.setOnLoadingListener(() -> {
+            mMyAppPresenter.getMyReviewList(false);
+        });
+
+        mLoadingHelper.setRecyclerView(mRvApp);
+
+        mMyAppPresenter.getMyReviewList(true);
+    }
+
+    @Subscribe
+    public void onRegisterReviewCompleted(BusEvent.RegisterReviewCompleted event) {
+        ReviewData reviewData = event.getReviewData();
+
+        int appInfoPosition = mAppAdapter.getAppInfoPosition(reviewData.getAppId());
+        if (appInfoPosition != -1) {
+            MyReviewData myReviewData = mAppAdapter.getItem(appInfoPosition);
+
+            MyReviewData newReviewData = new MyReviewData();
+
+            newReviewData.setAppInfo(myReviewData.getAppInfo());
+            newReviewData.setAppElement(reviewData.getAppElement());
+            newReviewData.setAppComment(reviewData.getAppComment());
+            newReviewData.setUserName(reviewData.getUserName());
+
+            mAppAdapter.addReviewData(newReviewData);
+            mAppAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMyReviewPresenter.detachView();
+        mMyAppPresenter.detachView();
+        mEventBus.unregister(this);
+
     }
 
     @Override
@@ -83,4 +139,12 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
         finish();
     }
 
+    @Override
+    public void onReviewList(List<MyReviewData> datas) {
+        mLoadingHelper.setNextPage(mMyAppPresenter.getNextUrl());
+        mLoadingHelper.setLoading(false);
+
+        mAppAdapter.addReviewDatas(datas);
+        mAppAdapter.notifyDataSetChanged();
+    }
 }

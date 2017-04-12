@@ -1,6 +1,9 @@
 package me.fourground.raisal.ui.mypage.app;
 
 
+import java.util.List;
+
+import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.ui.base.MvpView;
 
 /**
@@ -10,4 +13,5 @@ import me.fourground.raisal.ui.base.MvpView;
  */
 public interface MyAppMvpView extends MvpView {
 
+    void onAppList(List<AppInfoData> datas);
 }

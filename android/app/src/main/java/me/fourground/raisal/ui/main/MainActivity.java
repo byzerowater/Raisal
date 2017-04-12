@@ -12,7 +12,7 @@ import butterknife.OnClick;
 import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.mypage.MyPageFragment;
-import me.fourground.raisal.ui.review.ReviewListFragment;
+import me.fourground.raisal.ui.app.AppListFragment;
 import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
 import me.fourground.raisal.util.FragmentHelper;
 
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
 
         switch (position) {
             case MENU_HOME:
-                FragmentHelper.addFragment(R.id.fl_content, MainActivity.this, ReviewListFragment.newInstance());
+                FragmentHelper.addFragment(R.id.fl_content, MainActivity.this, AppListFragment.newInstance());
                 break;
             case MENU_WRITE:
                 startActivity(WriteAppAppraisalActivity.getStartIntent(MainActivity.this));

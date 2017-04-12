@@ -1,6 +1,7 @@
 package me.fourground.raisal.data.remote;
 
 import me.fourground.raisal.data.model.AppListData;
+import me.fourground.raisal.data.model.MyReviewListData;
 import me.fourground.raisal.data.model.UpdateNickNameRequest;
 import me.fourground.raisal.data.model.ContentData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
@@ -85,21 +86,20 @@ public interface NetworkService {
     @GET
     Observable<AppListData> getAppList(@Url String url);
 
-//    /**
-//     * Retrieve a list of shots
-//     */
-//    @GET("shots")
-//    Single<List<Shot>> getShots(@Query("access_token") String accessToken,
-//                                @Query("per_page") int perPage,
-//                                @Query("page") int page);
-//
-//    /**
-//     * Retrieve a list of comments for a given shot
-//     */
-//    @GET("shots/{shot_id}/comments")
-//    Single<List<Comment>> getComments(@Path("shot_id") int shotId,
-//                                      @Query("access_token") String accessToken,
-//                                      @Query("per_page") int perPage,
-//                                      @Query("page") int page);
+    /**
+     * 내 등록 앱 목록 조회
+     *
+     * @return
+     */
+    @GET
+    Observable<AppListData> getMyAppList(@Url String url);
+
+    /**
+     * 내 리뷰 목록 조회
+     *
+     * @return
+     */
+    @GET
+    Observable<MyReviewListData> getMyReviewList(@Url String url);
 
 }

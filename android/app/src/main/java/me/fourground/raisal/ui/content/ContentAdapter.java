@@ -147,7 +147,7 @@ public class ContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         contentViewHolder.mTvReviewCount.setText(context.getString(R.string._text_content_review_count, appInfo.getNPartyUserCount()));
 
-        contentViewHolder.mTvAverage.setText(String.valueOf(appInfo.getAppraisalAvg()));
+        contentViewHolder.mTvAverage.setText(String.format("%.1f", appInfo.getAppraisalAvg()));
         contentViewHolder.mRbAverage.setRating(appInfo.getAppraisalAvg());
 
         PointData appElement = data.getAppElement();

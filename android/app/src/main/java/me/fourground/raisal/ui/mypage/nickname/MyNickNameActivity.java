@@ -110,7 +110,9 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
         boolean isPass = true;
         String nickName = mEtNickname.getText().toString();
 
-        if (StringUtil.isEmpty(nickName)) {
+        Matcher matcher = Pattern.compile(VALID_NICK_NAME_REGEX).matcher(nickName);
+
+        if (StringUtil.isEmpty(nickName) || !matcher.find()) {
             isPass = false;
             mTilNickname.setErrorEnabled(true);
             mTilNickname.setError(getString(R.string.text_error_nickname));
@@ -119,9 +121,9 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
             mTilNickname.setErrorEnabled(false);
         }
 
-        Matcher matcher = Pattern.compile(VALID_NICK_NAME_REGEX).matcher(nickName);
 
-        return isPass && matcher.find();
+
+        return isPass;
     }
 
     @Override

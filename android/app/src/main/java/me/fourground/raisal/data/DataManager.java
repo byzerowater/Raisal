@@ -10,6 +10,7 @@ import me.fourground.raisal.data.local.PreferencesHelper;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.AppListData;
 import me.fourground.raisal.data.model.ContentData;
+import me.fourground.raisal.data.model.MyReviewListData;
 import me.fourground.raisal.data.model.RegisterAppRequest;
 import me.fourground.raisal.data.model.RegisterData;
 import me.fourground.raisal.data.model.RegisterReviewRequest;
@@ -71,6 +72,14 @@ public class DataManager {
         return mNetworkService.getAppList(url);
     }
 
+    public Observable<AppListData> getMyAppList(String url) {
+        return mNetworkService.getMyAppList(url);
+    }
+
+    public Observable<MyReviewListData> getMyReviewList(String url) {
+        return mNetworkService.getMyReviewList(url);
+    }
+
     public Observable<ContentData> getContent(String appId) {
         return mNetworkService.getContent(appId);
     }
@@ -108,7 +117,6 @@ public class DataManager {
                     data.setAppId(appId);
                     data.setAppComment(registerReviewRequest.getComment());
                     data.setAppElement(registerReviewRequest.getAppElement());
-                    data.setTargetOsCode(Const.STORE_TYPE_ADR);
                     data.setUserName(mPreferencesHelper.getSignData().getNickName());
                     mEventPoster.postEventSafely(new BusEvent.RegisterReviewCompleted(data));
                 });

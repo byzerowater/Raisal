@@ -42,11 +42,15 @@ android {
             buildConfigField "String", "BASE_URL", "\"http://ec2-13-124-89-173.ap-northeast-2.compute.amazonaws.com:8080\""
             buildConfigField "String", "APP_LIST_URL", "\"/api/raisal/select\""
             buildConfigField "String", "APP_REVIEW_LIST_URL", "\"/api/raisal/collect/{appId}\""
+            buildConfigField "String", "MY_APP_LIST_URL", "\"/api/raisal/my/select\""
+            buildConfigField "String", "MY_APP_REVIEW_LIST_URL", "\"/api/raisal/my/collect\""
         }
         release {
             buildConfigField "String", "BASE_URL", "\"http://ec2-13-124-89-173.ap-northeast-2.compute.amazonaws.com:8080\""
             buildConfigField "String", "APP_LIST_URL", "\"/api/raisal/select\""
             buildConfigField "String", "APP_REVIEW_LIST_URL", "\"/api/raisal/collect/{appId}\""
+            buildConfigField "String", "MY_APP_LIST_URL", "\"/api/raisal/my/select\""
+            buildConfigField "String", "MY_APP_REVIEW_LIST_URL", "\"/api/raisal/my/collect\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
@@ -56,7 +60,7 @@ android {
                     output ->
                         def file = output.outputFile
                         output.outputFile = new File(file.parent,
-                                file.name.replace("app", "Raisal." + defaultConfig.versionName))
+                                file.name.replace("app", "Litmus." + defaultConfig.versionName))
                 }
             }
         }

@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.review;
+package me.fourground.raisal.ui.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +22,6 @@ import me.fourground.raisal.data.BusEvent;
 import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.data.model.ReviewData;
 import me.fourground.raisal.ui.base.BaseFragment;
-import me.fourground.raisal.ui.common.AppAdapter;
 import me.fourground.raisal.ui.content.ContentActivity;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.views.LinearRecyclerView;
@@ -35,12 +34,12 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ReviewListFragment extends BaseFragment implements ReviewListMvpView {
+public class AppListFragment extends BaseFragment implements AppListMvpView {
 
     @Inject
     Bus mEventBus;
     @Inject
-    ReviewListPresenter mReviewListPresenter;
+    AppListPresenter mReviewListPresenter;
     @Inject
     AppAdapter mAppAdapter;
     @Inject
@@ -53,7 +52,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
     Unbinder unbinder;
 
     public static Fragment newInstance() {
-        Fragment fragment = new ReviewListFragment();
+        Fragment fragment = new AppListFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -82,7 +81,7 @@ public class ReviewListFragment extends BaseFragment implements ReviewListMvpVie
 
         mRvApp.setAdapter(mAppAdapter);
 
-        mAppAdapter.setOnOrderItemClickListener(new AppAdapter.OnAppItemClickListener() {
+        mAppAdapter.setOnAppItemClickListener(new AppAdapter.OnAppItemClickListener() {
             @Override
             public void onAppItemClick(AppInfoData appItem) {
                 startActivity(ContentActivity.getStartIntent(getActivity(), appItem.getAppId()));

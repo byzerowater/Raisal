@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.common;
+package me.fourground.raisal.ui.app;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +51,7 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
     /**
      * 앱 평가 아이템 클릭 리스너
      */
-    private OnAppItemClickListener mOnOrderItemClickListener;
+    private OnAppItemClickListener mOnAppItemClickListener;
 
     /**
      * 앱 평가 Adapter
@@ -104,8 +104,8 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         holder.itemView.setOnClickListener(
                 view -> {
-                    if (mOnOrderItemClickListener != null) {
-                        mOnOrderItemClickListener.onAppItemClick(data);
+                    if (mOnAppItemClickListener != null) {
+                        mOnAppItemClickListener.onAppItemClick(data);
                     }
                 });
     }
@@ -148,8 +148,8 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
         evaluatingHolder.mTvState.setText(context.getString(R.string.text_appraisal_evaluating));
         evaluatingHolder.mTvState.setSelected(true);
         evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
-            if (mOnOrderItemClickListener != null) {
-                mOnOrderItemClickListener.onWriteItemClick(data);
+            if (mOnAppItemClickListener != null) {
+                mOnAppItemClickListener.onWriteItemClick(data);
             }
         });
     }
@@ -178,8 +178,8 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
         mAppDatas.add(0, appData);
     }
 
-    public void setOnOrderItemClickListener(OnAppItemClickListener onOrderItemClickListener) {
-        mOnOrderItemClickListener = onOrderItemClickListener;
+    public void setOnAppItemClickListener(OnAppItemClickListener onAppItemClickListener) {
+        mOnAppItemClickListener = onAppItemClickListener;
     }
 
     public int getAppInfoPosition(String appId) {

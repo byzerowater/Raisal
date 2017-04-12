@@ -17,7 +17,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.common.Const;
+import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.util.DateUtil;
 import me.fourground.raisal.util.ListUtil;
+import me.fourground.raisal.util.Util;
 
 /**
  * Created by YoungSoo Kim on 2017-03-29.
@@ -27,13 +31,21 @@ import me.fourground.raisal.util.ListUtil;
  */
 public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder> {
 
-    /**
-     * 리뷰 데이터들
-     */
-    private List<String> mAppDatas;
+    public interface OnAppItemClickListener {
+        void onAppItemClick(AppInfoData appItem);
+    }
 
     /**
-     * 리뷰 Adapter
+     * 앱 평가 데이터들
+     */
+    private List<AppInfoData> mAppDatas;
+    /**
+     * 앱 평가 아이템 클릭 리스너
+     */
+    private MyAppAdapter.OnAppItemClickListener mOnAppItemClickListener;
+
+    /**
+     * 앱 평가 Adapter
      */
     @Inject
     public MyAppAdapter() {
@@ -49,9 +61,43 @@ public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder>
     }
 
     @Override
-    public void onBindViewHolder(MyAppHolder holder, int position) {
-        Context context = holder.itemView.getContext();
-        String s = mAppDatas.get(position);
+    public void onBindViewHolder(MyAppHolder myAppHolder, int position) {
+        Context context = myAppHolder.itemView.getContext();
+        AppInfoData data = mAppDatas.get(position);
+
+        boolean isEvaluating = Const.APPRAISAL_TYPE_ACTIVIE.equals(data.getAppStatus());
+
+        myAppHolder.mRbAverage.setRating(data.getAppraisalAvg());
+        myAppHolder.mTvAverage.setText(String.format("%.1f", data.getAppraisalAvg()));
+        myAppHolder.mTvDate.setText(context.getString(R.string._text_date,
+                DateUtil.convertDateFormat(data.getStartDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW),
+                DateUtil.convertDateFormat(data.getEndDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW)
+        ));
+        myAppHolder.mTvName.setText(data.getAppName());
+        myAppHolder.mTvStore.setText(Util.getStoreType(context, data.getTargetOsCode()));
+
+        if (data.getNPartyUserCount() == 0) {
+            myAppHolder.mTvEmptyText.setVisibility(View.VISIBLE);
+            myAppHolder.mLlAverage.setVisibility(View.GONE);
+        } else {
+            myAppHolder.mTvEmptyText.setVisibility(View.GONE);
+            myAppHolder.mLlAverage.setVisibility(View.VISIBLE);
+            myAppHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
+        }
+
+        String state = isEvaluating ?
+                context.getString(R.string.text_appraisal_evaluating)
+                : context.getString(R.string.text_appraisal_end);
+
+        myAppHolder.mTvState.setText(state);
+        myAppHolder.mTvState.setSelected(isEvaluating);
+
+        myAppHolder.itemView.setOnClickListener(
+                view -> {
+                    if (mOnAppItemClickListener != null) {
+                        mOnAppItemClickListener.onAppItemClick(data);
+                    }
+                });
     }
 
     @Override
@@ -59,9 +105,9 @@ public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder>
         return ListUtil.getListCount(mAppDatas);
     }
 
-    public String getItem(int position) {
+    public AppInfoData getItem(int position) {
         int itemCount = getItemCount();
-        String item = null;
+        AppInfoData item = null;
 
         if (itemCount > position && position >= 0) {
             item = mAppDatas.get(position);
@@ -70,8 +116,32 @@ public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder>
         return item;
     }
 
-    public void addReviewDatas(List<String> reviewDatas) {
-        mAppDatas.addAll(reviewDatas);
+    public void addAppData(AppInfoData appData) {
+        mAppDatas.add(0, appData);
+    }
+
+    public void addAppDatas(List<AppInfoData> appDatas) {
+        mAppDatas.addAll(appDatas);
+    }
+
+
+    public void setOnAppItemClickListener(MyAppAdapter.OnAppItemClickListener onAppItemClickListener) {
+        mOnAppItemClickListener = onAppItemClickListener;
+    }
+
+    public int getAppInfoPosition(String appId) {
+        int itemCount = getItemCount();
+        int position = -1;
+
+        for (int i = 0; i < itemCount; i++) {
+            AppInfoData appData = getItem(i);
+            if (appId.equals(appData.getAppId())) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
     }
 
     static class MyAppHolder extends RecyclerView.ViewHolder {

@@ -47,6 +47,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
+            android:name=".ui.mypage.nickname.MyNickNameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+
+        <activity
             android:name=".ui.write.app.WriteAppAppraisalActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
@@ -60,6 +66,7 @@
             android:name=".ui.write.review.WriteReviewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
         <activity
             android:name=".ui.write.review.WriteReviewCompleteActivity"
             android:screenOrientation="portrait"

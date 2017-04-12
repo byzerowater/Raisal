@@ -38,7 +38,7 @@ public class HeaderInterceptor implements Interceptor {
 
 
         builder.header("Content-Type", "application/json")
-                .header("User-Agent", "Android Raisal")
+                .header("User-Agent", "Android LITMUS")
                 .header("DEVICE-MODEL", Build.DEVICE)
                 .header("OS", "A")
                 .header("OS-VER", Build.VERSION.RELEASE)

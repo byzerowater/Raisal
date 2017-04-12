@@ -1,22 +1,25 @@
 package me.fourground.raisal.ui.mypage.app;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
-import com.google.firebase.auth.FirebaseUser;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import me.fourground.raisal.BuildConfig;
 import me.fourground.raisal.R;
 import me.fourground.raisal.data.DataManager;
-import me.fourground.raisal.data.model.SignData;
-import me.fourground.raisal.data.model.SignInRequest;
+import me.fourground.raisal.data.model.AppInfoData;
 import me.fourground.raisal.ui.base.BasePresenter;
 import me.fourground.raisal.util.DialogFactory;
+import me.fourground.raisal.util.StringUtil;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -27,6 +30,7 @@ public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
+    private String mNextUrl = BuildConfig.MY_APP_LIST_URL;
 
     @Inject
     public MyAppPresenter(DataManager dataManager) {
@@ -40,50 +44,65 @@ public class MyAppPresenter extends BasePresenter<MyAppMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void updateNickName(FirebaseUser user, String channelCode) {
-        getMvpView().showProgress(true);
-        mSubscription = mDataManager.signIn(new SignInRequest(
-                user.getUid(),
-                user.getEmail(),
-                channelCode))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .retryWhen(err ->
-                        err.observeOn(AndroidSchedulers.mainThread())
-                                .flatMap(e -> {
-                                    PublishSubject<Integer> choice = PublishSubject.create();
-                                    Context context = (Context) getMvpView();
-                                    DialogFactory.createDialog(context,
-                                            context.getString(R.string.text_network_error),
-                                            context.getString(R.string.action_close),
-                                            context.getString(R.string.action_retry_connect),
-                                            (dialog, which) -> {
-                                                choice.onError(e);
-                                            },
-                                            (dialog, which) -> {
-                                                choice.onNext(1);
-                                            }).show();
+    public void getMyAppList(boolean isShowProgress) {
+        if (!StringUtil.isEmpty(mNextUrl)) {
+            if (isShowProgress) {
+                getMvpView().showProgress(true);
+            }
+            mSubscription = mDataManager.getMyAppList(mNextUrl)
+                    .retryWhen(err ->
+                            err.observeOn(AndroidSchedulers.mainThread())
+                                    .flatMap(e -> {
+                                        PublishSubject<Integer> choice = PublishSubject.create();
+                                        Context context = null;
+                                        if (getMvpView() instanceof Fragment) {
+                                            context = ((Fragment) getMvpView()).getActivity();
+                                        } else {
+                                            context = (Context) getMvpView();
+                                        }
+                                        DialogFactory.createDialog(context,
+                                                context.getString(R.string.text_network_error),
+                                                context.getString(R.string.action_close),
+                                                context.getString(R.string.action_retry_connect),
+                                                (dialog, which) -> {
+                                                    choice.onError(e);
+                                                },
+                                                (dialog, which) -> {
+                                                    choice.onNext(1);
+                                                }).show();
 
-                                    return choice;
-                                })
-                )
-                .subscribe(new Subscriber<SignData>() {
-                    @Override
-                    public void onCompleted() {
-                        getMvpView().showProgress(false);
+                                        return choice;
+                                    })
+                    )
+                    .map(appListData -> {
+                        mNextUrl = appListData.getLinks().getNext();
+                        return appListData.getData();
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<List<AppInfoData>>() {
+                                   @Override
+                                   public void onCompleted() {
+                                       getMvpView().showProgress(false);
+                                   }
 
-                    }
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Timber.e(e);
+                                       getMvpView().onError();
+                                       getMvpView().showProgress(false);
+                                   }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        getMvpView().showProgress(false);
-                        getMvpView().onError();
-                    }
+                                   @Override
+                                   public void onNext(List<AppInfoData> datas) {
+                                       getMvpView().onAppList(datas);
+                                   }
+                               }
+                    );
+        }
+    }
 
-                    @Override
-                    public void onNext(SignData signData) {
-                    }
-                });
-
+    public String getNextUrl() {
+        return mNextUrl;
     }
 }

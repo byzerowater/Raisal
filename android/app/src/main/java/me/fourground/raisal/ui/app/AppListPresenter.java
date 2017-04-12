@@ -1,4 +1,4 @@
-package me.fourground.raisal.ui.review;
+package me.fourground.raisal.ui.app;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -26,14 +26,14 @@ import timber.log.Timber;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class ReviewListPresenter extends BasePresenter<ReviewListMvpView> {
+public class AppListPresenter extends BasePresenter<AppListMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
     private String mNextUrl = BuildConfig.APP_LIST_URL;
 
     @Inject
-    public ReviewListPresenter(DataManager dataManager) {
+    public AppListPresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 

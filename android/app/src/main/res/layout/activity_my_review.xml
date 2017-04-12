@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/white_ffffff_ff"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.write.review.WriteReviewActivity">
+              tools:context="me.fourground.raisal.ui.mypage.review.MyReviewActivity">
 
     <include layout="@layout/include_header"/>
 
@@ -13,7 +13,10 @@
         android:id="@+id/rv_review"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_app_evaluating"/>
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:listitem="@layout/item_my_review"/>
 
 
 </LinearLayout>

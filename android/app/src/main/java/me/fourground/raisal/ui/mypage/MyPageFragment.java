@@ -20,6 +20,7 @@ import me.fourground.raisal.R;
 import me.fourground.raisal.ui.base.BaseFragment;
 import me.fourground.raisal.ui.dialog.LoadingDialog;
 import me.fourground.raisal.ui.mypage.app.MyAppActivity;
+import me.fourground.raisal.ui.mypage.nickname.MyNickNameActivity;
 import me.fourground.raisal.ui.mypage.review.MyReviewActivity;
 
 /**
@@ -78,6 +79,7 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_change_nickname:
+                startActivity(MyNickNameActivity.getStartIntent(getActivity()));
                 break;
             case R.id.rl_btn_my_app:
                 startActivity(MyAppActivity.getStartIntent(getActivity()));

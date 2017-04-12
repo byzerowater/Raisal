@@ -15,7 +15,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.fourground.raisal.R;
+import me.fourground.raisal.common.Const;
+import me.fourground.raisal.data.model.AppInfoData;
+import me.fourground.raisal.data.model.MyReviewData;
+import me.fourground.raisal.data.model.PointData;
+import me.fourground.raisal.util.DateUtil;
 import me.fourground.raisal.util.ListUtil;
+import me.fourground.raisal.util.Util;
 
 /**
  * Created by YoungSoo Kim on 2017-03-29.
@@ -23,56 +29,128 @@ import me.fourground.raisal.util.ListUtil;
  * byzerowater@gmail.com
  * 리뷰 Adapter
  */
-public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.ReviewHolder> {
+public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyReviewHolder> {
+
+
+    public interface OnReviewItemClickListener {
+        void onReviewItemClick(MyReviewData reviewData);
+    }
 
     /**
-     * 리뷰 데이터들
+     * 앱 평가 데이터들
      */
-    private List<String> mReviewDatas;
+    private List<MyReviewData> mMyReviewDatas;
+    /**
+     * 앱 평가 아이템 클릭 리스너
+     */
+    private OnReviewItemClickListener mOnReviewItemClickListener;
 
     /**
-     * 리뷰 Adapter
+     * 앱 평가 Adapter
      */
     @Inject
     public MyReviewAdapter() {
-        this.mReviewDatas = new ArrayList<>();
+        this.mMyReviewDatas = new ArrayList<>();
     }
 
 
     @Override
-    public ReviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyReviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflate = LayoutInflater.from(parent.getContext());
-        return new ReviewHolder(inflate.inflate(R.layout.item_my_review, parent, false));
+        return new MyReviewHolder(inflate.inflate(R.layout.item_my_review, parent, false));
 
     }
 
     @Override
-    public void onBindViewHolder(ReviewHolder holder, int position) {
-        Context context = holder.itemView.getContext();
-        String s = mReviewDatas.get(position);
+    public void onBindViewHolder(MyReviewHolder myReviewHolder, int position) {
+        Context context = myReviewHolder.itemView.getContext();
+        MyReviewData data = mMyReviewDatas.get(position);
+
+        AppInfoData appInfo = data.getAppInfo();
+
+
+        myReviewHolder.mTvDate.setText(context.getString(R.string._text_date,
+                DateUtil.convertDateFormat(appInfo.getStartDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW),
+                DateUtil.convertDateFormat(appInfo.getEndDtm(), Const.DATE_FORMAT_SERVER, Const.DATE_FORMAT_VIEW)
+        ));
+        myReviewHolder.mTvName.setText(appInfo.getAppName());
+        myReviewHolder.mTvStore.setText(Util.getStoreType(context, appInfo.getTargetOsCode()));
+
+        myReviewHolder.mTvReview.setText(data.getAppComment());
+
+        PointData point = data.getAppElement();
+
+        String design = "0";
+        String contens = "0";
+        String satisfaction = "0";
+        String useful = "0";
+
+        if (point != null) {
+            design = String.valueOf(point.getDesign());
+            contens = String.valueOf(point.getContents());
+            satisfaction = String.valueOf(point.getSatisfaction());
+            useful = String.valueOf(point.getUseful());
+        }
+
+        myReviewHolder.mTvDesign.setText(design);
+        myReviewHolder.mTvContents.setText(contens);
+        myReviewHolder.mTvSatisfaction.setText(satisfaction);
+        myReviewHolder.mTvUseful.setText(useful);
+
+        myReviewHolder.itemView.setOnClickListener(
+                view -> {
+                    if (mOnReviewItemClickListener != null) {
+                        mOnReviewItemClickListener.onReviewItemClick(data);
+                    }
+                });
     }
 
     @Override
     public int getItemCount() {
-        return ListUtil.getListCount(mReviewDatas);
+        return ListUtil.getListCount(mMyReviewDatas);
     }
 
-    public String getItem(int position) {
+    public MyReviewData getItem(int position) {
         int itemCount = getItemCount();
-        String item = null;
+        MyReviewData item = null;
 
         if (itemCount > position && position >= 0) {
-            item = mReviewDatas.get(position);
+            item = mMyReviewDatas.get(position);
         }
 
         return item;
     }
 
-    public void addReviewDatas(List<String> reviewDatas) {
-        mReviewDatas.addAll(reviewDatas);
+    public void addReviewData(MyReviewData reviewData) {
+        mMyReviewDatas.add(0, reviewData);
     }
 
-    static class ReviewHolder extends RecyclerView.ViewHolder {
+    public void addReviewDatas(List<MyReviewData> reviewDatas) {
+        mMyReviewDatas.addAll(reviewDatas);
+    }
+
+
+    public void setOnReviewItemClickListener(OnReviewItemClickListener onReviewItemClickListener) {
+        mOnReviewItemClickListener = onReviewItemClickListener;
+    }
+
+    public int getAppInfoPosition(String appId) {
+        int itemCount = getItemCount();
+        int position = -1;
+
+        for (int i = 0; i < itemCount; i++) {
+            MyReviewData reviewData = getItem(i);
+            AppInfoData appInfoData = reviewData.getAppInfo();
+            if (appId.equals(appInfoData.getAppId())) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
+    }
+
+    static class MyReviewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)
         TextView mTvName;
         @BindView(R.id.tv_store)
@@ -92,9 +170,10 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.Review
         @BindView(R.id.tv_satisfaction)
         TextView mTvSatisfaction;
 
-        ReviewHolder(View itemView) {
+        MyReviewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
 }
