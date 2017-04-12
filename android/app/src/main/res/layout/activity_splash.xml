@@ -7,7 +7,7 @@
     android:background="@color/blue_0090ff_ff"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="me.fourground.raisal.ui.splash.SplashActivity">
+    tools:context="me.fourground.litmus.ui.splash.SplashActivity">
 
     <TextView
         android:id="@+id/tv_app_name"

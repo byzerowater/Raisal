@@ -71,8 +71,10 @@
     @com.squareup.otto.Produce public *;
 }
 
+# Application classes that will be serialized/deserialized over Gson
+-keep class me.fourground.litmus.data.model.** { *; }
+
 # Retrolambda rules
 -dontwarn java.lang.invoke.*
 
-# Application classes that will be serialized/deserialized over Gson
--keep class me.fourground.raisal.data.model.**
+

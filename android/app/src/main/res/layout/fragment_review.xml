@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.fourground.raisal.ui.main.MainActivity">
+    tools:context="me.fourground.litmus.ui.main.MainActivity">
 
-    <me.fourground.raisal.ui.views.LinearRecyclerView
+    <me.fourground.litmus.ui.views.LinearRecyclerView
         android:id="@+id/rv_app"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/white_ffffff_ff"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity">
+              tools:context="me.fourground.litmus.ui.write.app.WriteAppAppraisalActivity">
 
     <include layout="@layout/include_header"/>
 

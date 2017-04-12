@@ -27,7 +27,7 @@
                 android:textColor="@color/gray_575757_ff"
                 android:textSize="9sp"/>
 
-            <me.fourground.raisal.ui.views.LinearRecyclerView
+            <me.fourground.litmus.ui.views.LinearRecyclerView
                 android:id="@+id/rv_points"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -5,11 +5,11 @@
               android:layout_height="match_parent"
               android:background="@color/white_ffffff_ff"
               android:orientation="vertical"
-              tools:context="me.fourground.raisal.ui.mypage.app.MyAppActivity">
+              tools:context="me.fourground.litmus.ui.mypage.app.MyAppActivity">
 
     <include layout="@layout/include_header"/>
 
-    <me.fourground.raisal.ui.views.LinearRecyclerView
+    <me.fourground.litmus.ui.views.LinearRecyclerView
         android:id="@+id/rv_app"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
