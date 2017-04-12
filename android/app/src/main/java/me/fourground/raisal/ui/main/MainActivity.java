@@ -4,15 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.fourground.raisal.R;
+import me.fourground.raisal.ui.app.AppListFragment;
 import me.fourground.raisal.ui.base.BaseActivity;
 import me.fourground.raisal.ui.mypage.MyPageFragment;
-import me.fourground.raisal.ui.app.AppListFragment;
 import me.fourground.raisal.ui.write.app.WriteAppAppraisalActivity;
 import me.fourground.raisal.util.FragmentHelper;
 
@@ -29,7 +28,7 @@ public class MainActivity extends BaseActivity {
 
 
     @BindViews({R.id.btn_home, R.id.btn_write, R.id.btn_my})
-    Button[] mBtnMenu;
+    View[] mBtnMenu;
 
     /**
      * MainActivity 가져오기
@@ -53,10 +52,13 @@ public class MainActivity extends BaseActivity {
 
     private void selectButton(int position) {
 
-        int size = mBtnMenu.length;
 
-        for (int i = 0; i < size; i++) {
-            mBtnMenu[i].setSelected(position == i);
+        if (position != MENU_WRITE) {
+            int size = mBtnMenu.length;
+
+            for (int i = 0; i < size; i++) {
+                mBtnMenu[i].setSelected(position == i);
+            }
         }
 
         switch (position) {

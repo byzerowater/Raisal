@@ -39,4 +39,9 @@
         <item name="android:textColor">@color/selector_state_text_color</item>
     </style>
 
+    <style name="ErrorAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/red_ff0000_ff</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
 </resources>

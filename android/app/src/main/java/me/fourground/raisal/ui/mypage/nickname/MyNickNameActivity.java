@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.regex.Matcher;
@@ -38,7 +38,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
     @Inject
     LoadingDialog mLoadingDialog;
     @BindView(R.id.btn_back)
-    Button mBtnBack;
+    ImageButton mBtnBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.et_nickname)

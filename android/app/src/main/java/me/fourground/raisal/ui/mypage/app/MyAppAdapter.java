@@ -65,8 +65,6 @@ public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder>
         Context context = myAppHolder.itemView.getContext();
         AppInfoData data = mAppDatas.get(position);
 
-        boolean isEvaluating = Const.APPRAISAL_TYPE_ACTIVIE.equals(data.getAppStatus());
-
         myAppHolder.mRbAverage.setRating(data.getAppraisalAvg());
         myAppHolder.mTvAverage.setText(String.format("%.1f", data.getAppraisalAvg()));
         myAppHolder.mTvDate.setText(context.getString(R.string._text_date,
@@ -84,6 +82,8 @@ public class MyAppAdapter extends RecyclerView.Adapter<MyAppAdapter.MyAppHolder>
             myAppHolder.mLlAverage.setVisibility(View.VISIBLE);
             myAppHolder.mTvReviewCount.setText(context.getString(R.string._text_review_count, data.getNPartyUserCount()));
         }
+
+        boolean isEvaluating = Const.APPRAISAL_TYPE_ACTIVIE.equals(data.getAppStatus());
 
         String state = isEvaluating ?
                 context.getString(R.string.text_appraisal_evaluating)

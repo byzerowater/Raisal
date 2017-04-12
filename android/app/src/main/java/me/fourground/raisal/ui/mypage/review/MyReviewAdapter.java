@@ -78,6 +78,15 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
         myReviewHolder.mTvReview.setText(data.getAppComment());
 
+        boolean isEvaluating = Const.APPRAISAL_TYPE_ACTIVIE.equals(appInfo.getAppStatus());
+
+        String state = isEvaluating ?
+                context.getString(R.string.text_appraisal_evaluating)
+                : context.getString(R.string.text_appraisal_end);
+
+        myReviewHolder.mTvState.setText(state);
+        myReviewHolder.mTvState.setSelected(isEvaluating);
+
         PointData point = data.getAppElement();
 
         String design = "0";

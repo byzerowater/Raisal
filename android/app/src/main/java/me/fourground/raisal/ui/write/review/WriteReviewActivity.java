@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -35,7 +36,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
     @Inject
     LoadingDialog mLoadingDialog;
     @BindView(R.id.btn_back)
-    Button mBtnBack;
+    ImageButton mBtnBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.btn_cancel)

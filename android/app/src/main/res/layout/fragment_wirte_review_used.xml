@@ -41,14 +41,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/text_used"
-            android:textColor="@color/gray_878787_ff"
+            android:textColor="@color/black_272727_ff"
             android:textSize="16sp"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chevron_right_gray"/>
 
     </RelativeLayout>
 
@@ -66,14 +69,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/text_first_time"
-            android:textColor="@color/gray_878787_ff"
+            android:textColor="@color/black_272727_ff"
             android:textSize="16sp"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chevron_right_gray"/>
 
     </RelativeLayout>
 

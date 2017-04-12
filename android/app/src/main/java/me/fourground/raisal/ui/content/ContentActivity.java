@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
@@ -61,7 +62,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
     @BindView(R.id.btn_write_review)
     Button mBtnWriteReview;
     @BindView(R.id.btn_back)
-    Button mBtnBack;
+    ImageButton mBtnBack;
 
     private AppInfoData mAppInfoData;
     private String mDownUrl = null;

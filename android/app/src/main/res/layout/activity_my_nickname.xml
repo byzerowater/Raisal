@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="@string/text_hint_nickname"
-
             android.support.design:counterEnabled="true"
             android.support.design:counterMaxLength="10"
+            android.support.design:errorTextAppearance="@style/ErrorAppearance"
             android.support.design:hintAnimationEnabled="true"
             android.support.design:hintEnabled="true">
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
     @BindView(R.id.tv_title)
     TextView mTvTitle;
     @BindView(R.id.btn_back)
-    Button mBtnBack;
+    ImageButton mBtnBack;
     @BindView(R.id.btn_confirm)
     Button mBtnConfirm;
 

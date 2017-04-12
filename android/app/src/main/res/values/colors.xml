@@ -9,7 +9,9 @@
     <color name="blue_0090ff_ff">#ff0090ff</color>
     <color name="blue_3c66c4_ff">#ff3c66c4</color>
 
+    <color name="red_ff0000_ff">#ffff0000</color>
     <color name="red_cf4332_ff">#ffcf4332</color>
+    <color name="red_af4332_ff">#ffaf4332</color>
 
     <color name="gray_f7f7f7_ff">#fff7f7f7</color>
     <color name="gray_e7e7e7_ff">#ffe7e7e7</color>

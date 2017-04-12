@@ -41,31 +41,73 @@
         android:layout_marginTop="92dp"
         android:text="@string/text_login_explanation"
         android:textColor="@color/gray_a7a7a7_ff"
-        android:textSize="14sp"/>
+        android:textSize="12sp"/>
 
-    <Button
+    <!--<Button-->
+    <!--android:id="@+id/sib_google"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/tv_login_explanation"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:background="@drawable/selector_icon_google"-->
+    <!--android:text="@string/action_sign_google"-->
+    <!--android:textColor="@color/white_ffffff_ff"-->
+    <!--android:textSize="14sp"/>-->
+
+
+    <LinearLayout
         android:id="@+id/sib_google"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/tv_login_explanation"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:background="@color/red_cf4332_ff"
-        android:text="@string/action_sign_google"
-        android:textColor="@color/white_ffffff_ff"
-        android:textSize="14sp"/>
+        android:layout_marginTop="11dp"
+        android:background="@drawable/selector_btn_google_bg"
+        android:orientation="horizontal">
 
-    <Button
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/selector_icon_google"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/action_sign_google"
+            android:textColor="@color/white_ffffff_ff"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/sib_facebook"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/sib_google"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
-        android:background="@color/blue_3c66c4_ff"
-        android:text="@string/action_sign_facebook"
-        android:textColor="@color/white_ffffff_ff"
-        android:textSize="14sp"/>
+        android:background="@drawable/com_facebook_button_background"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:src="@drawable/com_facebook_button_login_logo"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/action_sign_facebook"
+            android:textColor="@color/white_ffffff_ff"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"

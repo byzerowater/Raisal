@@ -38,6 +38,17 @@
                 tools:listitem="@layout/item_review_point"/>
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/gray_eeeeee_ff"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="@string/text_reivew_explanation"
+                android:textColor="@color/gray_575757_ff"
+                android:textSize="9sp"/>
+
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_impression"
                 android:layout_width="match_parent"
@@ -46,7 +57,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android.support.design:counterEnabled="true"
-                android.support.design:counterMaxLength="200"
+                android.support.design:counterMaxLength="30"
                 android.support.design:hintAnimationEnabled="true"
                 android.support.design:hintEnabled="false">
 
@@ -57,7 +68,7 @@
                     android:layout_height="227dp"
                     android:background="@color/gray_f7f7f7_ff"
                     android:gravity="top"
-                    android:hint="@string/text_hint_service_concept"
+                    android:hint="@string/text_hint_review_idea"
                     android:maxLength="200"
                     android:nestedScrollingEnabled="false"
                     android:padding="12dp"

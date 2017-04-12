@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -51,10 +50,10 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     private static final String EXTRA_IS_AUTHENTICATION_ERROR = "extra_is_authentication_error";
 
     @BindView(R.id.sib_google)
-    Button mSibGoogle;
+    View mSibGoogle;
 
     @BindView(R.id.sib_facebook)
-    Button mSibFacebook;
+    View mSibFacebook;
 
     @Inject
     SignInPresenter mSignInPresenter;
@@ -67,8 +66,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
     private GoogleApiClient mGoogleApiClient;
     private CallbackManager mCallbackManager;
 
-    private boolean
-            isAuthenticationError = false;
+    private boolean isAuthenticationError = false;
 
     /**
      * SignInActivity 가져오기
