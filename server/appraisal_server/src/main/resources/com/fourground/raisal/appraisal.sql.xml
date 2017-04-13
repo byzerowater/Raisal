@@ -47,9 +47,27 @@
 		<result column='aprs_elmt1' property='appElement.contents' ></result>
 		<result column='aprs_elmt2' property='appElement.design' ></result>
 		<result column='aprs_elmt3' property='appElement.satisfaction' ></result>
-		<result column='aprs_elmt4' property='appElement.useful' ></result>
+		<result column='aprs_elmt4' property='appElement.useful' ></result>	
+<!-- 		<result column='app_nm' property='appName' ></result>
+		<result column='appr_stus' property='appStatus' ></result>
+		<result column='aprs_str_dtm' property='startDtm' ></result>
+		<result column='aprs_end_dtm' property='endDtm' ></result>	 -->	
 	</resultMap>
 	
+	<resultMap type='com.fourground.raisal.app.dto.AppraisalProVo' id='appraisalProMap'>
+		<result column='app_id' property='appInfo.appId'></result>
+		<result column='aprs_txt' property='appComment' ></result>
+		<result column='aprs_reg_id' property='userName' ></result>
+		<result column='plfm_cd' property='appInfo.targetOsCode' ></result>
+		<result column='aprs_elmt1' property='appElement.contents' ></result>
+		<result column='aprs_elmt2' property='appElement.design' ></result>
+		<result column='aprs_elmt3' property='appElement.satisfaction' ></result>
+		<result column='aprs_elmt4' property='appElement.useful' ></result>	
+		<result column='app_nm' property='appInfo.appName' ></result>
+		<result column='appr_stus' property='appInfo.appStatus' ></result>
+		<result column='aprs_str_dtm' property='appInfo.startDtm' ></result>
+		<result column='aprs_end_dtm' property='appInfo.endDtm' ></result>		
+	</resultMap>
 	
 <!-- 	<sql id='selectMaster'>
 		select 
@@ -105,6 +123,11 @@
 		LEFT JOIN CO_APPR_RPLY AS RPL ON RPL.aprs_id = MST.aprs_id
 	</sql>
 	
+	<sql id='joinApp'>
+		<if test='range != null'>
+		LEFT JOIN CO_APPR_APP AS APP ON APP.app_id = MST.app_id
+		</if>
+	</sql>
 	
 	<sql id='querySelectAprs'>
 		select
@@ -112,12 +135,24 @@
 			<!-- ,MST.reg_id AS aprs_reg_id -->
 			,(select user_nm from CO_CH_ACNT where user_id = MST.reg_id) AS aprs_reg_id
 			,RPL.aprs_txt AS aprs_txt
-			,MST.plfm_cd
 			<!-- ,MST.aprs_pnt -->
 			,MST.aprs_elmt1
 			,MST.aprs_elmt2
 			,MST.aprs_elmt3
 			,MST.aprs_elmt4
+			<choose>
+			<when test='range != null'>
+			,APP.app_id
+			,APP.app_nm
+			,APP.aprs_str_dtm
+			,APP.aprs_end_dtm
+			,APP.appr_stus
+			,(select group_concat(plfm_cd) from CO_REF_URL where app_id = MST.app_id group by app_id) as plfm_cd
+			</when>
+			<otherwise>
+			,MST.plfm_cd
+			</otherwise>
+			</choose>
 	</sql>
 	
 	<sql id='conditionAppId'>
@@ -213,6 +248,31 @@
 		<include refid='joinReply'></include>
 		WHERE 1=1
 		<include refid='conditionAppId'></include>
+		<include refid='conditionUserId'></include>
+		<include refid='common.count-bottom'></include>
+	</select>
+	
+	<!--  MY CONTENTS  -->
+	<select id='selectAppraisalMyList' resultMap='appraisalProMap' parameterType='HashMap'>
+		<include refid='common.paging-top'></include>
+		<include refid='querySelectAprs'></include>
+		FROM
+			CO_APPR AS MST
+		<include refid='joinReply'></include>
+		<include refid='joinApp'></include>
+		WHERE 1=1
+		<include refid='conditionUserId'></include>
+		<include refid='common.paging-bottom'></include>
+	</select>
+	
+	<select id='selectAppraisalMyCount' resultType='Long' parameterType='HashMap'>
+		<include refid='common.count-top'></include>
+		<include refid='querySelectAprs'></include>
+		FROM
+			CO_APPR AS MST
+		<include refid='joinReply'></include>
+		<include refid='joinApp'></include>
+		WHERE 1=1
 		<include refid='conditionUserId'></include>
 		<include refid='common.count-bottom'></include>
 	</select>

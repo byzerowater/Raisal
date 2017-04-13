@@ -243,7 +243,10 @@ public class AppraisalRestController extends BaseRestController {
 		int nListLength = size != null ? size.intValue() : Constants.Search.nMinSearchCnt;
 		int nReqPage = reqPage != null && reqPage.intValue() > 0 ? reqPage - 1 : 0;
 		
-		int totPages = this.getCalcuTotPage(appManagerService.selectAppraisalListCount(parameter)
+		// My List 일때 파라미터 추가
+		parameter.put("range", "my");
+		
+		int totPages = this.getCalcuTotPage(appManagerService.selectAppraisalMyListCount(parameter)
 				,nListLength);
 
 		parameter.put("pagingYn", "Y");
@@ -257,8 +260,8 @@ public class AppraisalRestController extends BaseRestController {
 //			parameter.put("plfmCd", "ADR");
 //		}
 		
-		List<AppraisalVo> collectAppraisalList = new ArrayList<AppraisalVo>();
-		collectAppraisalList = appManagerService.selectAppraisalList(parameter);
+		List<AppraisalProVo> collectAppraisalList = new ArrayList<AppraisalProVo>();
+		collectAppraisalList = appManagerService.selectAppraisalMyList(parameter);
 		
 		resultData.put("data", collectAppraisalList);
 		resultData.put("baseUrl", "/api/raisal/my/collect/");
@@ -318,6 +321,18 @@ public class AppraisalRestController extends BaseRestController {
 		Map<String, Object> parameter = requestBody.convertToMap();
 		ResultVo result = new ResultVo();
 		
+		if(parameter.get("platformCode") == null || ((String)parameter.get("platformCode")).length() <= 0) {
+			String osType = request.getHeader("OS");
+			if(osType != null) {
+				if(osType.equals("A")) {
+					parameter.put("platformCode", "ARD");
+				} else if(osType.equals("I")) {
+					parameter.put("platformCode", "ARD");
+				} else {
+					parameter.put("platformCode", osType);
+				}
+			}
+		}
 		try {
 			String authKey = request.getHeader("Authorization");
 			/* test */ authKey = "L9+BpDHrub+WsyPGL3Zp3k60jG5+ddMGIxrlBD6q/NLNZCvvdYGBNarY/eERG5C6";					
