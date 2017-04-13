@@ -1,5 +1,7 @@
 package me.fourground.litmus.ui.app;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -24,10 +28,10 @@ import me.fourground.litmus.data.model.ReviewData;
 import me.fourground.litmus.ui.base.BaseFragment;
 import me.fourground.litmus.ui.content.ContentActivity;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
+import me.fourground.litmus.ui.signin.SignInActivity;
 import me.fourground.litmus.ui.views.LinearRecyclerView;
 import me.fourground.litmus.ui.write.review.WriteReviewActivity;
 import me.fourground.litmus.util.LoadingHelper;
-import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -35,6 +39,12 @@ import timber.log.Timber;
  * byzerowater@gmail.com
  */
 public class AppListFragment extends BaseFragment implements AppListMvpView {
+
+    private static final int CLICK_CONTENT = 1;
+    private static final int CLICK_WRITE = 2;
+
+    private static final int REQUEST_CODE_CONTENT = 0x15;
+    private static final int REQUEST_CODE_WRITE = 0x16;
 
     @Inject
     Bus mEventBus;
@@ -50,6 +60,8 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
     @BindView(R.id.rv_app)
     LinearRecyclerView mRvApp;
     Unbinder unbinder;
+
+    private AppInfoData mClickAppInfoData = null;
 
     public static Fragment newInstance() {
         Fragment fragment = new AppListFragment();
@@ -84,12 +96,12 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
         mAppAdapter.setOnAppItemClickListener(new AppAdapter.OnAppItemClickListener() {
             @Override
             public void onAppItemClick(AppInfoData appItem) {
-                startActivity(ContentActivity.getStartIntent(getActivity(), appItem.getAppId()));
+                clickButton(appItem, CLICK_CONTENT);
             }
 
             @Override
             public void onWriteItemClick(AppInfoData appItem) {
-                startActivity(WriteReviewActivity.getStartIntent(getActivity(), appItem));
+                clickButton(appItem, CLICK_WRITE);
             }
         });
 
@@ -100,6 +112,48 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
         mLoadingHelper.setRecyclerView(mRvApp);
 
         mReviewListPresenter.getAppList(true);
+    }
+
+    private void clickButton(AppInfoData appItem, int clickType) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mClickAppInfoData = appItem;
+
+        if (currentUser == null) {
+            switch (clickType) {
+                case CLICK_CONTENT:
+                    startActivityForResult(SignInActivity.getStartIntent(getActivity(), true), REQUEST_CODE_CONTENT);
+                    break;
+                case CLICK_WRITE:
+                    startActivityForResult(SignInActivity.getStartIntent(getActivity(), true), REQUEST_CODE_WRITE);
+                    break;
+            }
+        } else {
+            switch (clickType) {
+                case CLICK_CONTENT:
+                    startActivity(ContentActivity.getStartIntent(getActivity(), appItem.getAppId()));
+                    break;
+                case CLICK_WRITE:
+                    startActivity(WriteReviewActivity.getStartIntent(getActivity(), appItem));
+                    break;
+            }
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_WRITE:
+                    clickButton(mClickAppInfoData, CLICK_WRITE);
+                    break;
+                case REQUEST_CODE_CONTENT:
+                    clickButton(mClickAppInfoData, CLICK_CONTENT);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -120,7 +174,6 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
     public void onRegisterCompleted(BusEvent.RegisterAppCompleted event) {
         AppInfoData appInfoData = event.getAppInfoData();
 
-        Timber.i("onRegisterCompleted " + appInfoData.toString());
         mAppAdapter.addAppData(appInfoData);
         mAppAdapter.notifyDataSetChanged();
     }

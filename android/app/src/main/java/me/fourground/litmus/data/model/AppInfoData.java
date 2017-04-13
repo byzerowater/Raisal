@@ -20,6 +20,7 @@ public class AppInfoData implements Parcelable {
      * nPartyUserCount : 0
      * startDtm : string
      * targetOsCode : string
+     * regId : string
      */
 
     private String appId;
@@ -30,9 +31,10 @@ public class AppInfoData implements Parcelable {
     private String targetOsCode;
     private float appraisalAvg;
     private int nPartyUserCount;
+    private String regId;
 
 
-    public AppInfoData(String appId, String appName, String appStatus, String startDtm, String endDtm, String targetOsCode, float appraisalAvg, int nPartyUserCount) {
+    public AppInfoData(String appId, String appName, String appStatus, String startDtm, String endDtm, String targetOsCode, float appraisalAvg, int nPartyUserCount, String regId) {
         this.appId = appId;
         this.appName = appName;
         this.appStatus = appStatus;
@@ -41,6 +43,7 @@ public class AppInfoData implements Parcelable {
         this.targetOsCode = targetOsCode;
         this.appraisalAvg = appraisalAvg;
         this.nPartyUserCount = nPartyUserCount;
+        this.regId = regId;
     }
 
     public String getAppId() {
@@ -107,6 +110,22 @@ public class AppInfoData implements Parcelable {
         this.targetOsCode = targetOsCode;
     }
 
+    public int getnPartyUserCount() {
+        return nPartyUserCount;
+    }
+
+    public void setnPartyUserCount(int nPartyUserCount) {
+        this.nPartyUserCount = nPartyUserCount;
+    }
+
+    public String getRegId() {
+        return regId;
+    }
+
+    public void setRegId(String regId) {
+        this.regId = regId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -117,23 +136,24 @@ public class AppInfoData implements Parcelable {
         dest.writeString(this.appId);
         dest.writeString(this.appName);
         dest.writeString(this.appStatus);
-        dest.writeFloat(this.appraisalAvg);
-        dest.writeString(this.endDtm);
-        dest.writeInt(this.nPartyUserCount);
         dest.writeString(this.startDtm);
+        dest.writeString(this.endDtm);
         dest.writeString(this.targetOsCode);
+        dest.writeFloat(this.appraisalAvg);
+        dest.writeInt(this.nPartyUserCount);
+        dest.writeString(this.regId);
     }
-
 
     protected AppInfoData(Parcel in) {
         this.appId = in.readString();
         this.appName = in.readString();
         this.appStatus = in.readString();
-        this.appraisalAvg = in.readFloat();
-        this.endDtm = in.readString();
-        this.nPartyUserCount = in.readInt();
         this.startDtm = in.readString();
+        this.endDtm = in.readString();
         this.targetOsCode = in.readString();
+        this.appraisalAvg = in.readFloat();
+        this.nPartyUserCount = in.readInt();
+        this.regId = in.readString();
     }
 
     public static final Creator<AppInfoData> CREATOR = new Creator<AppInfoData>() {
@@ -154,11 +174,12 @@ public class AppInfoData implements Parcelable {
                 "appId='" + appId + '\'' +
                 ", appName='" + appName + '\'' +
                 ", appStatus='" + appStatus + '\'' +
-                ", appraisalAvg='" + appraisalAvg + '\'' +
-                ", endDtm='" + endDtm + '\'' +
-                ", nPartyUserCount=" + nPartyUserCount +
                 ", startDtm='" + startDtm + '\'' +
+                ", endDtm='" + endDtm + '\'' +
                 ", targetOsCode='" + targetOsCode + '\'' +
+                ", appraisalAvg=" + appraisalAvg +
+                ", nPartyUserCount=" + nPartyUserCount +
+                ", regId='" + regId + '\'' +
                 '}';
     }
 }

@@ -94,7 +94,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
     /**
      * 스플레쉬 딜레이
      */
-    public void delaySplash(boolean isGoMain) {
+    public void delaySplash() {
         mSubscription = Observable.timer(2, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
@@ -108,11 +108,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
 
             @Override
             public void onNext(Long aLong) {
-                if (isGoMain) {
-                    getMvpView().onGoMain();
-                } else {
-                    getMvpView().onGoSign();
-                }
+                getMvpView().onGoMain();
             }
         });
     }

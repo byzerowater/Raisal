@@ -7,6 +7,10 @@ package me.fourground.litmus.common;
  * 공통 상수 관리
  */
 public class Const {
+
+    public static final int ERROR_UNAUTHORIZED = 401;
+    public static final int ERROR_CREATED = 201;
+
     public static final String AES_KEY = "Y!A$PG#LO6BA2L8";
 
     public static final String LOGIN_TYPE_GOOGLE = "G";

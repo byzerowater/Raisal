@@ -12,6 +12,4 @@ public interface SplashMvpView extends MvpView {
 
     void onSignIn();
     void onGoMain();
-    void onGoSign();
-
 }

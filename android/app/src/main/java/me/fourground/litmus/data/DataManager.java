@@ -1,5 +1,8 @@
 package me.fourground.litmus.data;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -96,6 +99,11 @@ public class DataManager {
                     String startDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_SERVER);
                     currentCalendar.add(Calendar.DATE, StringUtil.getInt(registAppRequest.getReqTerm()));
                     String endDate = DateUtil.getDateFormat(currentCalendar.getTime(), Const.DATE_FORMAT_SERVER);
+                    String uid = null;
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if (currentUser != null) {
+                        uid = currentUser.getUid();
+                    }
 
                     AppInfoData data = new AppInfoData(
                             registerData.getAppId(),
@@ -105,7 +113,9 @@ public class DataManager {
                             endDate,
                             Const.STORE_TYPE_ADR,
                             0,
-                            0);
+                            0,
+                            uid
+                    );
                     mEventPoster.postEventSafely(new BusEvent.RegisterAppCompleted(data));
                 });
     }

@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ import me.fourground.litmus.common.Const;
 import me.fourground.litmus.data.model.AppInfoData;
 import me.fourground.litmus.util.DateUtil;
 import me.fourground.litmus.util.ListUtil;
+import me.fourground.litmus.util.StringUtil;
 import me.fourground.litmus.util.Util;
 import timber.log.Timber;
 
@@ -53,12 +57,19 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
      */
     private OnAppItemClickListener mOnAppItemClickListener;
 
+    private String mUid;
+
     /**
      * 앱 평가 Adapter
      */
     @Inject
     public AppAdapter() {
         this.mAppDatas = new ArrayList<>();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            this.mUid = currentUser.getUid();
+            Timber.i("uid %s", mUid);
+        }
     }
 
 
@@ -147,11 +158,20 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         evaluatingHolder.mTvState.setText(context.getString(R.string.text_appraisal_evaluating));
         evaluatingHolder.mTvState.setSelected(true);
+
+        if (!StringUtil.isEmpty(mUid) && mUid.equals(data.getRegId())) {
+            evaluatingHolder.mBtnJoinReview.setVisibility(View.GONE);
+        } else {
+            evaluatingHolder.mBtnJoinReview.setVisibility(View.VISIBLE);
+        }
+
         evaluatingHolder.mBtnJoinReview.setOnClickListener(v -> {
             if (mOnAppItemClickListener != null) {
                 mOnAppItemClickListener.onWriteItemClick(data);
             }
         });
+
+
     }
 
     @Override

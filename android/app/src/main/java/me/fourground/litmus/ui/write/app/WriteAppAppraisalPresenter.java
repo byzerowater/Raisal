@@ -5,11 +5,13 @@ import android.content.Context;
 import javax.inject.Inject;
 
 import me.fourground.litmus.R;
+import me.fourground.litmus.common.Const;
 import me.fourground.litmus.data.DataManager;
 import me.fourground.litmus.data.model.RegisterAppRequest;
 import me.fourground.litmus.data.model.RegisterData;
 import me.fourground.litmus.ui.base.BasePresenter;
 import me.fourground.litmus.util.DialogFactory;
+import retrofit2.HttpException;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,18 +48,33 @@ public class WriteAppAppraisalPresenter extends BasePresenter<WriteAppAppraisalM
                 .retryWhen(err ->
                         err.observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(e -> {
+                                    int code = -1;
                                     PublishSubject<Integer> choice = PublishSubject.create();
+                                    if (e instanceof HttpException) {
+                                        code = ((HttpException) e).code();
+                                    }
                                     Context context = (Context) getMvpView();
-                                    DialogFactory.createDialog(context,
-                                            context.getString(R.string.text_network_error),
-                                            context.getString(R.string.action_close),
-                                            context.getString(R.string.action_retry_connect),
-                                            (dialog, which) -> {
-                                                choice.onError(e);
-                                            },
-                                            (dialog, which) -> {
-                                                choice.onNext(1);
-                                            }).show();
+
+                                    if (code == Const.ERROR_CREATED) {
+                                        DialogFactory.createDialog(context,
+                                                context.getString(R.string.text_network_error_create),
+                                                context.getString(R.string.action_close),
+                                                (dialog, which) -> {
+                                                    choice.onError(e);
+                                                }).show();
+                                    } else {
+
+                                        DialogFactory.createDialog(context,
+                                                context.getString(R.string.text_network_error),
+                                                context.getString(R.string.action_close),
+                                                context.getString(R.string.action_retry_connect),
+                                                (dialog, which) -> {
+                                                    choice.onError(e);
+                                                },
+                                                (dialog, which) -> {
+                                                    choice.onNext(1);
+                                                }).show();
+                                    }
 
                                     return choice;
                                 })

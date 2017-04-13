@@ -8,6 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -17,11 +24,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.litmus.R;
+import me.fourground.litmus.common.Const;
 import me.fourground.litmus.ui.base.BaseFragment;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
+import me.fourground.litmus.ui.main.MainActivity;
 import me.fourground.litmus.ui.mypage.app.MyAppActivity;
 import me.fourground.litmus.ui.mypage.nickname.MyNickNameActivity;
 import me.fourground.litmus.ui.mypage.review.MyReviewActivity;
+import timber.log.Timber;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -75,21 +85,6 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
         mEventBus.unregister(this);
     }
 
-    @OnClick({R.id.btn_change_nickname, R.id.rl_btn_my_app, R.id.rl_btn_my_review})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_change_nickname:
-                startActivity(MyNickNameActivity.getStartIntent(getActivity()));
-                break;
-            case R.id.rl_btn_my_app:
-                startActivity(MyAppActivity.getStartIntent(getActivity()));
-                break;
-            case R.id.rl_btn_my_review:
-                startActivity(MyReviewActivity.getStartIntent(getActivity()));
-                break;
-        }
-    }
-
     @Override
     public void showProgress(boolean isShow) {
         if (isShow) {
@@ -101,5 +96,62 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
 
     @Override
     public void onError() {
+    }
+
+    private void signout() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (currentUser != null) {
+            String loginType = Const.LOGIN_TYPE_GOOGLE;
+            for (UserInfo userInfo : currentUser.getProviderData()) {
+                if ("facebook.com".equals(userInfo.getProviderId())) {
+                    loginType = Const.LOGIN_TYPE_FACEBOOK;
+                    break;
+                }
+            }
+
+            FirebaseAuth.getInstance().signOut();
+            if (loginType == Const.LOGIN_TYPE_FACEBOOK) {
+                LoginManager.getInstance().logOut();
+                ((MainActivity) getActivity()).selectHomeMenu();
+            } else {
+                showProgress(true);
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+
+                Auth.GoogleSignInApi.signOut(new GoogleApiClient.Builder(getActivity())
+                        .enableAutoManage(getActivity() /* FragmentActivity */, connectionResult -> {
+                            Timber.d("onConnectionFailed:" + connectionResult);
+                        } /* OnConnectionFailedListener */)
+                        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                        .build()).setResultCallback(status -> {
+                    Timber.i("status " + status.isSuccess());
+                    if (status.isSuccess()) {
+                        ((MainActivity) getActivity()).selectHomeMenu();
+                    }
+                    showProgress(false);
+                });
+            }
+        }
+    }
+
+    @OnClick({R.id.btn_change_nickname, R.id.rl_btn_my_app, R.id.rl_btn_my_review, R.id.rl_btn_signout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_change_nickname:
+                startActivity(MyNickNameActivity.getStartIntent(getActivity()));
+                break;
+            case R.id.rl_btn_my_app:
+                startActivity(MyAppActivity.getStartIntent(getActivity()));
+                break;
+            case R.id.rl_btn_my_review:
+                startActivity(MyReviewActivity.getStartIntent(getActivity()));
+                break;
+            case R.id.rl_btn_signout:
+                signout();
+                break;
+        }
     }
 }

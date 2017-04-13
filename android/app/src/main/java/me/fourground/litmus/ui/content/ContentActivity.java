@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -32,6 +34,7 @@ import me.fourground.litmus.ui.dialog.LoadingDialog;
 import me.fourground.litmus.ui.views.LinearRecyclerView;
 import me.fourground.litmus.ui.write.review.WriteReviewActivity;
 import me.fourground.litmus.util.LoadingHelper;
+import me.fourground.litmus.util.StringUtil;
 
 /**
  * Created by YoungSoo Kim on 2017-03-22.
@@ -66,6 +69,8 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     private AppInfoData mAppInfoData;
     private String mDownUrl = null;
+
+    private String mUid;
 
 
     /**
@@ -104,6 +109,11 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
         mContentPresenter.getContent(appId);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            mUid = currentUser.getUid();
+        }
+
 
     }
 
@@ -133,8 +143,9 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
         AppInfoData appInfo = contentData.getAppInfo();
 
+
         boolean isEnd = Const.APPRAISAL_TYPE_FINISH.equals(appInfo.getAppStatus());
-        if (isEnd) {
+        if (isEnd || (!StringUtil.isEmpty(mUid) && mUid.equals(appInfo.getRegId()))) {
             mBtnWriteReview.setVisibility(View.GONE);
         } else {
             mBtnWriteReview.setVisibility(View.VISIBLE);

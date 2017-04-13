@@ -88,7 +88,6 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
      */
     public static Intent getStartIntent(Context context, boolean isAuthenticationError) {
         Intent intent = new Intent(context, SignInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRA_IS_AUTHENTICATION_ERROR, isAuthenticationError);
         return intent;
     }
@@ -236,7 +235,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     private void signInFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(SignInActivity.this,
-                Arrays.asList("email", "public_profile"));
+                Arrays.asList("email"));
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -290,9 +289,12 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     @Override
     public void onSignIn() {
+
+        Timber.i("onSignIn setResult");
         if (!isAuthenticationError) {
             startActivity(MainActivity.getStartIntent(SignInActivity.this));
         }
+        setResult(RESULT_OK);
         finish();
     }
 }

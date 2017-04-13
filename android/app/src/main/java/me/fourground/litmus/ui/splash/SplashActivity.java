@@ -41,7 +41,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser == null) {
-            mSplashPresenter.delaySplash(false);
+            mSplashPresenter.delaySplash();
         } else {
             signIn(currentUser);
         }
@@ -70,17 +70,11 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     @Override
     public void onSignIn() {
-        mSplashPresenter.delaySplash(true);
+        mSplashPresenter.delaySplash();
     }
 
     public void onGoMain() {
         startActivity(MainActivity.getStartIntent(this));
-        finish();
-    }
-
-    @Override
-    public void onGoSign() {
-        startActivity(SignInActivity.getStartIntent(SplashActivity.this));
         finish();
     }
 
