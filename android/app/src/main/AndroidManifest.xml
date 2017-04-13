@@ -47,7 +47,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
-            android:name=".ui.mypage.nickname.MyNickNameActivity"
+            android:name=".ui.mypage.nickname.MyNicknameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 

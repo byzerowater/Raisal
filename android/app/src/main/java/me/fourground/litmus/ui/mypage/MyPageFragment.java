@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
@@ -17,11 +18,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.fourground.litmus.R;
+import me.fourground.litmus.data.BusEvent;
 import me.fourground.litmus.ui.base.BaseFragment;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
 import me.fourground.litmus.ui.main.MainActivity;
 import me.fourground.litmus.ui.mypage.app.MyAppActivity;
-import me.fourground.litmus.ui.mypage.nickname.MyNickNameActivity;
+import me.fourground.litmus.ui.mypage.nickname.MyNicknameActivity;
 import me.fourground.litmus.ui.mypage.review.MyReviewActivity;
 
 /**
@@ -89,6 +91,12 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
     public void onError() {
     }
 
+    @Subscribe
+    public void onUpdateNicknameCompleted(BusEvent.UpdateNicknameCompleted event) {
+        mTvNickname.setText(event.getNickname());
+    }
+
+
 //    private void signout() {
 //        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 //
@@ -132,7 +140,7 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_change_nickname:
-                startActivity(MyNickNameActivity.getStartIntent(getActivity()));
+                startActivity(MyNicknameActivity.getStartIntent(getActivity()));
                 break;
             case R.id.rl_btn_my_app:
                 startActivity(MyAppActivity.getStartIntent(getActivity()));

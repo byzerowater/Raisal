@@ -7,7 +7,7 @@ import me.fourground.litmus.ui.content.ContentActivity;
 import me.fourground.litmus.ui.main.MainActivity;
 import me.fourground.litmus.ui.mypage.MyPageFragment;
 import me.fourground.litmus.ui.mypage.app.MyAppActivity;
-import me.fourground.litmus.ui.mypage.nickname.MyNickNameActivity;
+import me.fourground.litmus.ui.mypage.nickname.MyNicknameActivity;
 import me.fourground.litmus.ui.mypage.review.MyReviewActivity;
 import me.fourground.litmus.ui.signin.SignInActivity;
 import me.fourground.litmus.ui.splash.SplashActivity;
@@ -41,6 +41,6 @@ public interface ActivityComponent {
 
     void inject(MyAppActivity myAppActivity);
 
-    void inject(MyNickNameActivity myNickNameActivity);
+    void inject(MyNicknameActivity myNicknameActivity);
 }
 

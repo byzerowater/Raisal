@@ -137,6 +137,7 @@ public class DataManager {
         return mNetworkService.updateNickName(nickNameRequest)
                 .doOnNext(signData -> {
                     mPreferencesHelper.putSignData(signData);
+                    mEventPoster.postEventSafely(new BusEvent.UpdateNicknameCompleted(nickNameRequest.getUserNm()));
                 });
     }
 

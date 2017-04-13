@@ -9,6 +9,7 @@ public class BusEvent {
 
     public static class SigninCompleted { }
 
+
     public static class RegisterAppCompleted {
         AppInfoData mAppInfoData;
 
@@ -31,6 +32,20 @@ public class BusEvent {
         public ReviewData getReviewData() {
             return mReviewData;
         }
+    }
+
+    public static class UpdateNicknameCompleted {
+        String mNickname;
+
+        public UpdateNicknameCompleted(String nickname) {
+
+            mNickname = nickname;
+        }
+
+        public String getNickname() {
+            return mNickname;
+        }
+
     }
 
 }

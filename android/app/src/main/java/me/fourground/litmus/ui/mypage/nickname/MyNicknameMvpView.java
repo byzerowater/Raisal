@@ -8,7 +8,7 @@ import me.fourground.litmus.ui.base.MvpView;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public interface MyNickNameMvpView extends MvpView {
+public interface MyNicknameMvpView extends MvpView {
 
     void onComplete();
 }

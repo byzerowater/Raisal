@@ -28,13 +28,13 @@ import me.fourground.litmus.util.StringUtil;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpView, Checker {
+public class MyNicknameActivity extends BaseActivity implements MyNicknameMvpView, Checker {
 
     private static final String VALID_NICK_NAME_REGEX = "^[a-zA-Z0-9ㄱ-ㅎ가-힣]*$";
 
 
     @Inject
-    MyNickNamePresenter mMyNickNamePresenter;
+    MyNicknamePresenter mMyNicknamePresenter;
     @Inject
     LoadingDialog mLoadingDialog;
     @BindView(R.id.btn_back)
@@ -53,7 +53,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
      * @return MyAppActivity Intent
      */
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MyNickNameActivity.class);
+        Intent intent = new Intent(context, MyNicknameActivity.class);
         return intent;
     }
 
@@ -63,7 +63,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
         activityComponent().inject(this);
         setContentView(R.layout.activity_my_nickname);
         ButterKnife.bind(this);
-        mMyNickNamePresenter.attachView(this);
+        mMyNicknamePresenter.attachView(this);
         mTvTitle.setText(getString(R.string.action_change_nickname));
         mBtnBack.setVisibility(View.VISIBLE);
     }
@@ -71,7 +71,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMyNickNamePresenter.detachView();
+        mMyNicknamePresenter.detachView();
     }
 
     @Override
@@ -96,7 +96,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
                 break;
             case R.id.btn_confirm:
                 if (checkInputText()) {
-                    mMyNickNamePresenter.updateNickName(mEtNickname.getText().toString());
+                    mMyNicknamePresenter.updateNickName(mEtNickname.getText().toString());
                 }
 
                 break;

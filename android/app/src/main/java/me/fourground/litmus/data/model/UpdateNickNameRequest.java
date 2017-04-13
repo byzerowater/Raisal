@@ -12,4 +12,8 @@ public class UpdateNickNameRequest {
     public UpdateNickNameRequest(String userNm) {
         this.userNm = userNm;
     }
+
+    public String getUserNm() {
+        return userNm;
+    }
 }

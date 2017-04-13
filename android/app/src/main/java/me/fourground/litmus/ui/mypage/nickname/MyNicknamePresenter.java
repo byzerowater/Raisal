@@ -21,13 +21,13 @@ import rx.subjects.PublishSubject;
  * 4ground Ltd
  * byzerowater@gmail.com
  */
-public class MyNickNamePresenter extends BasePresenter<MyNickNameMvpView> {
+public class MyNicknamePresenter extends BasePresenter<MyNicknameMvpView> {
 
     private final DataManager mDataManager;
     private Subscription mSubscription;
 
     @Inject
-    public MyNickNamePresenter(DataManager dataManager) {
+    public MyNicknamePresenter(DataManager dataManager) {
         mDataManager = dataManager;
     }
 
