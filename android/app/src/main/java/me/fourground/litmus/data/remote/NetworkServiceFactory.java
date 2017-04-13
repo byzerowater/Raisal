@@ -40,7 +40,7 @@ public class NetworkServiceFactory {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
-                : HttpLoggingInterceptor.Level.BODY);
+                : HttpLoggingInterceptor.Level.NONE);
 
 
         return new OkHttpClient.Builder()

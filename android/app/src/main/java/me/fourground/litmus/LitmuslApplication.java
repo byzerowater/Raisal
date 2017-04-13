@@ -35,9 +35,9 @@ public class LitmuslApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-//        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-//        }
+        }
 
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

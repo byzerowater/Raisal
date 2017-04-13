@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,6 +31,8 @@ public class MainActivity extends BaseActivity {
 
     @BindViews({R.id.btn_home, R.id.btn_write, R.id.btn_my})
     View[] mBtnMenu;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     /**
      * MainActivity 가져오기
@@ -52,7 +56,6 @@ public class MainActivity extends BaseActivity {
 
     private void selectButton(int position) {
 
-
         if (position != MENU_WRITE) {
             int size = mBtnMenu.length;
 
@@ -64,12 +67,14 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             case MENU_HOME:
                 FragmentHelper.addFragment(R.id.fl_content, MainActivity.this, AppListFragment.newInstance());
+                mTvTitle.setText(getString(R.string.app_name));
                 break;
             case MENU_WRITE:
                 startActivity(WriteAppAppraisalActivity.getStartIntent(MainActivity.this));
                 break;
             case MENU_MY:
                 FragmentHelper.addFragment(R.id.fl_content, MainActivity.this, MyPageFragment.newInstance());
+                mTvTitle.setText(getString(R.string.action_my_info));
                 break;
         }
     }
