@@ -46,7 +46,7 @@ public class AuthManagerService {
 			} else {
 				String randomNick = generateRandomNick(userUid);
 				
-				if(randomNick != null || randomNick.length() < 10) {
+				if(randomNick == null || randomNick.length() < 10) {
 					throw new Exception("Don't generate Nickname.");
 				}
 				

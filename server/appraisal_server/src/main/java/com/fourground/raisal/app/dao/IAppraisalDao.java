@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
+import com.fourground.raisal.app.dto.AppraisalProVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
 
 public interface IAppraisalDao {
@@ -17,6 +18,9 @@ public interface IAppraisalDao {
 
 	public List<AppraisalVo> selectAppraisalList(Map<String, Object> parameter);
 	public Long selectAppraisalCount(Map<String, Object> parameter);
+	
+	public List<AppraisalProVo> selectAppraisalMyList(Map<String, Object> parameter);
+	public Long selectAppraisalMyCount(Map<String, Object> parameter);
 	
 	public int insertAppMasterInfo(Map<String, Object> parameter);
 	public int insertRefUrl(Map<String, Object> parameter);

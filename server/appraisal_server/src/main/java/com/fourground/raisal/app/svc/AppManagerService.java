@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fourground.raisal.app.dao.IAppraisalDao;
 import com.fourground.raisal.app.dto.AppInfoDetailVo;
 import com.fourground.raisal.app.dto.AppInfoVo;
+import com.fourground.raisal.app.dto.AppraisalProVo;
 import com.fourground.raisal.app.dto.AppraisalVo;
 import com.fourground.raisal.user.dao.IChannelAccountDao;
 import com.fourground.raisal.user.dto.AuthInfoVo;
@@ -63,7 +64,19 @@ public class AppManagerService {
 		return listCnt != null ? listCnt.longValue() : 0L;
 	}
 	
-
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public List<AppraisalProVo> selectAppraisalMyList(Map<String, Object> parameter) {
+		List<AppraisalProVo> appraisalProVoList = new ArrayList<AppraisalProVo>();
+		appraisalProVoList = appraisalDao.selectAppraisalMyList(parameter);
+		return appraisalProVoList;
+	}
+	
+	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
+	public long selectAppraisalMyListCount(Map<String, Object> parameter) {
+		Long listCnt = appraisalDao.selectAppraisalMyCount(parameter);
+		return listCnt != null ? listCnt.longValue() : 0L;
+	}
+	
 	@Transactional(readOnly=true, propagation=Propagation.SUPPORTS)
 	public String insertAppraisalDetail(Map<String, Object> parameter, String appId, String authKey) throws Exception {
 //		Map<String, Object> raisalPoint = (Map<String, Object>)parameter.get("raisalPoint");
