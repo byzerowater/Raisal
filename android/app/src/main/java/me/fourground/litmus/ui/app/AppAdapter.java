@@ -190,6 +190,14 @@ public class AppAdapter extends RecyclerView.Adapter<ViewHolder> {
         return item;
     }
 
+    public void setUid(String uid) {
+        mUid = uid;
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
     public void addAppDatas(List<AppInfoData> appDatas) {
         mAppDatas.addAll(appDatas);
     }

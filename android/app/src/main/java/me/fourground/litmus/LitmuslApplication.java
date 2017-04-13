@@ -63,7 +63,7 @@ public class LitmuslApplication extends Application {
 
     @Subscribe
     public void onAuthenticationError(BusEvent.AuthenticationError event) {
-        mDataManager.signOut()
+        mDataManager.signout()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(s -> {

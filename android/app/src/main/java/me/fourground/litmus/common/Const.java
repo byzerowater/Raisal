@@ -9,7 +9,7 @@ package me.fourground.litmus.common;
 public class Const {
 
     public static final int ERROR_UNAUTHORIZED = 401;
-    public static final int ERROR_CREATED = 201;
+    public static final int ERROR_PRECONDITION_REQUIRED = 428;
 
     public static final String AES_KEY = "Y!A$PG#LO6BA2L8";
 

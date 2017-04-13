@@ -56,10 +56,11 @@ public class DataManager {
                 .doOnNext(signData -> {
                     mPreferencesHelper.putAccessToken(signData.getAuthKey());
                     mPreferencesHelper.putSignData(signData);
+                    mEventPoster.postEventSafely(new BusEvent.SigninCompleted());
                 });
     }
 
-    public Observable<String> signOut() {
+    public Observable<String> signout() {
         return Observable.create(subscriber -> {
                     try {
                         subscriber.onNext(removeAccessToken());
@@ -146,6 +147,7 @@ public class DataManager {
     private String removeAccessToken() {
         String accessToken = mPreferencesHelper.getAccessToken();
         mPreferencesHelper.putAccessToken(null);
+        FirebaseAuth.getInstance().signOut();
         return accessToken;
     }
 

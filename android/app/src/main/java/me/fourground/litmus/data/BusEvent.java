@@ -7,6 +7,8 @@ public class BusEvent {
 
     public static class AuthenticationError { }
 
+    public static class SigninCompleted { }
+
     public static class RegisterAppCompleted {
         AppInfoData mAppInfoData;
 

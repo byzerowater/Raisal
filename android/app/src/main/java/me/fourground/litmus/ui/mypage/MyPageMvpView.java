@@ -9,4 +9,5 @@ import me.fourground.litmus.ui.base.MvpView;
  * byzerowater@gmail.com
  */
 public interface MyPageMvpView extends MvpView {
+    void onSignout();
 }

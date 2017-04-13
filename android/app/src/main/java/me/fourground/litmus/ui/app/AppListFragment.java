@@ -190,6 +190,15 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
         }
     }
 
+    @Subscribe
+    public void onSigninCompleted(BusEvent.SigninCompleted event) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            mAppAdapter.setUid(currentUser.getUid());
+            mAppAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onAppList(List<AppInfoData> datas) {
         mLoadingHelper.setNextPage(mReviewListPresenter.getNextUrl());

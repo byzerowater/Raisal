@@ -55,7 +55,7 @@ public class WriteAppAppraisalPresenter extends BasePresenter<WriteAppAppraisalM
                                     }
                                     Context context = (Context) getMvpView();
 
-                                    if (code == Const.ERROR_CREATED) {
+                                    if (code == Const.ERROR_PRECONDITION_REQUIRED) {
                                         DialogFactory.createDialog(context,
                                                 context.getString(R.string.text_network_error_create),
                                                 context.getString(R.string.action_close),
