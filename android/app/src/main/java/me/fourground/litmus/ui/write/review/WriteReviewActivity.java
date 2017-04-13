@@ -99,7 +99,7 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     public void registerApp() {

@@ -101,6 +101,5 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
 
     @Override
     public void onError() {
-
     }
 }

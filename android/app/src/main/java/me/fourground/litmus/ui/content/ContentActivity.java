@@ -125,7 +125,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     @Override

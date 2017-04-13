@@ -13,6 +13,7 @@ import me.fourground.litmus.R;
 import me.fourground.litmus.common.Const;
 import me.fourground.litmus.ui.base.BaseActivity;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
+import me.fourground.litmus.ui.main.MainActivity;
 import me.fourground.litmus.ui.signin.SignInActivity;
 import timber.log.Timber;
 
@@ -40,9 +41,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser == null) {
-//            mSplashPresenter.delaySplash();
-            startActivity(SignInActivity.getStartIntent(SplashActivity.this));
-            finish();
+            mSplashPresenter.delaySplash(false);
         } else {
             signIn(currentUser);
         }
@@ -71,11 +70,17 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     @Override
     public void onSignIn() {
-        mSplashPresenter.delaySplash();
+        mSplashPresenter.delaySplash(true);
     }
 
     public void onGoMain() {
-        startActivity(SignInActivity.getStartIntent(this));
+        startActivity(MainActivity.getStartIntent(this));
+        finish();
+    }
+
+    @Override
+    public void onGoSign() {
+        startActivity(SignInActivity.getStartIntent(SplashActivity.this));
         finish();
     }
 

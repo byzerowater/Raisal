@@ -131,7 +131,7 @@ public class MyAppActivity extends BaseActivity implements MyAppMvpView {
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     @OnClick(R.id.btn_back)

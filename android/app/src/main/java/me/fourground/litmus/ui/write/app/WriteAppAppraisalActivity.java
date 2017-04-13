@@ -96,7 +96,7 @@ public class WriteAppAppraisalActivity extends BaseActivity implements WriteAppA
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     public RegisterAppRequest getRegisterAppRequest() {

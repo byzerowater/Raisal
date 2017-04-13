@@ -131,7 +131,7 @@ public class MyReviewActivity extends BaseActivity implements MyReviewMvpView {
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     @OnClick(R.id.btn_back)

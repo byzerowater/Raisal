@@ -85,7 +85,7 @@ public class MyNickNameActivity extends BaseActivity implements MyNickNameMvpVie
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     @OnClick({R.id.btn_back, R.id.btn_confirm})

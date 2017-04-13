@@ -273,7 +273,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
 
     @Override
     public void onError() {
-
+        finish();
     }
 
     @OnClick({R.id.sib_google, R.id.sib_facebook})
