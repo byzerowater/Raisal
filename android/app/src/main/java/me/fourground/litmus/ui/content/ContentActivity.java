@@ -143,14 +143,7 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
         AppInfoData appInfo = contentData.getAppInfo();
 
-
-        boolean isEnd = Const.APPRAISAL_TYPE_FINISH.equals(appInfo.getAppStatus());
-        if (isEnd || (!StringUtil.isEmpty(mUid) && mUid.equals(appInfo.getRegId()))) {
-            mBtnWriteReview.setVisibility(View.GONE);
-        } else {
-            mBtnWriteReview.setVisibility(View.VISIBLE);
-        }
-
+        setVisibleWriteReviewBtn(appInfo);
         mContentAdapter.addContentData(contentData);
         mContentAdapter.notifyDataSetChanged();
 
@@ -206,6 +199,35 @@ public class ContentActivity extends BaseActivity implements ContentMvpView {
 
             mContentAdapter.addReviewData(reviewData);
             mContentAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Subscribe
+    public void onSignInCompleted(BusEvent.SignInCompleted event) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            mUid = currentUser.getUid();
+        }
+
+        ContentData contentData = mContentAdapter.getContentData();
+        setVisibleWriteReviewBtn(contentData.getAppInfo());
+
+    }
+
+    @Subscribe
+    public void onSignOutCompleted(BusEvent.SignOutCompleted event) {
+        mUid = null;
+        ContentData contentData = mContentAdapter.getContentData();
+        setVisibleWriteReviewBtn(contentData.getAppInfo());
+    }
+
+    private void setVisibleWriteReviewBtn(AppInfoData appInfoData) {
+
+        boolean isEnd = Const.APPRAISAL_TYPE_FINISH.equals(appInfoData.getAppStatus());
+        if (isEnd || (!StringUtil.isEmpty(mUid) && mUid.equals(appInfoData.getRegId()))) {
+            mBtnWriteReview.setVisibility(View.GONE);
+        } else {
+            mBtnWriteReview.setVisibility(View.VISIBLE);
         }
     }
 
