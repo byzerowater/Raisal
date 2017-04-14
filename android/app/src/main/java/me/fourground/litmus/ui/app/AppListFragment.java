@@ -133,7 +133,11 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
                     startActivity(ContentActivity.getStartIntent(getActivity(), appItem.getAppId()));
                     break;
                 case CLICK_WRITE:
-                    startActivity(WriteReviewActivity.getStartIntent(getActivity(), appItem));
+                    Intent intent = WriteReviewActivity.getStartIntent(getActivity(), appItem);
+                    if (appItem.getRegId().equals(currentUser.getUid())) {
+                        intent = ContentActivity.getStartIntent(getActivity(), appItem.getAppId());
+                    }
+                    startActivity(intent);
                     break;
             }
         }

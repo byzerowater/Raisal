@@ -1,6 +1,5 @@
 package me.fourground.litmus.ui.write.review;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import javax.inject.Inject;
 
@@ -22,7 +18,6 @@ import me.fourground.litmus.data.model.AppInfoData;
 import me.fourground.litmus.data.model.RegisterReviewRequest;
 import me.fourground.litmus.ui.base.BaseActivity;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
-import me.fourground.litmus.util.DialogFactory;
 import me.fourground.litmus.util.FragmentHelper;
 import timber.log.Timber;
 
@@ -76,21 +71,6 @@ public class WriteReviewActivity extends BaseActivity implements WriteReviewMvpV
 
         mTvTitle.setText(R.string.text_title_write_review);
         FragmentHelper.addFragment(R.id.fl_content, WriteReviewActivity.this, WriteUsedFragment.newInstance());
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            if (mAppInfoData.getRegId().equals(currentUser.getUid())) {
-                Dialog errorAlert = DialogFactory.createDialog(WriteReviewActivity.this,
-                        getString(R.string.text_error_no_write_review),
-                        getString(R.string.action_confirm),
-                        (dialog, which) -> {
-                            finish();
-                        });
-                errorAlert.setCancelable(false);
-                errorAlert.show();
-            }
-        }
-
     }
 
     @Override
