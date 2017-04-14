@@ -122,18 +122,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private int getSelectedButtonId() {
-        int id = 0;
-
-        for (View dayView : mBtnMenu) {
-            if (dayView.isSelected()) {
-                id = dayView.getId();
-                break;
-            }
-        }
-        return id;
-    }
-
     @OnClick({R.id.btn_home, R.id.btn_write, R.id.btn_my})
     public void onViewClicked(View view) {
 

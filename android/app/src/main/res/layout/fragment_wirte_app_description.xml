@@ -22,6 +22,7 @@
 
         <Button
             android:id="@+id/btn_7day"
+            style="@style/FontTypeFace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="9dp"
@@ -33,6 +34,7 @@
 
         <Button
             android:id="@+id/btn_14day"
+            style="@style/FontTypeFace"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="9dp"

@@ -149,13 +149,13 @@ public class MyPageFragment extends BaseFragment implements MyPageMvpView {
                 startActivity(MyReviewActivity.getStartIntent(getActivity()));
                 break;
             case R.id.rl_btn_signout:
-                mMyPagePresenter.signout();
+                mMyPagePresenter.signOut();
                 break;
         }
     }
 
     @Override
-    public void onSignout() {
+    public void onSignOut() {
         ((MainActivity) getActivity()).selectHomeMenu();
     }
 }

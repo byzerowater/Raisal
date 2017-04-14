@@ -10,6 +10,7 @@
 
     <TextView
         android:id="@+id/tv_title"
+        style="@style/FontTypeFace"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -48,6 +49,7 @@
             android:layout_weight="1">
 
             <TextView
+                style="@style/FontTypeFace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -72,6 +74,7 @@
             android:layout_weight="1">
 
             <TextView
+                style="@style/FontTypeFace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -96,6 +99,7 @@
             android:layout_weight="1">
 
             <TextView
+                style="@style/FontTypeFace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

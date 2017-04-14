@@ -27,6 +27,7 @@ import me.fourground.litmus.data.remote.NetworkService;
 import me.fourground.litmus.util.DateUtil;
 import me.fourground.litmus.util.StringUtil;
 import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action0;
 
 /**
@@ -56,20 +57,24 @@ public class DataManager {
                 .doOnNext(signData -> {
                     mPreferencesHelper.putAccessToken(signData.getAuthKey());
                     mPreferencesHelper.putSignData(signData);
-                    mEventPoster.postEventSafely(new BusEvent.SigninCompleted());
+                    mEventPoster.postEventSafely(new BusEvent.SignInCompleted());
                 });
     }
 
-    public Observable<String> signout() {
-        return Observable.create(subscriber -> {
-                    try {
-                        subscriber.onNext(removeAccessToken());
-                        subscriber.onCompleted();
-                    } catch (Throwable error) {
-                        subscriber.onError(error);
-                    }
+    public Observable<String> signOut() {
+        return Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                try {
+                    subscriber.onNext(removeAccessToken());
+                    subscriber.onCompleted();
+                } catch (Throwable error) {
+                    subscriber.onError(error);
                 }
-        );
+            }
+        }).doOnNext(s -> {
+            mEventPoster.postEventSafely(new BusEvent.SignOutCompleted());
+        });
     }
 
     public Observable<AppListData> getAppList(String url) {

@@ -30,7 +30,7 @@ import me.fourground.litmus.util.StringUtil;
  */
 public class MyNicknameActivity extends BaseActivity implements MyNicknameMvpView, Checker {
 
-    private static final String VALID_NICK_NAME_REGEX = "^[a-zA-Z0-9ㄱ-ㅎ가-힣]*$";
+    private static final String VALID_NICK_NAME_REGEX = "^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$";
 
 
     @Inject

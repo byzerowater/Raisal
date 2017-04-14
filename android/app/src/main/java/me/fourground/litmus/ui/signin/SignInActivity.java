@@ -201,7 +201,7 @@ public class SignInActivity extends BaseActivity implements SignInMvpView {
                 firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In failed, update UI appropriately
-                Timber.d("facebook:onCancel");
+                Timber.d("google:onCancel");
             }
         }
     }

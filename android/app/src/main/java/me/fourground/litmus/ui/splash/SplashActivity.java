@@ -14,7 +14,6 @@ import me.fourground.litmus.common.Const;
 import me.fourground.litmus.ui.base.BaseActivity;
 import me.fourground.litmus.ui.dialog.LoadingDialog;
 import me.fourground.litmus.ui.main.MainActivity;
-import me.fourground.litmus.ui.signin.SignInActivity;
 import timber.log.Timber;
 
 /**
@@ -33,8 +32,8 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityComponent().inject(this);
         setContentView(R.layout.activity_splash);
+        activityComponent().inject(this);
         ButterKnife.bind(this);
         mSplashPresenter.attachView(this);
 

@@ -39,6 +39,7 @@
         android:gravity="center_vertical">
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -67,6 +68,7 @@
         android:gravity="center_vertical">
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

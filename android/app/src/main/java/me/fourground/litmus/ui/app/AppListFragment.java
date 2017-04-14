@@ -167,7 +167,7 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
 
     @Override
     public void onError() {
-
+        getActivity().finish();
     }
 
     @Subscribe
@@ -191,12 +191,18 @@ public class AppListFragment extends BaseFragment implements AppListMvpView {
     }
 
     @Subscribe
-    public void onSigninCompleted(BusEvent.SigninCompleted event) {
+    public void onSignInCompleted(BusEvent.SignInCompleted event) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             mAppAdapter.setUid(currentUser.getUid());
             mAppAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Subscribe
+    public void onSignOutCompleted(BusEvent.SignOutCompleted event) {
+        mAppAdapter.setUid(null);
+        mAppAdapter.notifyDataSetChanged();
     }
 
     @Override

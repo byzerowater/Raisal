@@ -8,23 +8,34 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="RegisterTitleTextStyle">
+    <style name="ErrorAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/red_ff0000_ff</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:typeface">normal</item>
+    </style>
+
+    <style name="FontTypeFace">
+        <item name="android:typeface">normal</item>
+    </style>
+
+    <style name="RegisterTitleTextStyle" parent="FontTypeFace">
         <item name="android:textSize">9sp</item>
         <item name="android:textColor">@color/gray_a7a7a7_ff</item>
     </style>
 
-    <style name="ServiceNameTextStyle">
+    <style name="ServiceNameTextStyle" parent="FontTypeFace">
+
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black_272727_ff</item>
     </style>
 
-    <style name="StoreTextStyle">
+    <style name="StoreTextStyle" parent="FontTypeFace">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/gray_575757_ff</item>
     </style>
 
-    <style name="InputTextStyle">
+    <style name="InputTextStyle" parent="FontTypeFace">
         <item name="android:textSize">16sp</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
@@ -32,16 +43,11 @@
         <item name="android:textColor">@color/black_272727_ff</item>
     </style>
 
-    <style name="StateTextStyle">
+    <style name="StateTextStyle" parent="FontTypeFace">
         <item name="android:textSize">9sp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/selector_rect_stroke</item>
         <item name="android:textColor">@color/selector_state_text_color</item>
-    </style>
-
-    <style name="ErrorAppearance" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/red_ff0000_ff</item>
-        <item name="android:textSize">9sp</item>
     </style>
 
 </resources>

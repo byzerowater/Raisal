@@ -20,6 +20,7 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
@@ -30,6 +31,7 @@
 
         <TextView
             android:id="@+id/tv_app_name"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -38,6 +40,7 @@
 
         <Button
             android:id="@+id/btn_my_review"
+            style="@style/FontTypeFace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -49,6 +52,7 @@
 
         <Button
             android:id="@+id/btn_main"
+            style="@style/FontTypeFace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

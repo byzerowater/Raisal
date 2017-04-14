@@ -31,9 +31,9 @@ public class MyPagePresenter extends BasePresenter<MyPageMvpView> {
         if (mSubscription != null) mSubscription.unsubscribe();
     }
 
-    public void signout() {
+    public void signOut() {
         getMvpView().showProgress(true);
-        mSubscription = mDataManager.signout()
+        mSubscription = mDataManager.signOut()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<String>() {
@@ -49,7 +49,7 @@ public class MyPagePresenter extends BasePresenter<MyPageMvpView> {
 
                     @Override
                     public void onNext(String s) {
-                        getMvpView().onSignout();
+                        getMvpView().onSignOut();
                     }
                 });
     }

@@ -5,6 +5,7 @@
 
     <TextView
         android:id="@+id/tv_review"
+        style="@style/FontTypeFace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -19,6 +20,7 @@
         android:orientation="horizontal">
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_design"
@@ -27,6 +29,7 @@
 
         <TextView
             android:id="@+id/tv_design"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
@@ -42,6 +45,7 @@
             android:background="@color/gray_e7e7e7_ff"/>
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_useful"
@@ -50,6 +54,7 @@
 
         <TextView
             android:id="@+id/tv_useful"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
@@ -65,6 +70,7 @@
             android:background="@color/gray_e7e7e7_ff"/>
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_contents"
@@ -73,6 +79,7 @@
 
         <TextView
             android:id="@+id/tv_contents"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
@@ -88,6 +95,7 @@
             android:background="@color/gray_e7e7e7_ff"/>
 
         <TextView
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_satisfaction"
@@ -96,6 +104,7 @@
 
         <TextView
             android:id="@+id/tv_satisfaction"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"

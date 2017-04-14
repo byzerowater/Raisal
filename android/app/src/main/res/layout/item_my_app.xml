@@ -14,6 +14,7 @@
 
         <TextView
             android:id="@+id/tv_empty_text"
+            style="@style/FontTypeFace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_empty_review"
@@ -40,6 +41,7 @@
 
             <TextView
                 android:id="@+id/tv_average"
+                style="@style/FontTypeFace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -50,6 +52,7 @@
 
             <TextView
                 android:id="@+id/tv_review_count"
+                style="@style/FontTypeFace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -62,6 +65,7 @@
 
     <TextView
         android:id="@+id/tv_date"
+        style="@style/FontTypeFace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
