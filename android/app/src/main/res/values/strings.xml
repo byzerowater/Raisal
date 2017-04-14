@@ -60,6 +60,8 @@
 
     <string name="text_register_review_complete">리뷰가 정상적으로 등록되었습니다</string>
 
+    <string name="text_error_no_write_review">내가 작성한 서비스에는 리뷰를 작성하실 수 없습니다.</string>
+
     <!--설정 닉네임 -->
 
     <string name="text_nickname">닉네임</string>
@@ -109,4 +111,6 @@
     <string name="_text_review_count">%d명이 리뷰를 남겼습니다.</string>
     <string name="_text_content_review_count">%d명의 리뷰</string>
     <string name="_text_review_date">평가기간 : %1$s ~ %2$s</string>
+
+
 </resources>
