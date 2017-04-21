@@ -41,10 +41,15 @@ public class DialogFactory {
                                       CharSequence message,
                                       CharSequence positiveText,
                                       DialogInterface.OnClickListener positiveListener) {
-        return new AlertDialog.Builder(context)
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton(positiveText, positiveListener)
                 .create();
+
+        alertDialog.setCancelable(false);
+
+        return alertDialog;
     }
 
     /**
@@ -64,10 +69,15 @@ public class DialogFactory {
                                       CharSequence positiveText,
                                       DialogInterface.OnClickListener negativeListener,
                                       DialogInterface.OnClickListener positiveListener) {
-        return new AlertDialog.Builder(context)
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setNegativeButton(negativeText, negativeListener)
                 .setPositiveButton(positiveText, positiveListener)
                 .create();
+
+        alertDialog.setCancelable(false);
+
+        return alertDialog;
     }
 }
