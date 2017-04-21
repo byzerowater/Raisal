@@ -60,6 +60,7 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
                     });
 
             mSubscription = Observable.merge(content, contentReviewList)
+                    .subscribeOn(Schedulers.io())
                     .retryWhen(err ->
                             err.observeOn(AndroidSchedulers.mainThread())
                                     .flatMap(e -> {
@@ -79,7 +80,6 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
                                         return choice;
                                     })
                     )
-                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Object>() {
                         @Override
@@ -107,10 +107,8 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
     public void getReviewList() {
         if (!StringUtil.isEmpty(mNextUrl)) {
             mSubscription = mDataManager.getContentReviewList(mNextUrl)
-                    .map(reviewListData -> {
-                        mNextUrl = reviewListData.getLinks().getNext();
-                        return reviewListData.getData();
-                    }).retryWhen(err ->
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(err ->
                             err.observeOn(AndroidSchedulers.mainThread())
                                     .flatMap(e -> {
                                         PublishSubject<Integer> choice = PublishSubject.create();
@@ -129,7 +127,10 @@ public class ContentPresenter extends BasePresenter<ContentMvpView> {
                                         return choice;
                                     })
                     )
-                    .subscribeOn(Schedulers.io())
+                    .map(reviewListData -> {
+                        mNextUrl = reviewListData.getLinks().getNext();
+                        return reviewListData.getData();
+                    })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<List<ReviewData>>() {
                         @Override

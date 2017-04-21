@@ -42,6 +42,7 @@ public class WriteReviewPresenter extends BasePresenter<WriteReviewMvpView> {
     public void registerApp(String appId, RegisterReviewRequest registerReviewRequest) {
         getMvpView().showProgress(true);
         mSubscription = mDataManager.registerReview(appId, registerReviewRequest)
+                .subscribeOn(Schedulers.io())
                 .retryWhen(err ->
                         err.observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(e -> {
@@ -65,7 +66,6 @@ public class WriteReviewPresenter extends BasePresenter<WriteReviewMvpView> {
                                     return choice;
                                 })
                 )
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<RegisterData>() {
                     @Override

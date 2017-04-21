@@ -50,6 +50,7 @@ public class MyReviewPresenter extends BasePresenter<MyReviewMvpView> {
                 getMvpView().showProgress(true);
             }
             mSubscription = mDataManager.getMyReviewList(mNextUrl)
+                    .subscribeOn(Schedulers.io())
                     .retryWhen(err ->
                             err.observeOn(AndroidSchedulers.mainThread())
                                     .flatMap(e -> {
@@ -78,7 +79,6 @@ public class MyReviewPresenter extends BasePresenter<MyReviewMvpView> {
                         mNextUrl = appListData.getLinks().getNext();
                         return appListData.getData();
                     })
-                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<List<MyReviewData>>() {
                                    @Override

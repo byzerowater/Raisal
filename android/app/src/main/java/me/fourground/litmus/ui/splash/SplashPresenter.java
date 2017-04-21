@@ -50,7 +50,6 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
                 user.getEmail(),
                 channelCode))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .retryWhen(err ->
                         err.observeOn(AndroidSchedulers.mainThread())
                                 .flatMap(e -> {
@@ -70,6 +69,7 @@ public class SplashPresenter extends BasePresenter<SplashMvpView> {
                                     return choice;
                                 })
                 )
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<SignData>() {
                     @Override
                     public void onCompleted() {

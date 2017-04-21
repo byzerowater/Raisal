@@ -50,6 +50,7 @@ public class AppListPresenter extends BasePresenter<AppListMvpView> {
                 getMvpView().showProgress(true);
             }
             mSubscription = mDataManager.getAppList(mNextUrl)
+                    .subscribeOn(Schedulers.io())
                     .retryWhen(err ->
                             err.observeOn(AndroidSchedulers.mainThread())
                                     .flatMap(e -> {
@@ -78,7 +79,6 @@ public class AppListPresenter extends BasePresenter<AppListMvpView> {
                         mNextUrl = appListData.getLinks().getNext();
                         return appListData.getData();
                     })
-                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<List<AppInfoData>>() {
                                    @Override
